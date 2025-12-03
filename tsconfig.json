@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2020",          // enables ?. ?.[] etc.
+    "module": "es2020",          // browser ESM
+    "moduleResolution": "node",  // how imports are resolved
+    "rootDir": "src",            // your TS
+    "outDir": "dist",            // compiled JS
+    "strict": true,              // good type safety
+    "allowJs": false,            // TS only
+    "isolatedModules": false,    // simpler build
+    "noEmitOnError": true,       // no still emit JS even if TS errors
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"]
+}
