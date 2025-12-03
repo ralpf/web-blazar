@@ -1,0 +1,1 @@
+export type Action = (value: any) => void;
