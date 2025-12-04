@@ -24,4 +24,8 @@ export class Dropdown extends InputUnit {
     protected readInput(): number {
         return this.input.selectedIndex;
     }
+
+    dispose(): void {
+        super.dispose();
+    }
 }

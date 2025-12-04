@@ -23,4 +23,8 @@ export class Slider extends InputUnit {
     protected readInput(): number {
         return this.input.valueAsNumber;
     }
+
+    dispose(): void {
+        super.dispose();
+    }
 }
