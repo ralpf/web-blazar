@@ -16,7 +16,7 @@ export class Unit {
         Unit.refMap.delete(this.root);
     }
     /**
-    * Finds a descendant element inside the given root element.
+    * Finds first descendant element inside the given root element.
     ** Throws if nothing is found.
     ** Selector is standard js querrySelector()
     */
@@ -29,6 +29,21 @@ export class Unit {
         if (!x)
             throw new Error(`root element has no child with selector '${selector}'\nroot path:'${Unit.ElementDomPath(root)}'`);
         return x;
+    }
+    /**
+     * Finds all descendant elements inside the given root element.
+     ** Throws if nothing is found.
+     ** Selector is standard js querrySelector()
+     */
+    static FindAll(root, selector) {
+        if (!selector)
+            throw new Error('selector argument should be a non-empty string');
+        if (!root)
+            throw new Error('root argument was null');
+        const all = root.querySelectorAll(selector);
+        if (!all || all.length === 0)
+            throw new Error(`root element has no children with selector '${selector}'\nroot path:'${Unit.ElementDomPath(root)}'`);
+        return Array.from(all);
     }
     /**
      * Find instance of T derived from Unit, that is 'attached' to the element

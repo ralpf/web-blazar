@@ -30,7 +30,7 @@ export class Unit {
     private static refMap = new Map<HTMLElement, Unit>();    // <~~~ important
 
      /**
-     * Finds a descendant element inside the given root element.
+     * Finds first descendant element inside the given root element.
      ** Throws if nothing is found.
      ** Selector is standard js querrySelector()
      */
@@ -40,6 +40,19 @@ export class Unit {
         const x = root.querySelector(selector);
         if (!x) throw new Error(`root element has no child with selector '${selector}'\nroot path:'${Unit.ElementDomPath(root)}'`);
         return x as HTMLElement;
+    }
+
+    /**
+     * Finds all descendant elements inside the given root element.
+     ** Throws if nothing is found.
+     ** Selector is standard js querrySelector()
+     */
+    static FindAll(root: HTMLElement, selector: string): HTMLElement[] {
+        if (!selector) throw new Error('selector argument should be a non-empty string');
+        if (!root) throw new Error('root argument was null');
+        const all = root.querySelectorAll(selector);
+        if (!all || all.length === 0) throw new Error(`root element has no children with selector '${selector}'\nroot path:'${Unit.ElementDomPath(root)}'`);
+        return Array.from(all) as HTMLElement[];
     }
     
     /**
