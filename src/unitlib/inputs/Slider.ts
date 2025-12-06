@@ -1,5 +1,5 @@
+import { Action } from "../aliases.js";
 import { Unit } from "../Unit";
-import { Action } from "../Action";
 import { InputUnit } from "./InputUnit";
 
 
@@ -20,7 +20,7 @@ export class Slider extends InputUnit {
         return this.input.labels?.[0] ?? null;
     }
 
-    protected readInput(): number {
+    protected readInput(): number {     // virtual
         return this.input.valueAsNumber;
     }
 

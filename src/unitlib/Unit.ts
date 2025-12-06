@@ -1,5 +1,6 @@
 
-// all wrappers around DOM elements derive from this
+
+/** Most base class for all classes in unitlib framework */
 export class Unit {
 
     protected root : HTMLElement;

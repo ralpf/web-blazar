@@ -1,7 +1,7 @@
-import { Action } from "../Action";
-import { Assert } from "../Assert";
-import { Unit } from "../Unit";
-import { InputUnit } from "./InputUnit";
+import { Action } from "../aliases.js";
+import { Assert } from "../Assert.js";
+import { Unit } from "../Unit.js";
+import { InputUnit } from "./InputUnit.js";
 
 
 // an wrapper of <select> element
