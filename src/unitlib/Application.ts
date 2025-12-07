@@ -2,6 +2,8 @@ import { log } from "./log.js";
 import { Action, UnitCTOR } from "./aliases.js";
 import { Assert } from "./Assert.js";
 import { Unit } from "./Unit.js";
+import { ButtonsRow } from "./inputs/ButtonsRow.js";
+import { Pages } from "./containers/Pages.js";
 
 
 /** Extend this class to make a web app */
@@ -11,10 +13,15 @@ export class Application {
 
     /** pass a list of constructors, they will be searched and resolved from DOM  */
     static initialize(...ctors: UnitCTOR[]) {
+        Assert.True(this.rootMap.size === 0);   // only one call per session
         Assert.IsArray(ctors);
-        Assert.True(this.rootMap.size === 0);   // only one call for initialize
         log('App initializing ...');
+        this.buildRootUnits(ctors);
+        this.buildAutoUnits();
+    }
 
+    private static buildRootUnits(ctors: UnitCTOR[]) {
+        log('Start search of DOM root Unit(s)');
         for (const ctor of ctors) {
             log(`Making root ${ctor.name} : Unit`);
             const allElements = Array.from( document.querySelectorAll(`[data-roottype="${ctor.name}"]`) );
@@ -23,8 +30,26 @@ export class Application {
             this.rootMap.set(ctor, singleton);
         }
         Assert.True(this.rootMap.size > 0);     // at least one singleton
-        log(`App initialized with ${this.rootMap.size} root objects`);
+        log(`Created ${this.rootMap.size} root Unit object(s)`);
     }
+
+    private static buildAutoUnits() {
+        log('Start auto-discover of Unit(s)');
+        this.rootMap.forEach(unit =>  this.recursiveBuildUnit(unit));
+    }
+
+    private static recursiveBuildUnit(parent: Unit) {
+        for (const child of parent.root.children) {
+            const element = child as HTMLElement;
+            const unitType = element.dataset.type;
+
+            if (unitType) {   // found [data-type] attrib
+
+            }
+        }
+    }
+
+
 
     /** get a root *Unit type from DOM */
     static getRoot<T extends Unit>(classCTOR: UnitCTOR): T {
@@ -41,4 +66,10 @@ export class Application {
         });
     }
 
+}
+
+
+const reg = {
+    Pages,
+    ButtonsRow,
 }

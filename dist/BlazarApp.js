@@ -6,6 +6,7 @@ export class BlazarApp extends Application {
     static Run() {
         BlazarApp.initialize(MainPager);
         BlazarApp.bindKeyboard();
+        // construcotrs builds all and links events
         this.mainPager = Application.getRoot(MainPager);
     }
     static bindKeyboard() {
