@@ -1,6 +1,6 @@
 import { Unit } from "../Unit.js";
 import { Assert } from "../Assert.js";
-import { log } from "../log.js";
+import { log } from "../global.js";
 
 
 /** A container for content, to show one children at a time */

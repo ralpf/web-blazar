@@ -1,4 +1,4 @@
-import { log } from "./log.js";
+import { log } from "./global.js";
 import { Action, UnitCTOR } from "./aliases.js";
 import { Assert } from "./Assert.js";
 import { Unit } from "./Unit.js";

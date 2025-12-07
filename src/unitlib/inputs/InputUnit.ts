@@ -1,5 +1,5 @@
 import { Action } from "../aliases.js";
-import { log } from "../log.js";
+import { log } from "../global.js";
 import { Unit }   from "../Unit.js";
 
 

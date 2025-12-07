@@ -1,4 +1,4 @@
-import { log } from "./unitlib/log.js";
+import { log } from "./unitlib/global.js";
 import { Unit } from "./unitlib/Unit.js";
 import { Pages } from "./unitlib/containers/Pages.js";
 import { ButtonsRow } from "./unitlib/inputs/ButtonsRow.js";

@@ -1,4 +1,4 @@
-import { log } from "./unitlib/log.js";
+import { log } from "./unitlib/global.js";
 import { Unit } from "./unitlib/Unit.js";
 import { Application } from "./unitlib/Application.js";
 import { MainPager } from "./MainPager.js";
