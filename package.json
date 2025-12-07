@@ -2,8 +2,9 @@
     "note": "This file is used only for npm tools and local development (TypeScript, minifier, etc.).",
     "note2": "one can define custom scripts here, even bash or python commands, and run them with `npm run <name>`.",
     "scripts": {
-        "build": "tsc",
-        "buildMin": "tsc && uglifyjs dist/main.js -o dist/main.min.js --compress --mangle false --comments false"
+        "build": "vite build",
+        "startLiveServer": "vite",
+        "startDistServer": "npx serve dist"
     },
     "devDependencies": {
         "vite": "^7.2.6"
