@@ -4,5 +4,8 @@
     "scripts": {
         "build": "tsc",
         "buildMin": "tsc && uglifyjs dist/main.js -o dist/main.min.js --compress --mangle false --comments false"
+    },
+    "devDependencies": {
+        "vite": "^7.2.6"
     }
 }
