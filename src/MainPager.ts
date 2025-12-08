@@ -19,7 +19,6 @@ export class MainPager extends Unit {
         // then buttons and link them
         const buttonsRoot = Unit.FindInnerUnit(this.root, ButtonsRow);
         this.controlButtons = new ButtonsRow(buttonsRoot, (value) => this.pages.activeIdx = value);
-        log("OK MainPager online");
     }
 
 }

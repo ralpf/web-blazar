@@ -12,7 +12,7 @@ export const unitRegistry: Record<string, UnitCTOR> = {}    // central ctors reg
  ** use 'traceON' to print callstack */
 export function log(msg: string, traceON = false) {
     //traceON = true;
-    console.log(msg);
+    console.log(`${msg}`);
     if (traceON) console.trace();
 }
 
