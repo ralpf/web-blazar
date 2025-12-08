@@ -7,6 +7,7 @@
         "startDistServer": "npx serve dist"
     },
     "devDependencies": {
+        "terser": "^5.44.1",
         "vite": "^7.2.6"
     }
 }

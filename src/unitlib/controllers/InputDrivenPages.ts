@@ -1,5 +1,5 @@
-import { Unit } from "../Unit.js";
-import { Assert } from "../Assert.js";
+import { Unit } from "../Unit";
+import { Assert } from "../Assert";
 
 
 /**

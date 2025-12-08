@@ -1,4 +1,4 @@
-import { Action } from "../aliases.js";
+import { Action } from "../aliases";
 import { Unit } from "../Unit";
 import { InputUnit } from "./InputUnit";
 

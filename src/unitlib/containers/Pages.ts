@@ -1,6 +1,5 @@
-import { Unit } from "../Unit.js";
-import { Assert } from "../Assert.js";
-import { log } from "../global.js";
+import { Unit } from "../Unit";
+import { Assert } from "../Assert";
 
 
 /** A container for content, to show one children at a time */
@@ -25,12 +24,9 @@ export class Pages extends Unit {
 
         this.idx = this.all.findIndex(x => x.isVisible);
         if (this.idx < 0) this.idx = 0;
-        log(`active idx=${this.idx}`);
 
         this.all.forEach(x => x.hide());
         this.activeUnit.show();
-        for (const x of this.all)
-            log(`page ${x.root.id}`);
     }
 
     private activateIdx(i: number) {

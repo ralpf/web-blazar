@@ -1,55 +1,12 @@
-import { log } from "./global.js";
-import { Action, UnitCTOR } from "./aliases.js";
-import { Assert } from "./Assert.js";
-import { Unit } from "./Unit.js";
-import { ButtonsRow } from "./inputs/ButtonsRow.js";
-import { Pages } from "./containers/Pages.js";
-
+import { err, log, logi, unitRegistry } from "./global";
+import { Action, UnitCTOR } from "./aliases";
+import { Assert } from "./Assert";
+import { Unit } from "./Unit";
 
 /** Extend this class to make a web app */
 export class Application {
 
     private static rootMap = new Map<Function, Unit>();
-
-    /** pass a list of constructors, they will be searched and resolved from DOM  */
-    static initialize(...ctors: UnitCTOR[]) {
-        Assert.True(this.rootMap.size === 0);   // only one call per session
-        Assert.IsArray(ctors);
-        log('App initializing ...');
-        this.buildRootUnits(ctors);
-        this.buildAutoUnits();
-    }
-
-    private static buildRootUnits(ctors: UnitCTOR[]) {
-        log('Start search of DOM root Unit(s)');
-        for (const ctor of ctors) {
-            log(`Making root ${ctor.name} : Unit`);
-            const allElements = Array.from( document.querySelectorAll(`[data-roottype="${ctor.name}"]`) );
-            Assert.IsArray(allElements, 1);     // only one root element per class
-            const singleton = new ctor(allElements[0] as HTMLElement);
-            this.rootMap.set(ctor, singleton);
-        }
-        Assert.True(this.rootMap.size > 0);     // at least one singleton
-        log(`Created ${this.rootMap.size} root Unit object(s)`);
-    }
-
-    private static buildAutoUnits() {
-        log('Start auto-discover of Unit(s)');
-        this.rootMap.forEach(unit =>  this.recursiveBuildUnit(unit));
-    }
-
-    private static recursiveBuildUnit(parent: Unit) {
-        for (const child of parent.root.children) {
-            const element = child as HTMLElement;
-            const unitType = element.dataset.type;
-
-            if (unitType) {   // found [data-type] attrib
-
-            }
-        }
-    }
-
-
 
     /** get a root *Unit type from DOM */
     static getRoot<T extends Unit>(classCTOR: UnitCTOR): T {
@@ -66,10 +23,48 @@ export class Application {
         });
     }
 
-}
+    /** pass a list of constructors, they will be searched and resolved from DOM  */
+    static initialize(...ctors: UnitCTOR[]) {
+        Assert.True(this.rootMap.size === 0);   // only one call per session
+        Assert.IsArray(ctors);
+        logi('initializing ...');
+        this.buildRootUnits(ctors);
+        this.buildAutoUnits();
+    }
 
+    private static buildRootUnits(ctors: UnitCTOR[]) {
+        logi('searching of DOM root Unit(s)');
+        for (const ctor of ctors) {
+            logi(`making root ${ctor.name} : Unit`);
+            const allElements = Array.from( document.querySelectorAll(`[data-roottype="${ctor.name}"]`) );
+            Assert.IsArray(allElements, 1);     // only one root element per class
+            const singleton = new ctor(allElements[0] as HTMLElement);
+            this.rootMap.set(ctor, singleton);
+        }
+        Assert.True(this.rootMap.size > 0);     // at least one singleton
+        logi(`total ${this.rootMap.size} root Unit object(s)`);
+    }
 
-const reg = {
-    Pages,
-    ButtonsRow,
+    private static buildAutoUnits() {
+        logi('start auto-discover of Unit(s)');
+        this.rootMap.forEach(unit =>  this.recursiveBuildUnit(unit, unit.root, 0));
+    }
+
+    private static recursiveBuildUnit(parentUnit: Unit, domElement: HTMLElement, depth: number) {
+        for (const child of domElement.children) {
+            const childElement = child as HTMLElement;
+            const unitTypeName = childElement.dataset.type;
+
+            if (unitTypeName) {   // found [data-type] attrib
+                const unitCtor = unitRegistry[unitTypeName];
+                if (!unitCtor) err(`DOM el. ${Unit.elementDomPath(childElement)} attached type '${unitTypeName}' that is part of Unit family ctors`);
+                log('    '.repeat(depth) + `+ ${unitTypeName}`);                // pretty log
+                const unitInstance = new unitCtor(childElement, parentUnit);    // this will build the *Unit class
+                this.recursiveBuildUnit(unitInstance, childElement, depth + 1); // and will recurse in it's own dom inner tree
+                continue;
+            }                                                                   // else no [data-type], scan in inner elements
+            this.recursiveBuildUnit(parentUnit, childElement, depth + 1);
+        }
+    }
+
 }

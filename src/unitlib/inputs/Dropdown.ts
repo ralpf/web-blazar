@@ -1,6 +1,6 @@
-import { Action } from "../aliases.js";
-import { Unit } from "../Unit.js";
-import { InputUnit } from "./InputUnit.js";
+import { Action } from "../aliases";
+import { Unit } from "../Unit";
+import { InputUnit } from "./InputUnit";
 
 
 /** an wrapper of <select> element. Callback accepts selected index */

@@ -1,10 +1,7 @@
-import { log } from "./unitlib/global.js";
-import { Unit } from "./unitlib/Unit.js";
-import { Application } from "./unitlib/Application.js";
-import { MainPager } from "./MainPager.js";
-
-log("OK: TS Framework started");
-
+import { log, logi, err, unitRegistry } from "./unitlib/global";
+import { Unit } from "./unitlib/Unit";
+import { Application } from "./unitlib/Application";
+import { MainPager } from "./MainPager";
 
 export class BlazarApp extends Application {
 
@@ -16,7 +13,7 @@ export class BlazarApp extends Application {
         // construcotrs builds all and links events
         this.mainPager = Application.getRoot(MainPager);
     }
-    
+
     static bindKeyboard() {
         Application.bindKeyAction(key => {
             const x = Application.getRoot(MainPager);
@@ -26,4 +23,4 @@ export class BlazarApp extends Application {
 }
 
 
-BlazarApp.Run();
+BlazarApp.Run();    // etnry point

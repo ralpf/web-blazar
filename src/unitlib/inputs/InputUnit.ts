@@ -1,6 +1,6 @@
-import { Action } from "../aliases.js";
-import { log } from "../global.js";
-import { Unit }   from "../Unit.js";
+import { Action } from "../aliases";
+import { log } from "../global";
+import { Unit }   from "../Unit";
 
 
 export abstract class InputUnit extends Unit {

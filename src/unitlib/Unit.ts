@@ -1,15 +1,21 @@
-import { UnitCTOR } from "./aliases.js";
+import { UnitCTOR } from "./aliases";
+import { err } from "./global";
 
 
 /** Most base class for all classes in unitlib framework */
 export class Unit {
 
-    private _root : HTMLElement;
+    private _root : HTMLElement;        // the carrier dom element for this class
+    private _parU : Unit;               // the Unit that created this instance
 
-    public get root() : HTMLElement { return this._root; }
 
-    constructor(root: HTMLElement) {
+    public get root()       : HTMLElement { return this._root; }
+    public get parentUnit() : Unit        { return this._parU; }
+
+
+    constructor(root: HTMLElement, parent?: Unit) {
         this._root = root;
+        this._parU  = parent ?? this;
     }
 
     get isVisible() : boolean { return getComputedStyle(this._root).display !== 'none'; }

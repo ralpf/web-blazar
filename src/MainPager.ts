@@ -1,8 +1,8 @@
-import { log } from "./unitlib/global.js";
-import { Unit } from "./unitlib/Unit.js";
-import { Pages } from "./unitlib/containers/Pages.js";
-import { ButtonsRow } from "./unitlib/inputs/ButtonsRow.js";
-import { Application } from "./unitlib/Application.js";
+import { log } from "./unitlib/global";
+import { Unit } from "./unitlib/Unit";
+import { Pages } from "./unitlib/containers/Pages";
+import { ButtonsRow } from "./unitlib/inputs/ButtonsRow";
+import { Application } from "./unitlib/Application";
 
 
 

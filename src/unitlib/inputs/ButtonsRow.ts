@@ -1,6 +1,6 @@
-import { Action } from "../aliases.js";
-import { Unit } from "../Unit.js";
-import { InputUnit } from "./InputUnit.js";
+import { Action } from "../aliases";
+import { Unit } from "../Unit";
+import { InputUnit } from "./InputUnit";
 
 
 /** a collection of buttos as a single input element. Callback accepts clicked button index */
