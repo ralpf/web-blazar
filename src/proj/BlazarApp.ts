@@ -1,7 +1,7 @@
-import { log, logi, err, unitRegistry } from "./unitlib/global";
-import { Unit } from "./unitlib/Unit";
-import { Application } from "./unitlib/Application";
-import { MainPager } from "./MainPager";
+import { log, logi, err, unitRegistry } from "../unitlib/global";
+import { Unit } from "../unitlib/Unit";
+import { Application } from "../unitlib/Application";
+import { MainPager } from "./managers/MainPager";
 
 export class BlazarApp extends Application {
 
