@@ -3,19 +3,22 @@
 import os
 import zipfile
 import shutil
-from pathlib import Path
+import subprocess
 import tempfile
+from pathlib import Path
 
 def get_downloads_dir():
-    home = Path.home()
-    # Try to detect the Windows username under WSL
-    win_user = os.getenv("USERNAME") or os.getenv("WSLUSER")
-    if win_user:
-        wslHome = Path(f"/mnt/c/Users/{win_user}")
-        downloads = wslHome / "Downloads"
-        if downloads.exists(): return downloads
+    # Try WSL Windows username
+    try:
+        out = subprocess.check_output(['cmd.exe', '/C', 'echo', '%USERNAME%'])
+        win_user = out.decode().strip()
+        if win_user:
+            downloads = Path(f"/mnt/c/Users/{win_user}/Downloads")
+            if downloads.exists(): return downloads
+    except: pass
     # Fallback: Linux/Windows native home
-    return home / "Downloads"
+    return Path.home() / "Downloads"
+
 
 
 
@@ -37,6 +40,7 @@ def extract_and_copy(zipPath, targetDir):
 
 def main():
     downloads = get_downloads_dir()
+    print(f'search in: {downloads}')
     latestZip = find_latest_zip(downloads)
     print(f"[grapesJS sync]: using ZIP: {latestZip}")
     extract_and_copy(latestZip, Path.cwd())
