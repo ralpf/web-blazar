@@ -11,6 +11,7 @@ export class Unit {
 
     public get root()       : HTMLElement { return this._root; }
     public get parentUnit() : Unit        { return this._parU; }
+    //public get domPath()    : string      { return Unit.elementDomPath(this.root); }
 
 
     constructor(root: HTMLElement, parent?: Unit) {

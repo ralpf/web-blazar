@@ -3,12 +3,12 @@ import { err } from "./global";
 
 export class Assert {
 
-    static True(condition: boolean) {
-        if (!condition) err('Condition was false');
+    static True(condition: boolean, msg = 'Condition was false') {
+        if (!condition) err(msg);
     }
 
-    static False(condition: boolean) {
-        if (condition) err(`Condition was true`);
+    static False(condition: boolean, msg = 'Condition was true') {
+        if (condition) err(msg);
     }
 
     static Index(array: any[], i: number) {

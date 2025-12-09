@@ -2,6 +2,7 @@ import { err, log, logi, unitRegistry } from "./global";
 import { Action, UnitCTOR } from "./aliases";
 import { Assert } from "./Assert";
 import { Unit } from "./Unit";
+import { CompositeUnit } from "./views/CompositeUnit";
 
 /** Extend this class to make a web app */
 export class Application {
@@ -55,20 +56,25 @@ export class Application {
     }
 
     private static recursiveBuildUnit(parentUnit: Unit, domElement: HTMLElement, depth: number) {
-        for (const child of domElement.children) {
-            const childElement = child as HTMLElement;
-            const unitTypeName = childElement.dataset.type;
+        for (const child of  Array.from(domElement.children, x => x as HTMLElement)) {
+            const typeName = child.dataset.type;
+            const fieldName = child.dataset.field;
+            const domPath = Unit.elementDomPath(child);
 
-            if (unitTypeName) {   // found [data-type] attrib
-                const unitCtor = unitRegistry[unitTypeName];
-                if (!unitCtor) err(`DOM el. ${Unit.elementDomPath(childElement)} attached type '${unitTypeName}' that is part of Unit family ctors`);
-                log('    '.repeat(depth + 1) + `+ ${unitTypeName}`);                // pretty log
-                const unitInstance = new unitCtor(childElement, parentUnit);    // this will build the *Unit class
-                this.recursiveBuildUnit(unitInstance, childElement, depth + 1); // and will recurse in it's own dom inner tree
-                continue;
-            }                                                                   // else no [data-type], scan in inner elements
-            this.recursiveBuildUnit(parentUnit, childElement, depth + 1);
+            if (typeName) {   // found [data-type] attrib
+                Assert.False(!fieldName, `Dom el. ${domPath} declared type '${typeName}' but is missing 'data-field' attribute`);
+                const unitCtor = unitRegistry[typeName];
+                if (!unitCtor) err(`DOM el. ${domPath} attached type '${typeName}' that is part of Unit family ctors`);
+                log('    '.repeat(depth + 1) + `+ ${typeName}`);        // pretty log
+                const newUnit = new unitCtor(child, parentUnit);        // ~ build the *Unit class
+                this.recursiveBuildUnit(newUnit, child, depth + 1);     // recurse in it's own dom inner tree
+                parentUnit instanceof CompositeUnit && parentUnit.attachClassField(fieldName!, newUnit);   // man, this looks good, c#-er here
+            }
+            else {                                                      // no [data-type], scan in inner elements
+                this.recursiveBuildUnit(parentUnit, child, depth + 1);
+            }
         }
+        parentUnit instanceof CompositeUnit && parentUnit.finalizeClassFields();
     }
 
 }
