@@ -1,5 +1,5 @@
-import { Unit } from "../../unitlib/Unit";
-import { CompositeUnit } from "../../unitlib/views/CompositeUnit";
+import { Unit } from "../Unit";
+import { CompositeUnit } from "./CompositeUnit";
 
 
 // more like page for all lamp blazar stuff
