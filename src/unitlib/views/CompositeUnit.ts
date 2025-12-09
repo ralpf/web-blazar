@@ -13,12 +13,13 @@ export abstract class CompositeUnit extends Unit {
         this.fields[fieldName] = unitInstance;
     }
 
+    /** called when the *Unit object tree is constructed. Marks getField<T>() method accessible */
     public abstract finalizeClassFields(): void;
 
     /** generic way to access a delayed class field */
     protected getField<T extends Unit>(fieldName: string): T {
         const unit = this.fields[fieldName];
-        Assert.False(!unit, `no filed '${fieldName}' was found`)
+        Assert.False(!unit, `no filed '${this.constructor.name}.${fieldName}' was found (refactored?)`);
         return unit as T;
     }
 }

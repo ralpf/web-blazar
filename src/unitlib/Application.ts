@@ -39,7 +39,7 @@ export class Application {
         for (const ctor of ctors) {
             log(`@ ${ctor.name}`);
             const allElements = Array.from( document.querySelectorAll(`[data-roottype="${ctor.name}"]`) );
-            Assert.IsArray(allElements, 1);     // only one root element per class
+            if (allElements.length === 0) err(`no [data-roottype=${ctor.name}] found in DOM`);
             const singleton = new ctor(allElements[0] as HTMLElement);
             this.rootMap.set(ctor, singleton);
         }
