@@ -16,7 +16,10 @@ export abstract class CompositeUnit extends Unit {
     }
 
     /** called when the *Unit object tree is constructed. Marks getField<T>() method accessible */
-    public abstract finalizeClassFields(): void;
+    public onObjectConstructed() {
+        this.initializeClassFields();
+        this.initializeEvents();
+    }
 
     /** generic way to access a delayed class field */
     protected getField<T extends Unit>(fieldName: string): T {
@@ -24,4 +27,8 @@ export abstract class CompositeUnit extends Unit {
         Assert.False(!unit, `no filed '${this.typeName}.${fieldName}' was found (refactored?) Available: [${Object.keys(this.fields).join(", ")}]`);
         return unit as T;
     }
+
+    protected abstract initializeClassFields(): void;
+    protected abstract initializeEvents(): void;
+
 }

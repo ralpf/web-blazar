@@ -40,7 +40,7 @@ export class Application {
             log(`@ ${ctor.name}`);
             const allElements = Array.from( document.querySelectorAll(`[data-roottype="${ctor.name}"]`) );
             if (allElements.length === 0) err(`no [data-roottype=${ctor.name}] found in DOM`);
-            const singleton = new ctor(allElements[0] as HTMLElement);
+            const singleton = new ctor(allElements[0]);
             this.rootMap.set(ctor, singleton);
         }
         Assert.True(this.rootMap.size > 0);     // at least one singleton
@@ -52,7 +52,7 @@ export class Application {
         for (const [ctor, unit] of this.rootMap) {
             log(`+ [M]${ctor.name}`);
             this.recursiveBuildUnit(unit, unit.root, 0);
-            unit instanceof CompositeUnit && unit.finalizeClassFields();
+            unit instanceof CompositeUnit && unit.onObjectConstructed();
         }
     }
 
@@ -70,7 +70,7 @@ export class Application {
                 log('    '.repeat(depth + 1) + `+ ${typeName}`);        // pretty log
                 const newUnit = new unitCtor(child, parentUnit);        // ~ build the *Unit class
                 this.recursiveBuildUnit(newUnit, child, depth + 1);     // recurse in it's own dom inner tree
-                newUnit instanceof CompositeUnit && newUnit.finalizeClassFields();
+                newUnit instanceof CompositeUnit && newUnit.onObjectConstructed();
                 parentUnit instanceof CompositeUnit && parentUnit.attachClassField(fieldName!, newUnit);   // man, this looks good, c#-er here
             }
             else {                                                      // no [data-type], scan in inner elements

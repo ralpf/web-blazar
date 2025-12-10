@@ -3,12 +3,17 @@ import { CompositeUnit } from "../../unitlib/containers/CompositeUnit";
 
 
 export class DeckView extends CompositeUnit {
-    
+
     constructor(root: HTMLElement, parent: Unit) {
         super(root, parent);
     }
 
-    public finalizeClassFields(): void {
+    public initializeClassFields(): void {
         throw new Error("Method not implemented.");
     }
+
+    protected initializeEvents(): void {
+        throw new Error("Method not implemented.");
+    }
+
 }

@@ -11,9 +11,14 @@ export class ViewsManager extends CompositeUnit {
     protected viewsRoot!   : Container;
 
 
-    public finalizeClassFields(): void {
+    public initializeClassFields(): void {
         this.viewsSelect = this.getField<ButtonsRowSig>('viewsSelect')
         this.viewsRoot   = this.getField<Container>('viewsRoot');
+    }
+
+    protected initializeEvents(): void {
+        this.viewsSelect.callback = (idx) => this.viewsRoot.activeIdx = idx;
+        this.viewsSelect.onChange(1);
     }
 
 }

@@ -14,8 +14,8 @@ export class Unit {
     public get typeName()   : string      { return this.constructor.name; }
 
 
-    constructor(root: HTMLElement, parent?: Unit) {
-        this._root = root;
+    constructor(root: Element, parent?: Unit) {
+        this._root = root as HTMLElement;
         this._parU  = parent ?? this;
     }
 

@@ -13,6 +13,10 @@ export abstract class InputUnit extends Unit {
         this.prepareInnerElements();
     }
 
+    public onChange(value: any) {   // override this
+        this.invokeCallback(value);
+    }
+
     protected invokeCallback(value: any) {
         Assert.True(!!this._cb, `input callback undefined in ${this.domPath} <${this.typeName}>`);
         this._cb(value);

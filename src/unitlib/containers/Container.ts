@@ -20,7 +20,7 @@ export class Container extends Unit {
         //let contentRoot = Unit.FindIn(this.root, '[data-tag="container"]');
 
         for (const x of this.root.children)
-            this.all.push(new Unit(x as HTMLElement));
+            this.all.push(new Unit(x));
 
         this.idx = this.all.findIndex(x => x.isVisible);
         if (this.idx < 0) this.idx = 0;
