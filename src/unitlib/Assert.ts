@@ -3,11 +3,11 @@ import { err } from "./global";
 
 export class Assert {
 
-    static True(condition: boolean, msg = 'Condition was false') {
+    static True(condition: boolean, msg = 'Condition was false'): asserts condition {
         if (!condition) err(msg);
     }
 
-    static False(condition: boolean, msg = 'Condition was true') {
+    static False(condition: boolean, msg = 'Condition was true'): asserts condition is false {
         if (condition) err(msg);
     }
 

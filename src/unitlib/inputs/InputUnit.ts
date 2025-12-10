@@ -1,20 +1,24 @@
 import { Action } from "../aliases";
-import { log } from "../global";
+import { Assert } from "../Assert";
 import { Unit }   from "../Unit";
 
 
 export abstract class InputUnit extends Unit {
 
-    private callback: Action;
+    private _cb: Action | undefined;
+    public set callback(action: Action) { this._cb = action };
 
-    constructor(root: HTMLElement, callback: Action) {
+    constructor(root: HTMLElement) {
         super(root);
-        this.callback = callback;
+        this.prepareInnerElements();
     }
 
     protected invokeCallback(value: any) {
-        this.callback(value);
+        Assert.True(!!this._cb, `input callback undefined in ${this.domPath} <${this.typeName}>`);
+        this._cb(value);
     }
+
+    protected abstract prepareInnerElements(): void;
 }
 
 // NOTE: maybe implement dispose() and clear listners from imputs too

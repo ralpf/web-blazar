@@ -1,7 +1,7 @@
 import { log, logi, err, unitRegistry } from "../unitlib/global";
 import { Unit } from "../unitlib/Unit";
 import { Application } from "../unitlib/Application";
-import { ViewsManager } from "../unitlib/views/ViewsManager";
+import { ViewsManager } from "./views/ViewsManager";
 
 export class BlazarApp extends Application {
 

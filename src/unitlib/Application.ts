@@ -2,7 +2,7 @@ import { err, log, logi, unitRegistry } from "./global";
 import { Action, UnitCTOR } from "./aliases";
 import { Assert } from "./Assert";
 import { Unit } from "./Unit";
-import { CompositeUnit } from "./views/CompositeUnit";
+import { CompositeUnit } from "./containers/CompositeUnit";
 
 /** Extend this class to make a web app */
 export class Application {

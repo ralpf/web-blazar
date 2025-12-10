@@ -1,4 +1,3 @@
-import { Action } from "../aliases";
 import { Assert } from "../Assert";
 import { Unit } from "../Unit";
 import { ButtonsRow } from "./ButtonsRow";
@@ -8,12 +7,9 @@ import { ButtonsRow } from "./ButtonsRow";
 /** like ButtonsRow, but contains an element that can signal which buttons was selected */
 export class ButtonsRowSig extends ButtonsRow {
 
-    constructor(root: HTMLElement, callback: Action) {
-        super(root, callback);
-    }
-
-    protected override initDomButtons(): void {
-        // find in DOM by tag
+    protected override prepareInnerElements(): void {
+        // do not call super.()
+        // search in DOM by tag
         const buttons = Array.from( Unit.FindWithTag(this.root, `buttons`).children ) as HTMLElement[];
         const signals = Array.from( Unit.FindWithTag(this.root, `signals`).children ) as HTMLElement[];
         // validate stuff
