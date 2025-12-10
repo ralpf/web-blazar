@@ -12,7 +12,7 @@ export abstract class InputUnit extends Unit {
         this.callback = callback;
     }
 
-    protected onInputEvent(value: any) {
+    protected invokeCallback(value: any) {
         this.callback(value);
     }
 }

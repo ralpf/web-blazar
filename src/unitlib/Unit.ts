@@ -1,7 +1,6 @@
 import { UnitCTOR } from "./aliases";
-import { err } from "./global";
 
-
+// DONT convert this class to err() or log() or Assert.*
 /** Most base class for all classes in unitlib framework */
 export class Unit {
 
@@ -11,7 +10,7 @@ export class Unit {
 
     public get root()       : HTMLElement { return this._root; }
     public get parentUnit() : Unit        { return this._parU; }
-    //public get domPath()    : string      { return Unit.elementDomPath(this.root); }
+    public get domPath()    : string      { return Unit.elementDomPath(this._root); }
 
 
     constructor(root: HTMLElement, parent?: Unit) {
@@ -58,11 +57,19 @@ export class Unit {
         return Array.from(all) as HTMLElement[];
     }
 
-    static FindInnerUnit(root: HTMLElement, ctor: UnitCTOR): HTMLElement {
-        const el = root.querySelector(`[data-type="${ctor.name}"]`);
-        if (!el) throw new Error(`no inner ${ctor.name} : Unit found in ${Unit.elementDomPath(root)}`);
-        return el as HTMLElement;
+    static FindWithTag(root: HTMLElement, tag: string): HTMLElement {
+        if (!tag) throw new Error(`tag can't be empty`);
+        if (!root) throw new Error(`root dom element can't be null`);
+        const x = root.querySelector(`[data-tag="${tag}"]`);
+        if (!x) throw new Error(`not found in DOM: child with tag '${tag}' in parent ${Unit.elementDomPath(root)}`);
+        return x as HTMLElement;
     }
+
+    // static FindInnerUnit(root: HTMLElement, ctor: UnitCTOR): HTMLElement {
+    //     const el = root.querySelector(`[data-type="${ctor.name}"]`);
+    //     if (!el) throw new Error(`no inner ${ctor.name} : Unit found in ${Unit.elementDomPath(root)}`);
+    //     return el as HTMLElement;
+    // }
     
     /**
      * Prints a DOM hierarchy path to the element. Also ID, if available

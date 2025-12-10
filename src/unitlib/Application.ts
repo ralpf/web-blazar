@@ -50,8 +50,9 @@ export class Application {
     private static buildAutoUnits() {
         log('auto-discovering of Unit(s)');
         for (const [ctor, unit] of this.rootMap) {
-            log(`@ ${ctor.name}`);
+            log(`+ [M]${ctor.name}`);
             this.recursiveBuildUnit(unit, unit.root, 0);
+            unit instanceof CompositeUnit && unit.finalizeClassFields();
         }
     }
 
@@ -60,6 +61,7 @@ export class Application {
             const typeName = child.dataset.type;
             const fieldName = child.dataset.field;
             const domPath = Unit.elementDomPath(child);
+            //log(`-------- debug I'm in ${Unit.elementDomPath(child)} data-type=${typeName}`);
 
             if (typeName) {   // found [data-type] attrib
                 Assert.False(!fieldName, `Dom el. ${domPath} declared type '${typeName}' but is missing 'data-field' attribute`);
@@ -68,13 +70,13 @@ export class Application {
                 log('    '.repeat(depth + 1) + `+ ${typeName}`);        // pretty log
                 const newUnit = new unitCtor(child, parentUnit);        // ~ build the *Unit class
                 this.recursiveBuildUnit(newUnit, child, depth + 1);     // recurse in it's own dom inner tree
+                newUnit instanceof CompositeUnit && newUnit.finalizeClassFields();
                 parentUnit instanceof CompositeUnit && parentUnit.attachClassField(fieldName!, newUnit);   // man, this looks good, c#-er here
             }
             else {                                                      // no [data-type], scan in inner elements
                 this.recursiveBuildUnit(parentUnit, child, depth + 1);
             }
         }
-        parentUnit instanceof CompositeUnit && parentUnit.finalizeClassFields();
     }
 
 }

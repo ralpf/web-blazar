@@ -9,6 +9,6 @@ export class Dropdown extends InputUnit {
     constructor(root: HTMLElement, callback: Action) {
         super(root, callback);
         const select = Unit.Find(this.root, 'select') as HTMLSelectElement;
-        select.addEventListener('change', () => this.onInputEvent(select.selectedIndex));
+        select.addEventListener('change', () => this.invokeCallback(select.selectedIndex));
     }
 }

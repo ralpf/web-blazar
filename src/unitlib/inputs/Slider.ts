@@ -8,7 +8,7 @@ export class Slider extends InputUnit {
     constructor(root: HTMLElement, callback: Action) {
         super(root, callback);
         const slider = Unit.Find(this.root, 'input[type="range"]') as HTMLInputElement;
-        slider.addEventListener('change', () => this.onInputEvent(slider.valueAsNumber));
+        slider.addEventListener('change', () => this.invokeCallback(slider.valueAsNumber));
     }
 
 }
