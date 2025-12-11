@@ -1,11 +1,10 @@
-import { Unit } from "../../unitlib/Unit";
-import { CompositeUnit } from "../../unitlib/containers/CompositeUnit";
 import { Container } from "../../unitlib/containers/Container";
+import { ViewUnit } from "../../unitlib/containers/ViewUnit";
 import { Dropdown } from "../../unitlib/inputs/Dropdown";
 
 
 // more like page for all lamp blazar stuff
-export class LampView extends CompositeUnit {
+export class LampView extends ViewUnit {
 
     private modes!    : Container;
     private dropdown! : Dropdown;
