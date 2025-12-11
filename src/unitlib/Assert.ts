@@ -15,6 +15,10 @@ export class Assert {
         if (i < 0 || i >= array.length) err(`Index out of range: ${array.length}[${i}]`);
     }
 
+    static Defined(obj: any): asserts obj {
+        if (!obj) err(`object was undefined or null`);
+    }
+
     static IsType(instance: any, className: Function) {
         if (instance instanceof className) return;
         const got = (instance as any)?.constructor?.name ?? typeof instance;

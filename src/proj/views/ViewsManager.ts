@@ -18,7 +18,7 @@ export class ViewsManager extends CompositeUnit {
 
     protected initializeEvents(): void {
         this.viewsSelect.callback = (idx) => this.viewsRoot.activeIdx = idx;
-        this.viewsSelect.onChange(1);
+        this.viewsSelect.onChange(2);
     }
 
 }
