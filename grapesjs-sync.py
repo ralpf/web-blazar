@@ -5,7 +5,9 @@ import zipfile
 import shutil
 import subprocess
 import tempfile
+from datetime import datetime
 from pathlib import Path
+
 
 def get_downloads_dir():
     # Try WSL Windows username
@@ -29,20 +31,25 @@ def find_latest_zip(downloads_dir):
 
 
 def extract_and_copy(zipPath, targetDir):
-    with zipfile.ZipFile(zipPath, "r") as z:
-        for name in z.namelist():
-            if name.endswith("index.html") or name.endswith("style.css"):
-                tmpPath = z.extract(name, tempfile.gettempdir())
-                filename = os.path.basename(name)
-                shutil.copy(tmpPath, targetDir / filename)
-                print(f"Updated {filename}")
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmpdir = Path(tmpdir)
+        with zipfile.ZipFile(zipPath, "r") as z:
+            for name in z.namelist():
+                if name.endswith("index.html") or name.endswith("style.css"):
+                    tmpPath = z.extract(name, tmpdir)
+                    filename = os.path.basename(name)
+                    shutil.copy(tmpPath, targetDir / filename)
+                    print(f"Updated {filename}")
 
 
 def main():
     downloads = get_downloads_dir()
     print(f'search in: {downloads}')
     latestZip = find_latest_zip(downloads)
-    print(f"[grapesJS sync]: using ZIP: {latestZip}")
+    ts = latestZip.stat().st_mtime
+    dt = datetime.fromtimestamp(ts)
+    print(f'[grapesJS sync]: using ZIP: {latestZip} [zip time]: {dt}')
     extract_and_copy(latestZip, Path.cwd())
 
 
