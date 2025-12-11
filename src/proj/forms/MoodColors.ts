@@ -1,13 +1,18 @@
 import { FormUnit } from "../../unitlib/containers/FormUnit";
+import { ButtonsRow } from "../../unitlib/inputs/ButtonsRow";
+import { Unit } from "../../unitlib/Unit";
+
 
 export class MoodColors extends FormUnit {
 
+    private buttons!: ButtonsRow;
+
     protected initializeClassFields(): void {
-        throw new Error("Method not implemented.");
+        this.buttons = this.getField<ButtonsRow>('buttons');
     }
 
     protected initializeEvents(): void {
-        throw new Error("Method not implemented.");
+        this.buttons.callback = i => console.log(`button presseed ${i + 1}`);
     }
 
 }

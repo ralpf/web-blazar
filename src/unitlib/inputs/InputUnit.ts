@@ -13,7 +13,7 @@ export abstract class InputUnit extends Unit {
         this.prepareInnerElements();
     }
 
-    public onChange(value: any) {   // override this
+    public invokeOnChange(value: any) {   // override this
         this.invokeCallback(value);
     }
 

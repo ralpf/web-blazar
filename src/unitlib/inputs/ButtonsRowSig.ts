@@ -19,14 +19,14 @@ export class ButtonsRowSig extends ButtonsRow {
         // cache signal elements
         this.signalArr = signals.map(x => ({ on: new Unit(x.children[0]), of: new Unit(x.children[1])}));
         // subscribe
-        buttons.forEach((bt, i) => (bt as HTMLElement).onclick = () => this.onChange(i) );
+        buttons.forEach((bt, i) => (bt as HTMLElement).onclick = () => this.invokeOnChange(i) );
     }
     
-    public override onChange(idx: number): void {
+    public override invokeOnChange(idx: number): void {
         this.signalArr.forEach(x => this.setSignalOnOff(false, x));
         const currSig = this.signalArr[idx];
         this.setSignalOnOff(true, currSig);
-        super.onChange(idx);
+        super.invokeOnChange(idx);
     }
 
     private setSignalOnOff(isOn: boolean, sig: Signal) {
