@@ -64,9 +64,9 @@ export class Application {
             //log(`-------- debug I'm in ${Unit.elementDomPath(child)} data-type=${typeName}`);
 
             if (typeName) {   // found [data-type] attrib
-                Assert.False(!fieldName, `Dom el. ${domPath} declared type '${typeName}' but is missing 'data-field' attribute`);
+                Assert.False(parentUnit instanceof CompositeUnit && !fieldName, `Dom el. ${domPath} declared type '${typeName}' but is missing 'data-field' attribute`);
                 const unitCtor = unitRegistry[typeName];
-                if (!unitCtor) err(`DOM el. ${domPath} attached type '${typeName}' that is part of Unit family ctors`);
+                if (!unitCtor) err(`DOM el. ${domPath} attached type '${typeName}' that is NOT part of Unit family ctors`);
                 log('    '.repeat(depth + 1) + `+ ${typeName}`);        // pretty log
                 const newUnit = new unitCtor(child, parentUnit);        // ~ build the *Unit class
                 this.recursiveBuildUnit(newUnit, child, depth + 1);     // recurse in it's own dom inner tree

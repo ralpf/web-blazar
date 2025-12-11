@@ -7,15 +7,16 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="index,follow" />
     <meta name="generator" content="GrapesJS Studio" />
-    <link rel="icon" href="/img/icon.png" />
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="./style.css" /> <!-- keep this right after the meta tags at file top -->
+  <link rel="icon" href="/img/icon.png" />
+
   </head>
 
   <body id="irj5">
     <div id="ikrm7v"></div>
     <div id="ihyfm">
       <label for="ilcvt" id="iid2j">Flicker</label>
-      <input type="checkbox" name="" value="" id="iw2ap" />
+      <input type="checkbox" name="" value="" id="iqrgg" />
     </div>
     <div data-roottype="ViewsManager" id="ID-root">
       <div id="ID-header">
@@ -52,7 +53,7 @@
           </div>
         </div>
       </div>
-      <div id="ID-main" data-type="Container" data-field="viewsRoot" >
+      <div id="ID-main" data-type="Container" data-field="viewsRoot">
         <div id="ID-view-global" class="proj-main-panel">
           <div id="iz6qe" class="proj-panel-header">Settings Page</div>
           <div id="ID-slider-global-view-bright" class="proj-inner-pannel">
@@ -60,18 +61,18 @@
             <input type="range" min="0" max="255" value="128" id="ifw7n" />
           </div>
         </div>
-        <div id="ID-view-blazar" class="proj-main-panel">
+        <div id="ID-view-blazar" data-type="LampView" class="proj-main-panel">
           <div id="iz6qe-2" class="proj-panel-header">Blazar Page</div>
           <div id="ID-slider-lamp-view-bright" class="proj-inner-pannel proj-input-slider">
             <label id="id8yd-2">Bright</label>
             <input type="range" min="0" max="255" value="128" id="ifw7n-2" />
           </div>
-          <div id="itahq7" class="proj-inner-pannel">
+          <div id="itahq7" data-type="Dropdown" data-field="dropdown" class="proj-inner-pannel">
             <label for="ID-lamp-mode-select" id="ihzs5">Lamp Mode</label>
             <select type="text" id="ID-lamp-mode-select" class="proj-input-select">
-              <option value="1" id="i7sen">Mood</option>
-              <option value="2" id="i6p4i">Slider</option>
-              <option value="3" id="itug4">Color Picker</option>
+              <option value="1" id="ige1s">Mood</option>
+              <option value="2" id="ixhgn">Slider</option>
+              <option value="3" id="iztfg">Color Picker</option>
             </select>
           </div>
           <div id="ibwmn" class="gjs-divider"></div>
@@ -88,7 +89,7 @@
                   <input type="number" min="0" max="255" value="4" id="ij3bp" />
                 </div>
                 <div id="is8a1p">
-                  <label for="idcvjp" id="ikjao">↝</label>
+                  <label for="idcvjp" id="iekpc">↝</label>
                   <input type="number" min="0" max="255" value="4" id="idcvjp" />
                 </div>
               </div>
@@ -99,13 +100,13 @@
                   <input type="number" min="0" max="255" value="4" id="ij3bp-2" />
                 </div>
                 <div id="is8a1p-2">
-                  <label for="idcvjp-2" id="iu6hzh">↝</label>
+                  <label for="idcvjp-2" id="ihkwth">↝</label>
                   <input type="number" min="0" max="255" value="4" id="idcvjp-2" />
                 </div>
               </div>
             </div>
           </div>
-          <div id="ID-lamp-mode-content">
+          <div id="ID-lamp-mode-content" data-type="Container" data-field="modes">
             <div id="iebqup" class="proj-inner-pannel">
               <div id="ivxar9" class="proj-inner-pannel-header">Mood Colors</div>
               <div id="ivce09">
@@ -118,7 +119,7 @@
               </div>
             </div>
             <div id="ivishs" class="proj-inner-pannel">
-              <div class="proj-inner-pannel-header" id="i9ucpw">Sliders HSV</div>
+              <div class="proj-inner-pannel-header" id="iyh7jd">Sliders HSV</div>
               <div id="izn36i" class="proj-input-slider">
                 <label for="i05dwi" id="ijy6ax">Hue</label>
                 <input type="range" min="0" max="255" value="128" id="i05dwi" />
@@ -150,12 +151,12 @@
             <input type="range" min="0" max="255" value="128" id="ifw7n-3" />
           </div>
           <div id="illqvb" class="proj-inner-pannel">
-            <label for="ID-deck-mode-select" id="iplvfh">Deck Mode</label>
+            <label for="ID-deck-mode-select" id="it52xa">Deck Mode</label>
             <select type="text" id="ID-deck-mode-select" class="proj-input-select">
-              <option value="1" id="iwzxqy">Mirror Lamp</option>
-              <option value="2" id="ih5499">Palette</option>
-              <option value="3" id="ir657r">Slider</option>
-              <option value="4" id="ikwq02">Color Picker</option>
+              <option value="1" id="i45z99">Mirror Lamp</option>
+              <option value="2" id="ifhnn3">Palette</option>
+              <option value="3" id="i2wwr3">Slider</option>
+              <option value="4" id="iwf17w">Color Picker</option>
             </select>
           </div>
           <div id="ID-deck-mode-content">
@@ -184,7 +185,7 @@
         </div>
       </div>
     </div>
-    <script type="module" src="/src/proj/BlazarApp.ts" id="ig2cv6"></script>
+    <script type="module" src="/src/proj/BlazarApp.ts" id="iwj9rx"></script>
   </body>
 
 </html>

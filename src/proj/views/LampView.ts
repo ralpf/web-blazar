@@ -16,7 +16,7 @@ export class LampView extends CompositeUnit {
     }
 
     protected initializeEvents(): void {
-        //throw new Error("Method not implemented.");
+        this.dropdown.callback = (idx) => this.modes.activeIdx = idx;
     }
 
 }

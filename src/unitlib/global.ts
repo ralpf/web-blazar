@@ -40,9 +40,10 @@ export function err(msg: string): never {
 
 //..............................................UNIT-CLASS-CTOR-REGISTRY
 
-const modules = import.meta.glob("./**/*.ts", { eager: true });
+const modules = import.meta.glob("../**/*.ts", { eager: true });
 for (const path in modules) {
     if (path.endsWith("Application.ts")) continue; // do not auto-scan Application.ts, it imports global.ts
+    if (path.endsWith("BlazarApp.ts"))  continue;
     const module = modules[path] as Record<string, any>;
     for (const exportName in module) {
         const exportSymbol = module[exportName];
@@ -51,3 +52,4 @@ for (const path in modules) {
                 unitRegistry[exportName] = exportSymbol;    // <className: string, classCTOR: func>
     }
 }
+//console.log("unitRegistry keys:", Object.keys(unitRegistry));
