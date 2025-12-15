@@ -4,7 +4,7 @@
     "scripts": {
         "build": "vite build",
         "startLiveServer": "vite",
-        "startDistServer": "npx serve dist"
+        "startDistServer": "vite preview"
     },
     "devDependencies": {
         "terser": "^5.44.1",

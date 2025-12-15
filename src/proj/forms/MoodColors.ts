@@ -12,7 +12,7 @@ export class MoodColors extends FormUnit {
     }
 
     protected initializeEvents(): void {
-        this.buttons.callback = i => console.log(`button presseed ${i + 1}`);
+        this.buttons.callback = i => this.propagateURL(`${i + 1}`);
     }
 
 }

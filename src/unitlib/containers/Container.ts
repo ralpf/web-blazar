@@ -36,6 +36,9 @@ export class Container extends Unit {
         this.activeUnit.show();
     }
 
+    public override propagateURL(url: string): void {
+        this.parentUnit.propagateURL(url);
+    }
 }
 
 // TODO: add next() , preve()

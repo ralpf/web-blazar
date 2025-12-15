@@ -52,4 +52,5 @@ for (const path in modules) {
                 unitRegistry[exportName] = exportSymbol;    // <className: string, classCTOR: func>
     }
 }
+unitRegistry[Unit.name] = Unit; // add this manually because the code above will skip it
 //console.log("unitRegistry keys:", Object.keys(unitRegistry));

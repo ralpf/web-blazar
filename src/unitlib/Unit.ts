@@ -1,11 +1,12 @@
 import { UnitCTOR } from "./aliases";
+import { Assert } from "./Assert";
 
 // DONT convert this class to err() or log() or Assert.*
 /** Most base class for all classes in unitlib framework */
 export class Unit {
 
     private _root : HTMLElement;        // the carrier dom element for this class
-    private _parU : Unit;               // the Unit that created this instance
+    private _parU!: Unit;               // the Unit that created this instance
 
 
     public get root()       : HTMLElement { return this._root; }
@@ -14,20 +15,30 @@ export class Unit {
     public get typeName()   : string      { return this.constructor.name; }
 
 
-    constructor(root: Element, parent?: Unit) {
+    constructor(root: Element) {
         this._root = root as HTMLElement;
-        this._parU  = parent ?? this;
     }
-
+    
     get isVisible() : boolean { return getComputedStyle(this._root).display !== 'none'; }
     set isVisible(v: boolean) { this._root.style.display = v ? 'flex' : 'none'; }
-
+    
     show(): void {
         this.isVisible = true;
     }
-
+    
     hide(): void {
         this.isVisible = false;
+    }
+    
+    /** used only for Units constructed from DOM traversal */
+    reportsTo(parent: Unit) {
+        Assert.Defined(parent);
+        this._parU  = parent;
+    }
+
+    public propagateURL(url: string) {
+        const moreUrl = `${this.typeName}/${url}`;
+        this.parentUnit.propagateURL(moreUrl);
     }
 
     //...........................................................................STATIC

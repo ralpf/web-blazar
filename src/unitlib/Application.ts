@@ -64,18 +64,28 @@ export class Application {
             //log(`-------- debug I'm in ${Unit.elementDomPath(child)} data-type=${typeName}`);
 
             if (typeName) {   // found [data-type] attrib
-                Assert.False(parentUnit instanceof CompositeUnit && !fieldName, `Dom el. ${domPath} declared type '${typeName}' but is missing 'data-field' attribute`);
+                Assert.False(!fieldName, `Dom el. ${domPath} declared type '${typeName}' but is missing 'data-field' attribute`);
                 const unitCtor = unitRegistry[typeName];
                 if (!unitCtor) err(`DOM el. ${domPath} attached type '${typeName}' that is NOT part of Unit family ctors`);
                 log('    '.repeat(depth + 1) + `+ ${typeName}`);        // pretty log
-                const newUnit = new unitCtor(child, parentUnit);        // ~ build the *Unit class
+                const newUnit = new unitCtor(child);                    // ~ build the *Unit class
+                newUnit.reportsTo(parentUnit);                          // this is used for url up-propagation
                 this.recursiveBuildUnit(newUnit, child, depth + 1);     // recurse in it's own dom inner tree
-                newUnit instanceof CompositeUnit && newUnit.onObjectConstructed();
-                parentUnit instanceof CompositeUnit && parentUnit.attachClassField(fieldName!, newUnit);   // man, this looks good, c#-er here
+                if (newUnit instanceof CompositeUnit) newUnit.onObjectConstructed();
+                if (fieldName !== 'none') this.findCompositeParent(newUnit).attachClassField(fieldName!, newUnit);
             }
             else {                                                      // no [data-type], scan in inner elements
                 this.recursiveBuildUnit(parentUnit, child, depth + 1);
             }
+        }
+    }
+
+    private static findCompositeParent(unit: Unit): CompositeUnit {
+        let curr = unit.parentUnit;
+        while (true) {
+            if (!curr) err(`DOM el. ${unit.domPath} does not have a parent that is ${CompositeUnit.name}`);
+            if (curr instanceof CompositeUnit) return curr;
+            curr = curr.parentUnit;
         }
     }
 
