@@ -5,11 +5,5 @@ export default {
             keep_classnames: true,
             keep_fnames: true
         }
-    },
-    server: {
-        watch: {
-            usePolling: true,
-            interval: 1000
-        }
     }
 };
