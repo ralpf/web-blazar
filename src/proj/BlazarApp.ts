@@ -13,7 +13,7 @@ export class BlazarApp extends Application {
         BlazarApp.initialize(ViewsManager);
         BlazarApp.bindKeyboard();
         // construcotrs builds all and links events
-        this.mainPager = Application.getRoot(ViewsManager);
+        this.mainPager = Application.getSingleton(ViewsManager);
 
     }
 
@@ -32,7 +32,7 @@ export class BlazarApp extends Application {
 
     static bindKeyboard() {
         Application.bindKeyAction(key => {
-            const x = Application.getRoot(ViewsManager);
+            const x = Application.getSingleton(ViewsManager);
             if (key === 't') x.isVisible = !x.isVisible;
         });
     }

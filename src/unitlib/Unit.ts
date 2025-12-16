@@ -22,16 +22,16 @@ export class Unit {
     get isVisible() : boolean { return getComputedStyle(this._root).display !== 'none'; }
     set isVisible(v: boolean) { this._root.style.display = v ? 'flex' : 'none'; }
     
-    show(): void {
+    public show(): void {
         this.isVisible = true;
     }
     
-    hide(): void {
+    public hide(): void {
         this.isVisible = false;
     }
     
     /** used only for Units constructed from DOM traversal */
-    reportsTo(parent: Unit) {
+    public reportsTo(parent: Unit) {
         Assert.Defined(parent);
         this._parU  = parent;
     }
@@ -39,6 +39,11 @@ export class Unit {
     public propagateURL(url: string) {
         const moreUrl = `${this.typeName}/${url}`;
         this.parentUnit.propagateURL(moreUrl);
+    }
+
+    public dispose() {
+        this.root.remove();
+        this._parU = null as any;
     }
 
     //...........................................................................STATIC

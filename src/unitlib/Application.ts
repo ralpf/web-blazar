@@ -10,14 +10,14 @@ export class Application {
     private static rootMap = new Map<Function, Unit>();
 
     /** get a root *Unit type from DOM */
-    static getRoot<T extends Unit>(classCTOR: UnitCTOR): T {
+    public static getSingleton<T extends Unit>(classCTOR: UnitCTOR): T {
               const rootInstance = Application.rootMap.get(classCTOR) as T;
               if (!rootInstance) throw new Error(`Controller of type '${classCTOR.name}' not in registry`);
               return rootInstance;
     }
 
     /** bind a generic keyboard to the app */
-    static bindKeyAction(action: Action) {
+    public static bindKeyAction(action: Action) {
         window.addEventListener('keydown', e => {
             if (e.repeat) return;  // ignore key hold
             action(e.key);
@@ -25,13 +25,32 @@ export class Application {
     }
 
     /** pass a list of constructors, they will be searched and resolved from DOM  */
-    static initialize(...ctors: UnitCTOR[]) {
+    public static initialize(...ctors: UnitCTOR[]) {
         Assert.True(this.rootMap.size === 0);   // only one call per session
         Assert.IsArray(ctors);
         logi('initializing ...');
         this.buildRootUnits(ctors);
         this.buildAutoUnits();
         logi('... all done');
+    }
+
+    public static cloneUnit<T extends Unit>(prototype: T, parentUnit: Unit, parentElement: Element): T {
+        Assert.Defined(prototype);
+        // we have 2 parents: one is dom parent, other is Unit parent, which may be not the same object
+        const newElement = prototype.root.cloneNode(true) as HTMLElement;
+        parentElement.appendChild(newElement);
+        // create and the unit instance on top object
+        const ctor = prototype.constructor as UnitCTOR<T>;
+        const newUnit = new ctor(newElement) as T;
+        newUnit.reportsTo(parentUnit);
+        this.recursiveBuildUnit(newUnit, newUnit.root, 0);
+        if (newUnit instanceof CompositeUnit) newUnit.onObjectConstructed();
+        return newUnit;
+    }
+
+    public static removeUnit(unit: Unit) {
+        Assert.Defined(unit);
+        unit.dispose();
     }
 
     private static buildRootUnits(ctors: UnitCTOR[]) {

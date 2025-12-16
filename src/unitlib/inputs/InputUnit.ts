@@ -5,8 +5,9 @@ import { Unit }   from "../Unit";
 
 export abstract class InputUnit extends Unit {
 
-    private _cb: Action | undefined;
+    private _cb?: Action;
     public set callback(action: Action) { this._cb = action };
+
 
     constructor(root: HTMLElement) {
         super(root);
@@ -23,6 +24,7 @@ export abstract class InputUnit extends Unit {
     }
 
     protected abstract prepareInnerElements(): void;
+
 }
 
 // NOTE: maybe implement dispose() and clear listners from imputs too
