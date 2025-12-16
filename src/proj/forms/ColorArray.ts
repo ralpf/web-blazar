@@ -33,6 +33,8 @@ export class ColorArray extends FormUnit {
         // insert into the array and fix the 'delete' button
         this.all.splice(idx + 1, 0, item);
         this.all[0].setDeleteButtonVisible(this.count > 1);
+        // assign random color
+        item.setRandomColor();
     }
     
     private onAddItemClicked(item: ColorItem) {
