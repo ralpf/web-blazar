@@ -3,6 +3,7 @@ import { CompositeUnit } from "../../unitlib/containers/CompositeUnit";
 import { Container } from "../../unitlib/containers/Container";
 import { Dropdown } from "../../unitlib/inputs/Dropdown";
 import { Slider } from "../../unitlib/inputs/Slider";
+import { AnimationFX } from "../anim/AnimationFX";
 
 
 export class DeckView extends CompositeUnit {
@@ -21,6 +22,8 @@ export class DeckView extends CompositeUnit {
     protected initializeEvents(): void {
         this.luma.callback = (value: number) => this.propagateURL(`my val is ${value}`);
         this.modeSelect.callback = (idx: number) => this.modeContent.activeIdx = idx;
+
+        AnimationFX.sliderLuma(this.luma, 0.33);
     }
 
 }
