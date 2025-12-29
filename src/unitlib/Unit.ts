@@ -1,5 +1,5 @@
-import { UnitCTOR } from "./aliases";
 import { Assert } from "./Assert";
+import { RequestDispatcher } from "./RequestDispatcher";
 
 // DONT convert this class to err() or log() or Assert.*
 /** Most base class for all classes in unitlib framework */
@@ -38,7 +38,8 @@ export class Unit {
 
     public propagateURL(url: string) {
         const moreUrl = `${this.typeName}/${url}`;
-        this.parentUnit.propagateURL(moreUrl);
+        if (this.parentUnit) this.parentUnit.propagateURL(moreUrl);
+        else RequestDispatcher.process(moreUrl);
     }
 
     public dispose() {

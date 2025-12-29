@@ -21,8 +21,4 @@ export class ViewsManager extends CompositeUnit {
         this.viewsSelect.invokeOnChange(1);
     }
 
-    public override propagateURL(url: string): void {
-        console.log(`<~~~ ${this.typeName}/${url}`);
-    }
-
 }
