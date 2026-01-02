@@ -1,7 +1,6 @@
 import { ViewsManager } from "./views/ViewsManager";
 import { Application } from "unitlib/static/Application";
-import { log } from "unitlib/core/global";
-import { Time } from "unitlib/core/Time";
+
 
 export class BlazarApp extends Application
  {
