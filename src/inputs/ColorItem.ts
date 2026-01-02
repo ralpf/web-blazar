@@ -1,6 +1,6 @@
-import { Action } from "../../unitlib/aliases";
-import { Unit } from "../../unitlib/Unit";
-import { InputUnit } from "../../unitlib/inputs/InputUnit";
+import { Action } from "unitlib/aliases";
+import { InputUnit } from "unitlib/inputs/InputUnit";
+import { Unit } from "unitlib/Unit";
 import { Color } from "../utils/Color";
 
 

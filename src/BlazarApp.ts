@@ -1,11 +1,10 @@
-import { log, logi, err, unitRegistry } from "../unitlib/global";
-import { Unit } from "../unitlib/Unit";
-import { Application } from "../unitlib/Application";
+import { Application } from "unitlib/Application";
 import { ViewsManager } from "./views/ViewsManager";
-import { Time } from "../unitlib/Time";
-import { Coroutine } from "../unitlib/Coroutine";
+import { log } from "unitlib/global";
+import { Time } from "unitlib/Time";
 
-export class BlazarApp extends Application {
+export class BlazarApp extends Application
+ {
 
     private static mainPager: ViewsManager;
 

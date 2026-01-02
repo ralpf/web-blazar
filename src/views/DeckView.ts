@@ -1,8 +1,7 @@
-import { Unit } from "../../unitlib/Unit";
-import { CompositeUnit } from "../../unitlib/containers/CompositeUnit";
-import { Container } from "../../unitlib/containers/Container";
-import { Dropdown } from "../../unitlib/inputs/Dropdown";
-import { Slider } from "../../unitlib/inputs/Slider";
+import { CompositeUnit } from "unitlib/containers/CompositeUnit";
+import { Container } from "unitlib/containers/Container";
+import { Dropdown } from "unitlib/inputs/Dropdown";
+import { Slider } from "unitlib/inputs/Slider";
 import { AnimationFX } from "../anim/AnimationFX";
 
 

@@ -1,7 +1,7 @@
-import { Container } from "../../unitlib/containers/Container";
-import { ViewUnit } from "../../unitlib/containers/ViewUnit";
-import { Dropdown } from "../../unitlib/inputs/Dropdown";
-import { Slider } from "../../unitlib/inputs/Slider";
+import { Container } from "unitlib/containers/Container";
+import { ViewUnit } from "unitlib/containers/ViewUnit";
+import { Dropdown } from "unitlib/inputs/Dropdown";
+import { Slider } from "unitlib/inputs/Slider";
 
 
 // more like page for all lamp blazar stuff

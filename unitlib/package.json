@@ -1,0 +1,10 @@
+{
+  "name": "unitlib",
+  "version": "0.0.0",
+  "type": "module",
+  "exports": {
+    "./*": "./*.ts",
+    "./containers/*": "./containers/*.ts",
+    "./inputs/*": "./inputs/*.ts"
+  }
+}

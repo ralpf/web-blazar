@@ -1,6 +1,7 @@
-import { Application } from "../../unitlib/Application";
-import { FormUnit } from "../../unitlib/containers/FormUnit";
+import { FormUnit } from "unitlib/containers/FormUnit";
 import { ColorItem } from "../inputs/ColorItem";
+import { Application } from "unitlib/Application";
+
 
 export class ColorArray extends FormUnit {
 

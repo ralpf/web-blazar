@@ -1,8 +1,7 @@
-import { CompositeUnit } from "../../unitlib/containers/CompositeUnit";
-import { Container } from "../../unitlib/containers/Container";
-import { ButtonsRowSig } from "../../unitlib/inputs/ButtonsRowSig";
-import { InputUnit } from "../../unitlib/inputs/InputUnit";
-
+import { CompositeUnit } from "unitlib/containers/CompositeUnit";
+import { Container } from "unitlib/containers/Container";
+import { ButtonsRowSig } from "unitlib/inputs/ButtonsRowSig";
+import { InputUnit } from "unitlib/inputs/InputUnit";
 
 
 export class ViewsManager extends CompositeUnit {

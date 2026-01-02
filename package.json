@@ -1,4 +1,7 @@
 {
+    "private": true,
+    "workspaces": ["unitlib", "app"],
+
     "note": "This file is used only for npm tools and local development (TypeScript, minifier, etc.).",
     "note2": "one can define custom scripts here, even bash or python commands, and run them with `npm run <name>`.",
     "scripts": {

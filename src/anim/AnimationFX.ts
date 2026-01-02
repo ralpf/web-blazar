@@ -1,6 +1,6 @@
-import { Assert } from "../../unitlib/Assert";
-import { Coroutine } from "../../unitlib/Coroutine";
-import { Unit } from "../../unitlib/Unit";
+import { Assert } from "unitlib/Assert";
+import { Coroutine } from "unitlib/Coroutine";
+import { Unit } from "unitlib/Unit";
 
 
 export class AnimationFX {

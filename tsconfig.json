@@ -3,7 +3,7 @@
     "target": "es2020",
     "module": "ESNext",
     "moduleResolution": "bundler",
-    "rootDir": "src",
+    "rootDir": ".",
     "outDir": "dist",
     "strict": true,
     "allowJs": false,
@@ -12,5 +12,5 @@
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true
   },
-  "include": ["src"]
+  "include": ["src", "unitlib"],
 }
