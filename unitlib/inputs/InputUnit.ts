@@ -1,6 +1,6 @@
 import { Action } from "../aliases";
-import { Assert } from "../Assert";
-import { Unit }   from "../Unit";
+import { Assert } from "../core/Assert";
+import { Unit }   from "../core/Unit";
 
 
 export abstract class InputUnit extends Unit {

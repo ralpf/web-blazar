@@ -1,4 +1,4 @@
-import { log } from "./global";
+import { log } from "../core/global";
 
 
 export class RequestDispatcher {

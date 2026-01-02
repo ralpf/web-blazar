@@ -1,8 +1,10 @@
-import { err, log, logi, unitRegistry } from "./global";
-import { Action, UnitCTOR } from "./aliases";
-import { Assert } from "./Assert";
-import { Unit } from "./Unit";
-import { CompositeUnit } from "./containers/CompositeUnit";
+import { err, log, logi, unitRegistry } from "../core/global";
+import { buildUnitRegistry } from "../core/global";
+import { Action, UnitCTOR } from "../core/aliases";
+import { Assert } from "../core/Assert";
+import { Unit } from "../core/Unit";
+import { CompositeUnit } from "../containers/CompositeUnit";
+
 
 /** Extend this class to make a web app */
 export class Application {
@@ -25,7 +27,9 @@ export class Application {
     }
 
     /** pass a list of constructors, they will be searched and resolved from DOM  */
-    public static initialize(...ctors: UnitCTOR[]) {
+    public static async initialize(...ctors: UnitCTOR[]) {
+        await buildUnitRegistry();
+        logi(`classes in global registry:\n[${Object.keys(unitRegistry)}]`);
         Assert.True(this.rootMap.size === 0);   // only one call per session
         Assert.IsArray(ctors);
         logi('initializing ...');

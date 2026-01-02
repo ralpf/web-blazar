@@ -2,7 +2,7 @@ import { FormUnit } from "../../unitlib/containers/FormUnit";
 import { log } from "../../unitlib/global";
 import { Checkbox } from "../../unitlib/inputs/Checkbox";
 import { Numeral } from "../../unitlib/inputs/Numeral";
-import { Unit } from "../../unitlib/Unit";
+import { Unit } from "unitlib/core/Unit";
 
 
 

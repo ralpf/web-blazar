@@ -1,5 +1,5 @@
-import { FormUnit } from "../../unitlib/containers/FormUnit";
-import { Slider } from "../../unitlib/inputs/Slider";
+import { FormUnit } from "unitlib/containers/FormUnit";
+import { Slider } from "unitlib/inputs/Slider";
 
 
 export class SlidersHSV extends FormUnit {

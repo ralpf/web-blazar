@@ -1,6 +1,6 @@
-import { Assert } from "../Assert";
-import { log } from "../global";
-import { Unit } from "../Unit";
+import { Assert } from "../core/Assert";
+import { log } from "../core/global";
+import { Unit } from "../core/Unit";
 
 
 export abstract class CompositeUnit extends Unit {

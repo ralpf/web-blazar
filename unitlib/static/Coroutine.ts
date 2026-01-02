@@ -1,5 +1,5 @@
-import { Assert } from "./Assert";
-import { Time } from "./Time";
+import { Assert } from "../core/Assert";
+import { Time } from "../core/Time";
 
 export class Coroutine {
 

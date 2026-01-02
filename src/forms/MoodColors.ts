@@ -1,6 +1,5 @@
-import { FormUnit } from "../../unitlib/containers/FormUnit";
-import { ButtonsRow } from "../../unitlib/inputs/ButtonsRow";
-import { Unit } from "../../unitlib/Unit";
+import { FormUnit } from "unitlib/containers/FormUnit";
+import { ButtonsRow } from "unitlib/inputs/ButtonsRow";
 
 
 export class MoodColors extends FormUnit {
@@ -12,7 +11,7 @@ export class MoodColors extends FormUnit {
     }
 
     protected initializeEvents(): void {
-        this.buttons.callback = i => this.propagateURL(`${i + 1}`);
+        this.buttons.callback = (i:number) => this.propagateURL(`${i + 1}`);
     }
 
 }

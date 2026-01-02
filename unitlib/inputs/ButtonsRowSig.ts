@@ -1,5 +1,5 @@
-import { Assert } from "../Assert";
-import { Unit } from "../Unit";
+import { Assert } from "../core/Assert";
+import { Unit } from "../core/Unit";
 import { ButtonsRow } from "./ButtonsRow";
 
 

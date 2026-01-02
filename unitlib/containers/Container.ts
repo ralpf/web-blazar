@@ -1,5 +1,5 @@
-import { Unit } from "../Unit";
-import { Assert } from "../Assert";
+import { Unit } from "../core/Unit";
+import { Assert } from "../core/Assert";
 
 
 /** A container for content, to show one children at a time */

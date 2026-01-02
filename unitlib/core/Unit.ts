@@ -1,5 +1,5 @@
 import { Assert } from "./Assert";
-import { RequestDispatcher } from "./RequestDispatcher";
+import { RequestDispatcher } from "../static/RequestDispatcher";
 
 // DONT convert this class to err() or log() or Assert.*
 /** Most base class for all classes in unitlib framework */

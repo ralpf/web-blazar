@@ -1,6 +1,7 @@
 import { UnitCTOR } from "./aliases";
 import { Unit } from "./Unit";
 
+
 //..................................................................VARS
 
 export const unitRegistry: Record<string, UnitCTOR> = {}    // central ctors register
@@ -40,17 +41,20 @@ export function err(msg: string): never {
 
 //..............................................UNIT-CLASS-CTOR-REGISTRY
 
-const modules = import.meta.glob("../**/*.ts", { eager: true });
-for (const path in modules) {
-    if (path.endsWith("Application.ts")) continue; // do not auto-scan Application.ts, it imports global.ts
-    if (path.endsWith("BlazarApp.ts"))  continue;
-    const module = modules[path] as Record<string, any>;
-    for (const exportName in module) {
-        const exportSymbol = module[exportName];
-        if (typeof exportSymbol === 'function')
-            if (exportSymbol.prototype instanceof Unit)
-                unitRegistry[exportName] = exportSymbol;    // <className: string, classCTOR: func>
-    }
+export async function buildUnitRegistry() {
+    const modules = import.meta.glob([
+        "../**/*.ts",       // the unitlib folder
+        "../../**/*.ts"     // the project folder
+    ]);
+    const loaders = Object.values(modules).map(load =>
+        load().then((mod: any) => {
+            for (const key in mod) {
+                const symbol = mod[key];
+                if (typeof symbol === "function")
+                    unitRegistry[symbol.name] = symbol;
+            }
+        })
+    );
+    await Promise.all(loaders);
+    unitRegistry[Unit.name] = Unit;  // this class has to be add separatelly
 }
-unitRegistry[Unit.name] = Unit; // add this manually because the code above will skip it
-//console.log("unitRegistry keys:", Object.keys(unitRegistry));
