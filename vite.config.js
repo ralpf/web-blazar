@@ -1,4 +1,5 @@
 export default {
+    base: "/web-blazar/",
     build: {
         minify: "terser",
         terserOptions: {
