@@ -7,7 +7,9 @@
     "scripts": {
         "build": "vite build",
         "startLiveServer": "vite",
-        "startDistServer": "vite preview"
+        "startDistServer": "vite preview",
+        "publish": "git subtree push --prefix dist origin release",
+        "buildPublish": "npm run build && npm run publish"
     },
     "devDependencies": {
         "terser": "^5.44.1",
