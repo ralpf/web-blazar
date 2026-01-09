@@ -1,8 +1,0 @@
-# used to store local index.html / styles.css for fast testing/develop
-liveserver/
-# builded stuff
-dist/
-# node js ts stuff
-node_modules/
-# cache files files
-tsconfig.tsbuildinfo
