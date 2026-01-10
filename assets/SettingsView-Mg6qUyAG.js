@@ -1,1 +1,0 @@
-import{C as e}from"./index-CT3mzoxI.js";class SettingsView extends e{initializeClassFields(){throw new Error("Method not implemented.")}initializeEvents(){throw new Error("Method not implemented.")}}export{SettingsView};
