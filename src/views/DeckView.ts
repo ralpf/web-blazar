@@ -19,9 +19,9 @@ export class DeckView extends CompositeUnit {
     }
 
     protected initializeEvents(): void {
-        this.luma.callback = (value: number) => this.propagateURL(`my val is ${value}`);
-        this.modeSelect.callback = (idx: number) => this.modeContent.activeIdx = idx;
-
+        this.luma.callback       = (n: number) => this.propagateURL(`luma=${n}`);
+        this.modeSelect.callback = (n: number) => this.modeContent.activeIdx = n;
+        // just a coroutine example, keep it
         AnimationFX.sliderLuma(this.luma, 0.33);
     }
 

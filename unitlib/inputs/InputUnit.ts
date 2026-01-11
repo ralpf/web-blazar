@@ -1,4 +1,4 @@
-import { Action } from "../aliases";
+import { Action } from "../core/aliases";
 import { Assert } from "../core/Assert";
 import { Unit }   from "../core/Unit";
 
@@ -17,6 +17,10 @@ export abstract class InputUnit extends Unit {
     public invokeOnChange(value: any) {   // override this
         this.invokeCallback(value);
     }
+
+    // public override propagateURL(url: string): void {
+        
+    // }
 
     protected invokeCallback(value: any) {
         Assert.True(!!this._cb, `input callback undefined in ${this.domPath} <${this.typeName}>`);
