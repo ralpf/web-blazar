@@ -1,1 +1,0 @@
-import{U as t,a as e}from"./index-DZf0d4uy.js";class InputUnit extends t{set callback(t){this._cb=t}constructor(t){super(t),this.prepareInnerElements()}invokeOnChange(t){this.invokeCallback(t)}invokeCallback(t){e.True(!!this._cb,`input callback undefined in ${this.domPath} <${this.typeName}>`),this._cb(t)}}export{InputUnit};

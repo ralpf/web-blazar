@@ -1,1 +1,0 @@
-import{U as e}from"./index-DZf0d4uy.js";import{InputUnit as t}from"./InputUnit-DSOvTJso.js";class Checkbox extends t{prepareInnerElements(){const t=e.Find(this.root,'input[type="checkbox"]');t.addEventListener("change",()=>this.invokeCallback(t.checked))}}export{Checkbox};
