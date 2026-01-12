@@ -1,1 +1,0 @@
-import{FormUnit as o}from"./FormUnit-CcWJ4q4w.js";import"./index-DZf0d4uy.js";class MoodColors extends o{constructor(){super(...arguments),this.colors=["#ff0000","#ff00ff","#ffba18","#41ff37","#00fffb","#c9dffb"]}initializeClassFields(){this.buttons=this.getField("buttons")}initializeEvents(){this.buttons.callback=o=>this.propagateURL(`col=${this.colors[o]}`)}}export{MoodColors};
