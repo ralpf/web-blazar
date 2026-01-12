@@ -18,8 +18,13 @@ export class LampView extends ViewUnit {
     }
 
     protected initializeEvents(): void {
-        this.dropdown.callback = (idx) => this.modes.activeIdx = idx;
-        this.luma.callback = (n: number) => this.propagateURL(`luma=${n}`);
+        this.dropdown.callback = (n: number) => this.onModeChanged(n);
+        this.luma.callback     = (n: number) => this.propagateURL(`luma=${n}`);
+    }
+
+    private onModeChanged(n: number) {
+        this.modes.activeIdx = n;
+        this.propagateURL(`mode=${n}`);
     }
 
 }
