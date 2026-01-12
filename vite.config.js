@@ -1,5 +1,5 @@
 export default {
-    base: "/web-blazar/",
+    base: "https://ralpf.github.io/web-blazar/",
     build: {
         minify: "terser",
         terserOptions: {
