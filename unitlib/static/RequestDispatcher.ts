@@ -37,8 +37,8 @@ export class RequestDispatcher {
         const lastToken = tokens[tokens.length - 1];
         let finalUrl = url;
         if (lastToken && lastToken.includes('=')) {
-            finalUrl = tokens.slice(0, -1).join('/');
-            finalUrl = finalUrl.length > 0 ? `/${finalUrl}?${lastToken}` : `/?${lastToken}`;
+            const path = tokens.slice(0, -1).filter((token) => token.length > 0).join('/');
+            finalUrl = path.length > 0 ? `/${path}?${lastToken}` : `/?${lastToken}`;
         }
         return finalUrl;
     }
