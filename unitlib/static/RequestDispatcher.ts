@@ -18,27 +18,35 @@ export class RequestDispatcher {
 
 
     public static process(url: string) {
-        const espUrl  = this.transformUrl(url);
-        const fullUrl = `${this.baseUrl}${espUrl}`;
-        this.GET(fullUrl);
+        const remapedUrl  = this.transformUrl(url);
+        const querryedUrl = this.formatQuerrySection(remapedUrl);
+        const escapedUrl  = this.escapeUrl(querryedUrl);
+        const finalUrl    = `${this.baseUrl}${escapedUrl}`;
+        this.GET(finalUrl);
     }
 
     private static transformUrl(url: string): string {
         // change url parts like ViewManager -> api
-        const tokens = url.split("/").filter((token) => token.length > 0);
+        const tokens = url.split('/').filter((token) => token.length > 0);
         const transformedTokens = tokens.map((token) => this.xfTable[token] ?? token);
-        // If the last token is a key=value pair, treat it as a query param.
-        const lastToken = transformedTokens[transformedTokens.length - 1];
-        let finalUrl = '';
-        if (lastToken && lastToken.includes("=")) {
-            finalUrl = transformedTokens.slice(0, -1).join("/");
+        return `/${transformedTokens.join('/')}`;
+    }
+
+    private static formatQuerrySection(url: string): string {
+        const tokens = url.split('/');
+        const lastToken = tokens[tokens.length - 1];
+        let finalUrl = url;
+        if (lastToken && lastToken.includes('=')) {
+            finalUrl = tokens.slice(0, -1).join('/');
             finalUrl = finalUrl.length > 0 ? `/${finalUrl}?${lastToken}` : `/?${lastToken}`;
-        } else {
-            finalUrl = `/${transformedTokens.join("/")}`;
         }
-        // url ready, ex esp/lamp?lume=55
         return finalUrl;
     }
+
+    private static escapeUrl(url: string): string {
+        return url.includes('#') ? url.split('#').join('%23') : url;
+    }
+
 
     private static async GET(url: string) {
         log(`GET -> ${url}`);

@@ -18,10 +18,6 @@ export abstract class InputUnit extends Unit {
         this.invokeCallback(value);
     }
 
-    // public override propagateURL(url: string): void {
-        
-    // }
-
     protected invokeCallback(value: any) {
         Assert.True(!!this._cb, `input callback undefined in ${this.domPath} <${this.typeName}>`);
         this._cb(value);
