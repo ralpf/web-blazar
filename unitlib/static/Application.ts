@@ -38,11 +38,11 @@ export class Application {
         logi('... all done');
     }
 
-    public static cloneUnit<T extends Unit>(prototype: T, parentUnit: Unit, parentElement: Element): T {
+    public static cloneUnit<T extends Unit>(prototype: T, parentUnit: Unit, rootDomElement: Element): T {
         Assert.Defined(prototype);
         // we have 2 parents: one is dom parent, other is Unit parent, which may be not the same object
         const newElement = prototype.root.cloneNode(true) as HTMLElement;
-        parentElement.appendChild(newElement);
+        rootDomElement.appendChild(newElement);
         // create and the unit instance on top object
         const ctor = prototype.constructor as UnitCTOR<T>;
         const newUnit = new ctor(newElement) as T;

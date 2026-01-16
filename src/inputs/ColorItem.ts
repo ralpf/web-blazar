@@ -11,6 +11,7 @@ export class ColorItem extends InputUnit {
     private buttonAdd!      : HTMLButtonElement;
     private colorPicker!    : HTMLInputElement;
     private buttonDelUnit!  : Unit;
+    private buttonAddUnit!  : Unit;
 
     public onAddItem!       : Action;
     public onDelItem!       : Action;
@@ -35,8 +36,16 @@ export class ColorItem extends InputUnit {
         this.setColor(Color.random());
     }
 
-    public setDeleteButtonVisible(isVisible: boolean) {
+    public setDelButtonVisible(isVisible: boolean) {
         this.buttonDelUnit.isVisible = isVisible;
+    }
+
+    public setAddButtonVisible(isVisible: boolean) {
+        this.buttonAddUnit.isVisible = isVisible;
+    }
+
+    public getColorString(): string {
+        return this.colorPicker.value;
     }
 
     protected prepareInnerElements(): void {
@@ -45,6 +54,7 @@ export class ColorItem extends InputUnit {
         this.buttonDel     = Unit.FindWithTag(this.root, 'x') as HTMLButtonElement;
         this.buttonAdd     = Unit.FindWithTag(this.root, '+') as HTMLButtonElement;
         this.buttonDelUnit = new Unit(this.buttonDel);
+        this.buttonAddUnit = new Unit(this.buttonAdd);
         // subscribe to events
         this.colorPicker.addEventListener('input', () => this.setColor(this.colorPicker.value));
         this.buttonAdd.onclick = () => this.onAddItem!(this);

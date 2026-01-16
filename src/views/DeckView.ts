@@ -7,22 +7,27 @@ import { AnimationFX } from "../anim/AnimationFX";
 
 export class DeckView extends CompositeUnit {
 
-    private luma!: Slider;
-    private modeSelect!: Dropdown;
-    private modeContent!: Container;
+    private luma!     : Slider;
+    private dropdown! : Dropdown;
+    private content!  : Container;
 
 
     protected initializeClassFields(): void {
         this.luma = this.getField('luma');
-        this.modeSelect = this.getField('modeSelect');
-        this.modeContent = this.getField('modeContent');
+        this.dropdown = this.getField('dropdown');
+        this.content = this.getField('content');
     }
 
     protected initializeEvents(): void {
-        this.luma.callback       = (n: number) => this.propagateURL(`luma=${n}`);
-        this.modeSelect.callback = (n: number) => this.modeContent.activeIdx = n;
+        this.luma.callback     = (n: number) => this.propagateURL(`luma=${n}`);
+        this.dropdown.callback = (n: number) => this.onModeChanged(n);
         // just a coroutine example, keep it
         AnimationFX.sliderLuma(this.luma, 0.33);
+    }
+
+        private onModeChanged(n: number) {
+        this.content.activeIdx = n;
+        this.propagateURL(`mode=${n}`);
     }
 
 }

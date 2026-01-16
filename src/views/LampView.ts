@@ -7,23 +7,23 @@ import { Slider } from "unitlib/inputs/Slider";
 // more like page for all lamp blazar stuff
 export class LampView extends ViewUnit {
 
-    private modes!    : Container;
+    private content!  : Container;
     private dropdown! : Dropdown;
     private luma!     : Slider;
 
     public override initializeClassFields(): void {
         this.dropdown = this.getField('dropdown');
         this.luma     = this.getField('luma');
-        this.modes    = this.getField('modes');
+        this.content  = this.getField('content');
     }
 
     protected initializeEvents(): void {
-        this.dropdown.callback = (n: number) => this.onModeChanged(n);
         this.luma.callback     = (n: number) => this.propagateURL(`luma=${n}`);
+        this.dropdown.callback = (n: number) => this.onModeChanged(n);
     }
 
     private onModeChanged(n: number) {
-        this.modes.activeIdx = n;
+        this.content.activeIdx = n;
         this.propagateURL(`mode=${n}`);
     }
 
