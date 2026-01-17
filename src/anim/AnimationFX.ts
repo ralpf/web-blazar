@@ -52,7 +52,6 @@ export class AnimationFX {
                 el.style.transform = `${base} translate(${x}px, ${y}px) rotate(${r}deg)`;
                 ampl *= decay;
                 t += dt;
-                console.log("anim tick", ampl);
                 yield 0;
             }
         }

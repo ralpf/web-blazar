@@ -27,8 +27,8 @@ export class ViewsManager extends CompositeUnit {
         this.registerBlazarClick();
         this.registerStarClick();
     }
-    
-    
+
+
 private registerBlazarClick() {
         const clickTimeWindowMs = 1000;
         const span = document.getElementById('ID-span-blazar');
@@ -37,7 +37,6 @@ private registerBlazarClick() {
         let clickTimer: any = null;
         span.addEventListener('click', () => {
             clickCount++;
-            console.log(`hit word click count: ${clickCount}`);
             if (clickTimer === null) {
                 clickTimer = setTimeout(() => {
                     clickCount = 0;
@@ -49,7 +48,6 @@ private registerBlazarClick() {
                 clickTimer = null;
                 clickCount = 0;
                 // action on tripple click
-                console.log(`hit word -> tripple click!!`);
                 this.viewsRoot.activeIdx = 3;   // dev hidden page
             }
         });
@@ -58,19 +56,10 @@ private registerBlazarClick() {
     private registerStarClick() {
         const span = document.getElementById('ID-span-star');
         Assert.Defined(span);
-        span.addEventListener('click', () => this.animateStar(span));
+        span.addEventListener('click', () => {
+            if (this.isStarAnimated) return;
+            AnimationFX.startHeader(span,() => this.isStarAnimated = true, () => this.isStarAnimated = false);
+        });
     }
-
-    private animateStar(span: HTMLElement) {
-        console.log(`hit start is animated: ${this.isStarAnimated}`);
-        if (this.isStarAnimated) return;
-
-        AnimationFX.startHeader(
-            span, 
-            () => this.isStarAnimated = true,
-            () => this.isStarAnimated = false
-        );
-    }
-
 
 }
