@@ -1,0 +1,1 @@
+import{C as i}from"./index-D7H7Adx5.js";class SettingsView extends i{initializeClassFields(){this.luma=this.getField("luma")}initializeEvents(){this.luma.callback=i=>this.propagateURL(`luma=${i}`)}}export{SettingsView};
