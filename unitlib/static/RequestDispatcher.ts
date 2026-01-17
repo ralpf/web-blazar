@@ -50,9 +50,12 @@ export class RequestDispatcher {
 
     private static async GET(url: string) {
         log(`GET -> ${url}`);
-        if (url.includes("127.0.0.1")) { log("Skipping request to 127.0.0.1"); return; }
+        if (url.includes('127.0.0.1') || url.includes('localhost')) {
+            log('Skipping request to localhost');
+            return;
+        }
 
-        const req = await fetch(url, { method: "GET" });
+        const req = await fetch(url, { method: 'GET' });
         if (!req.ok) err(`ESP GET failed: ${req.status}`);
         const data = await req.text(); // or res.json()
         log(`RESP <- ${data}`);
