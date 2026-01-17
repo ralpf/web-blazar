@@ -5,7 +5,7 @@
     "note": "This file is used only for npm tools and local development (TypeScript, minifier, etc.).",
     "note2": "one can define custom scripts here, even bash or python commands, and run them with `npm run <name>`.",
     "scripts": {
-        "build": "vite build",
+        "build": "vite build && echo \"\ndon't forget to reupload frontend (index_*.html)\"",
         "startLiveServer": "vite",
         "startDistServer": "vite preview",
         "publish": "git subtree push --prefix dist origin release",

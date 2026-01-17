@@ -1,0 +1,1 @@
+import{U as e}from"./index-D7H7Adx5.js";import{InputUnit as n}from"./InputUnit-CbSygonb.js";class Slider extends n{prepareInnerElements(){const n=e.Find(this.root,'input[type="range"]');n.addEventListener("change",()=>this.invokeCallback(n.valueAsNumber))}}export{Slider};
