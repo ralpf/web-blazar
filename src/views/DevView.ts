@@ -36,6 +36,8 @@ export class DevView extends CompositeUnit {
             this.logLines.appendChild(line);
             this.logLines.scrollTop = this.logLines.scrollHeight;
         };
+        // close websoket on page reload
+        window.addEventListener("beforeunload", () => this.ws?.close() );
     }
 
 }
