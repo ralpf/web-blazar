@@ -1,1 +1,0 @@
-import{U as t}from"./index-Cn9_7npv.js";import{InputUnit as n}from"./InputUnit-by0mlG8O.js";class ButtonsRow extends n{prepareInnerElements(){t.FindAll(this.root,"button").forEach((t,n)=>t.addEventListener("click",()=>this.invokeCallback(n)))}}export{ButtonsRow};
