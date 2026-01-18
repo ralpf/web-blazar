@@ -12,13 +12,19 @@ export class DevView extends CompositeUnit {
         this.logLines = Unit.FindWithTag(this.root, 'logRoot');
         // init WebSocket
         const url = `ws://${window.location.host}/log`;
-        if (url.includes('127.0.0.1') || url.includes('localhost')) this.ws = null;
-        else this.ws = new WebSocket(url);
+        if (url.includes('127.0.0.1') || url.includes('localhost')) {
+            log('[WebSocket] disabled for localhost');
+            this.ws = null;
+        } 
+        else {
+            log(`[WebSocket] will use url: ${url}`);
+            this.ws = new WebSocket(url);
+        }
     }
 
     protected initializeEvents(): void {
         // subscribe websocket
-        if (!this.ws) { log(`[WebSocket] disabled for localhost`); return; }
+        if (!this.ws) return;
         this.ws.onopen = () => log('[WebSocket] Connect OK');
         this.ws.onclose = () => log('[WebSocket] disconnected');
         this.ws.onmessage = (ev) => {
