@@ -31,7 +31,8 @@ export class DevView extends CompositeUnit {
             const msg = String(ev.data);
             log(`[WebSocket] ${msg}`);
             const line = this.logLines.firstElementChild!.cloneNode(true) as HTMLElement;
-            line.textContent = msg;
+            const timeStamp = new Date().toLocaleTimeString('en-GB', { hour12: false });
+            line.textContent = `${timeStamp}: ${msg}`;
             this.logLines.appendChild(line);
             this.logLines.scrollTop = this.logLines.scrollHeight;
         };
