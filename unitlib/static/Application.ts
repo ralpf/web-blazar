@@ -6,6 +6,9 @@ import { Unit } from "../core/Unit";
 import { CompositeUnit } from "../containers/CompositeUnit";
 
 
+
+
+
 /** Extend this class to make a web app */
 export class Application {
 
@@ -95,6 +98,7 @@ export class Application {
                 newUnit.reportsTo(parentUnit);                          // this is used for url up-propagation
                 this.recursiveBuildUnit(newUnit, child, depth + 1);     // recurse in it's own dom inner tree
                 if (newUnit instanceof CompositeUnit) newUnit.onObjectConstructed();
+                // attach the instance to it's parent, if the dom object uses a fields, but NOT 'none'
                 if (fieldName !== 'none') this.findCompositeParent(newUnit).attachClassField(fieldName!, newUnit);
             }
             else {                                                      // no [data-type], scan in inner elements

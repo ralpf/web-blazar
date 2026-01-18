@@ -3,7 +3,7 @@ import { err, log } from "../core/global";
 
 export class RequestDispatcher {
 
-    private static baseUrl = `http://${window.location.host}`;
+    private static readonly baseUrl = `http://${window.location.host}`;
 
     private static xfTable: Record<string, string> = {
         'ViewsManager'  : 'esp',
