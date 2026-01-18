@@ -1,1 +1,0 @@
-import{U as e}from"./index-BAnrADdp.js";import{InputUnit as n}from"./InputUnit-CdmAuJz-.js";class Numeral extends n{prepareInnerElements(){const n=e.Find(this.root,'input[type="number"]');n.addEventListener("change",()=>this.invokeCallback(n.valueAsNumber))}}export{Numeral};
