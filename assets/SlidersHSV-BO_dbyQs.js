@@ -1,0 +1,1 @@
+import{FormUnit as i}from"./FormUnit-CV1WRnOp.js";import"./index-Cn9_7npv.js";class SlidersHSV extends i{initializeClassFields(){this.hue=this.getField("hue"),this.sat=this.getField("sat")}initializeEvents(){this.hue.callback=i=>this.propagateURL(`hue=${i}`),this.sat.callback=i=>this.propagateURL(`sat=${i}`)}}export{SlidersHSV};

@@ -1,0 +1,1 @@
+import{U as e}from"./index-Cn9_7npv.js";import{InputUnit as n}from"./InputUnit-by0mlG8O.js";class Dropdown extends n{prepareInnerElements(){const n=e.Find(this.root,"select");n.addEventListener("change",()=>this.invokeCallback(n.selectedIndex))}}export{Dropdown};
