@@ -30,7 +30,7 @@ export class DevView extends CompositeUnit {
         this.ws.onmessage = (ev) => {
             const msg = String(ev.data);
             log(`[WebSocket] ${msg}`);
-            const line = document.createElement('div');
+            const line = this.logLines.firstElementChild!.cloneNode(true) as HTMLElement;
             line.textContent = msg;
             this.logLines.appendChild(line);
             this.logLines.scrollTop = this.logLines.scrollHeight;
