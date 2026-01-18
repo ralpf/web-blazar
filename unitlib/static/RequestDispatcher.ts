@@ -20,7 +20,7 @@ export class RequestDispatcher {
     public static process(url: string) {
         const remapedUrl  = this.transformUrl(url);
         const querryedUrl = this.formatQuerrySection(remapedUrl);
-        const escapedUrl  = this.escapeUrl(querryedUrl);
+        const escapedUrl  = this.escapeUrl(this.removeHash(querryedUrl));
         const finalUrl    = `${this.baseUrl}${escapedUrl}`;
         this.GET(finalUrl);
     }
@@ -41,6 +41,10 @@ export class RequestDispatcher {
             finalUrl = path.length > 0 ? `/${path}?${lastToken}` : `/?${lastToken}`;
         }
         return finalUrl;
+    }
+
+    private static removeHash(url: string): string {
+        return url.replace(/#/g, '');
     }
 
     private static escapeUrl(url: string): string {
