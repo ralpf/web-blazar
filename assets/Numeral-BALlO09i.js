@@ -1,0 +1,1 @@
+import{U as e}from"./index-CfawxKp4.js";import{InputUnit as n}from"./InputUnit-Dl4Id_o5.js";class Numeral extends n{prepareInnerElements(){const n=e.Find(this.root,'input[type="number"]');n.addEventListener("change",()=>this.invokeCallback(n.valueAsNumber))}}export{Numeral};
