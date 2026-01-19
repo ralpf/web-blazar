@@ -30,11 +30,13 @@ export class DevView extends CompositeUnit {
         if (!this.ws) return;
         this.ws.onopen = () => {
             log('[WebSocket] Connect OK');
+            this.wsocketOnOf.textContent = 'on';
             this.wsocketOnOf.style.backgroundColor = "rgba(0, 168, 0, 1)";
         };
         
         this.ws.onclose = () => {
             log('[WebSocket] disconnected');
+            this.wsocketOnOf.textContent = 'of';
             this.wsocketOnOf.style.backgroundColor = "rgba(168, 0, 0, 1)";
         };
 
