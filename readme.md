@@ -28,6 +28,12 @@ refactor: perhaps we can strip off data-roottype attr. To do this, we inherit Ap
       - form (hsv sliders)
       - form (color picker)
 
+# How URL is generated
+URL assembling is done via propagateURL() func  
+During DOM walking, each *Unit that derives from `*CompositeUnit` will receive a set of children. For the child to be attached, it has to had a `data-field` attribute in HTML attached. The filed's name becomes the key in CompositeUnit's `this.fields` dictionary.  
+Important: if the parent of *Unit is not a `CompositeUnit` type, it will pass-thru the child to it's respective parent, and so on. Only derived from `CompositeUnit` classes can have fields attached  
+Also a quirk of the system is that fields exists and propagates URL correctly, no matter if that fields are declared explicit in composite classes, like we do in `initializeClassFields()` method
+
 
 # Monotonic Input Update Protocol
 Each InputUnit attaches a monotonic uint16 sequence number to every GET request.  

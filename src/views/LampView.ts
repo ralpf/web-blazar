@@ -10,6 +10,7 @@ export class LampView extends ViewUnit {
     private content!  : Container;
     private dropdown! : Dropdown;
     private luma!     : Slider;
+    // more fields exist like sliders, mood and palette, flicker
 
     public override initializeClassFields(): void {
         this.dropdown = this.getField('dropdown');
