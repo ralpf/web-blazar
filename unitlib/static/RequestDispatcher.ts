@@ -1,35 +1,26 @@
+import { Assert } from "../core/Assert";
 import { err, log } from "../core/global";
 
 
 export class RequestDispatcher {
 
     private static readonly baseUrl = `http://${window.location.host}`;
-
-    private static xfTable: Record<string, string> = {
-        'ViewsManager'  : 'esp',
-        'LampView'      : 'lamp',
-        'DeckView'      : 'deck',
-        'SettingsView'  : 'glob',
-        'MoodColors'    : 'mood',
-        'SlidersHSV'    : 'hsv',
-        'ColorArray'    : 'picker',
-        'FlickerWave'   : 'flik',
-    };
+    public  static enabled = false;
 
 
-    public static process(url: string) {
-        const remapedUrl  = this.transformUrl(url);
-        const querryedUrl = this.formatQuerrySection(remapedUrl);
-        const escapedUrl  = this.escapeUrl(this.removeHash(querryedUrl));
-        const finalUrl    = `${this.baseUrl}${escapedUrl}`;
-        this.GET(finalUrl);
+    public static init(xfTable: Record<string, string>) {
+        // pass the transform table to dedicated class
+        UrlTransformer.setMap(xfTable);
     }
 
-    private static transformUrl(url: string): string {
-        // change url parts like ViewManager -> api
-        const tokens = url.split('/').filter((token) => token.length > 0);
-        const transformedTokens = tokens.map((token) => this.xfTable[token] ?? token);
-        return `/${transformedTokens.join('/')}`;
+    public static process(url: string) {
+        if (!this.enabled) return;
+        // url incomes in class form, i.e. ViewManager/LampView/FlickerWave/...
+        const remapedUrl  = UrlTransformer.toUrlForm(url);
+        const querryedUrl = this.formatQuerrySection(remapedUrl);
+        const escapedUrl  = this.removeHash(querryedUrl);
+        const finalUrl    = `${this.baseUrl}${escapedUrl}`;
+        this.GET(finalUrl);
     }
 
     private static formatQuerrySection(url: string): string {
@@ -47,11 +38,6 @@ export class RequestDispatcher {
         return url.replace(/#/g, '');
     }
 
-    private static escapeUrl(url: string): string {
-        return url.includes('#') ? url.split('#').join('%23') : url;
-    }
-
-
     private static async GET(url: string) {
         log(`GET -> ${url}`);
         if (url.includes('127.0.0.1') || url.includes('localhost')) {
@@ -63,6 +49,31 @@ export class RequestDispatcher {
         if (!req.ok) err(`ESP GET failed: ${req.status}`);
         const data = await req.text(); // or res.json()
         log(`RESP <- ${data}`);
+    }
+
+}
+
+
+
+class UrlTransformer {
+    private static xfTable: Record<string, string>;
+
+    public static setMap(map: Record<string, string>): void {
+        Assert.Defined(map);
+        this.xfTable = map;
+    }
+
+    // change url parts like ViewManager -> api
+    public static toUrlForm(classForm: string): string {
+        Assert.Defined(classForm);
+        if (!this.xfTable) err(`first set the transform map via setMap() method!`);
+        const tokens = classForm.split('/').filter((token) => token.length > 0);
+        const transformedTokens = tokens.map((token) => this.xfTable[token] ?? token);
+        return `/${transformedTokens.join('/')}`;
+    }
+
+    public static toClassForm(urlForm: string): string {
+
     }
 
 }

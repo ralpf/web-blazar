@@ -4,6 +4,7 @@ import { Action, UnitCTOR } from "../core/aliases";
 import { Assert } from "../core/Assert";
 import { Unit } from "../core/Unit";
 import { CompositeUnit } from "../containers/CompositeUnit";
+import { RequestDispatcher } from "./RequestDispatcher";
 
 
 
@@ -30,7 +31,7 @@ export class Application {
     }
 
     /** pass a list of constructors, they will be searched and resolved from DOM  */
-    public static async initialize(...ctors: UnitCTOR[]) {
+    public static async initializeRootClasses(...ctors: UnitCTOR[]) {
         await buildUnitRegistry();
         logi(`classes in global registry:\n[${Object.keys(unitRegistry)}]`);
         Assert.True(this.rootMap.size === 0);   // only one call per session
@@ -39,6 +40,15 @@ export class Application {
         this.buildRootUnits(ctors);
         this.buildAutoUnits();
         logi('... all done');
+    }
+
+    public static initializeUrlRemap(xfTable: Record<string, string>) {
+        RequestDispatcher.init(xfTable);
+    }
+
+    public static initializeCompleted() {
+        // call this after all init is done
+        RequestDispatcher.enabled = true;
     }
 
     public static cloneUnit<T extends Unit>(prototype: T, parentUnit: Unit, rootDomElement: Element): T {
