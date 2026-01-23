@@ -42,10 +42,6 @@ export class Application {
         logi('... all done');
     }
 
-    public static initializeUrlRemap(xfTable: Record<string, string>) {
-        RequestDispatcher.init(xfTable);
-    }
-
     public static initializeCompleted() {
         // call this after all init is done
         RequestDispatcher.enabled = true;

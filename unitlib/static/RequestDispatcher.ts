@@ -8,18 +8,12 @@ export class RequestDispatcher {
     public  static enabled = false;
 
 
-    public static init(xfTable: Record<string, string>) {
-        // pass the transform table to dedicated class
-        UrlTransformer.setMap(xfTable);
-    }
-
     public static process(url: string) {
         if (!this.enabled) return;
         // url incomes in class form, i.e. ViewManager/LampView/FlickerWave/...
-        const remapedUrl  = UrlTransformer.toUrlForm(url);
-        const querryedUrl = this.formatQuerrySection(remapedUrl);
-        const escapedUrl  = this.removeHash(querryedUrl);
-        const finalUrl    = `${this.baseUrl}${escapedUrl}`;
+        const querryedUrl = this.formatQuerrySection(url);
+        const fixedUrl    = this.removeHash(querryedUrl);       // # is a separator and has to be escaped. ESP api will handle colors w/0 it no problem
+        const finalUrl    = `${this.baseUrl}${fixedUrl}`;
         this.GET(finalUrl);
     }
 
@@ -49,31 +43,6 @@ export class RequestDispatcher {
         if (!req.ok) err(`ESP GET failed: ${req.status}`);
         const data = await req.text(); // or res.json()
         log(`RESP <- ${data}`);
-    }
-
-}
-
-
-
-class UrlTransformer {
-    private static xfTable: Record<string, string>;
-
-    public static setMap(map: Record<string, string>): void {
-        Assert.Defined(map);
-        this.xfTable = map;
-    }
-
-    // change url parts like ViewManager -> api
-    public static toUrlForm(classForm: string): string {
-        Assert.Defined(classForm);
-        if (!this.xfTable) err(`first set the transform map via setMap() method!`);
-        const tokens = classForm.split('/').filter((token) => token.length > 0);
-        const transformedTokens = tokens.map((token) => this.xfTable[token] ?? token);
-        return `/${transformedTokens.join('/')}`;
-    }
-
-    public static toClassForm(urlForm: string): string {
-
     }
 
 }

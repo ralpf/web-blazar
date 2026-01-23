@@ -6,24 +6,13 @@ export class BlazarApp extends Application
  {
 
     private static mainPager: ViewsManager;
-    private static xfTable: Record<string, string> = {
-        'ViewsManager'  : 'esp',
-        'LampView'      : 'lamp',
-        'DeckView'      : 'deck',
-        'SettingsView'  : 'glob',
-        'MoodColors'    : 'mood',
-        'SlidersHSV'    : 'hsv',
-        'ColorArray'    : 'picker',
-        'FlickerWave'   : 'flik',
-    };
+
 
     static async initializeAsync() {
         await BlazarApp.initializeRootClasses(ViewsManager);
-        BlazarApp.initializeUrlRemap(this.xfTable);
         BlazarApp.bindKeyboard();
         BlazarApp.initializeCompleted();
         this.mainPager = Application.getSingleton(ViewsManager);
-        // all done
     }
 
     static bindKeyboard() {
@@ -36,4 +25,4 @@ export class BlazarApp extends Application
 
 
 async function main() { await BlazarApp.initializeAsync(); }
-main(); // entry point
+main(); //      <<~~ entry point
