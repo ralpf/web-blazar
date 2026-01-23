@@ -1,6 +1,7 @@
 import { Action } from "../core/aliases";
 import { Assert } from "../core/Assert";
 import { Unit }   from "../core/Unit";
+import { RequestDispatcher } from "../static/RequestDispatcher";
 
 
 export abstract class InputUnit extends Unit {
@@ -19,6 +20,7 @@ export abstract class InputUnit extends Unit {
     }
 
     protected invokeCallback(value: any) {
+        if (RequestDispatcher.enabled === false) return;    // global disabled input, looks ugly
         Assert.True(!!this._cb, `input callback undefined in ${this.domPath} <${this.typeName}>`);
         this._cb(value);
     }

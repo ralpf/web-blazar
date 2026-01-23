@@ -5,10 +5,11 @@ import { RequestDispatcher } from "../static/RequestDispatcher";
 /** Most base class for all classes in unitlib framework */
 export class Unit {
 
-    private _root : HTMLElement;        // the carrier dom element for this class
-    private _parU!: Unit;               // the Unit that created this instance
+    private _root   : HTMLElement;          // the carrier dom element for this class
+    private _parU!  : Unit;                 // the Unit that created this instance
+    private _parFN? : string;               // if this unit is a field of CompositeUnit, it's field name is cached here
 
-
+    // GET
     public get root()       : HTMLElement { return this._root; }
     public get parentUnit() : Unit        { return this._parU; }
     public get domPath()    : string      { return Unit.elementDomPath(this._root); }
@@ -18,26 +19,35 @@ export class Unit {
     constructor(root: Element) {
         this._root = root as HTMLElement;
     }
-    
+
     get isVisible() : boolean { return getComputedStyle(this._root).display !== 'none'; }
     set isVisible(v: boolean) { this._root.style.display = v ? 'flex' : 'none'; }
-    
+
     public show(): void {
         this.isVisible = true;
     }
-    
+
     public hide(): void {
         this.isVisible = false;
     }
-    
-    /** used only for Units constructed from DOM traversal */
+
+    //................................................................................INFRASTRUCTURE
+
+    // used for Units constructed from DOM traversal
     public reportsTo(parent: Unit) {
         Assert.Defined(parent);
         this._parU  = parent;
     }
 
+    public setItsParentFieldName(fieldName: string) {
+        Assert.Defined(fieldName);
+        this._parFN = fieldName;
+    }
+
+    // a part of chain for URL creation
     public propagateURL(url: string) {
-        const moreUrl = `${this.typeName}/${url}`;
+        Assert.Defined(this._parFN, `parent's field name was not set for ${this.domPath}`);    // should have a field name set
+        const moreUrl = `${this._parFN}/${url}`;
         if (this.parentUnit) this.parentUnit.propagateURL(moreUrl);
         else RequestDispatcher.process(moreUrl);
     }
@@ -47,7 +57,7 @@ export class Unit {
         this._parU = null as any;
     }
 
-    //...........................................................................STATIC
+    //........................................................................................STATIC
 
      /**
      * Finds first descendant element inside the given root element.
@@ -88,7 +98,7 @@ export class Unit {
     //     if (!el) throw new Error(`no inner ${ctor.name} : Unit found in ${Unit.elementDomPath(root)}`);
     //     return el as HTMLElement;
     // }
-    
+
     /**
      * Prints a DOM hierarchy path to the element. Also ID, if available
      ** Ex: div/div/div/select [someId]

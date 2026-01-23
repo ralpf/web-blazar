@@ -36,10 +36,7 @@ export class ColorArray extends FormUnit {
         item.callback  = this.onAnythingChanged.bind(this);
         // insert into the array
         this.all.splice(idx + 1, 0, item);
-        // enable/disable [x] [+] buttons
-        //this.enableAddItemAllButtons(this.count < this.limit);
-        //this.enableDelItemAllButtons(this.count > 1);
-        // assign random color
+        // style
         item.setRandomColor();
     }
     

@@ -7,7 +7,7 @@
     "outDir": "dist",
     "strict": true,
     "allowJs": false,
-    "isolatedModules": false,
+    "isolatedModules": true,
     "noEmitOnError": true,
     "forceConsistentCasingInFileNames": true,
     "sourceMap": true

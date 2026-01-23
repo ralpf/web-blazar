@@ -72,7 +72,11 @@ export class Application {
             log(`@ ${ctor.name}`);
             const allElements = Array.from( document.querySelectorAll(`[data-roottype="${ctor.name}"]`) );
             if (allElements.length === 0) err(`no [data-roottype=${ctor.name}] found in DOM`);
-            const singleton = new ctor(allElements[0]);
+            const uniqElement = allElements[0];
+            const fieldName = uniqElement.getAttribute('data-field');
+            Assert.Defined(fieldName, `expected to have field name set for root unit ${ctor.name}`);
+            const singleton = new ctor(uniqElement);
+            singleton.setItsParentFieldName(fieldName);
             this.rootMap.set(ctor, singleton);
         }
         Assert.True(this.rootMap.size > 0);     // at least one singleton
@@ -102,8 +106,8 @@ export class Application {
                 log('    '.repeat(depth + 1) + `+ ${typeName}`);        // pretty log
                 const newUnit = new unitCtor(child);                    // ~ build the *Unit class
                 newUnit.reportsTo(parentUnit);                          // this is used for url up-propagation
-                this.recursiveBuildUnit(newUnit, child, depth + 1);     // recurse in it's own dom inner tree
-                if (newUnit instanceof CompositeUnit) newUnit.onObjectConstructed();
+                this.recursiveBuildUnit(newUnit, child, depth + 1);     // recurse in it's own dom inner tree, depth is for debug
+                if (newUnit instanceof CompositeUnit) newUnit.onObjectConstructed(); // think how to rename the mehtod or refactor the dom walker
                 // attach the instance to it's parent, if the dom object uses a fields, but NOT 'none'
                 if (fieldName !== 'none') this.findCompositeParent(newUnit).attachClassField(fieldName!, newUnit);
             }

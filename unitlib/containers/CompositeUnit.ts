@@ -12,7 +12,8 @@ export abstract class CompositeUnit extends Unit {
         Assert.True(!!fieldName, 'filedName was empty');
         Assert.True(!this.fields[fieldName], `duplicate of '${fieldName}'`);
         this.fields[fieldName] = unitInstance;
-        log(`\t\t·${this.typeName}.${fieldName} field added`);
+        unitInstance.setItsParentFieldName(fieldName);
+        log(`\t\t·${this.typeName}.${fieldName} field bind ok`);
     }
 
     /** called when the *Unit object tree is constructed. Marks getField<T>() method accessible */

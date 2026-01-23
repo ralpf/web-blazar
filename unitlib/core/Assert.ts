@@ -15,8 +15,8 @@ export class Assert {
         if (i < 0 || i >= array.length) err(`Index out of range: ${array.length}[${i}]`);
     }
 
-    static Defined(obj: any): asserts obj {
-        if (!obj) err(`object was undefined or null`);
+    static Defined(obj: any, msg = `object was undefined or null`): asserts obj {
+        if (!obj) err(msg);
     }
 
     static IsType(instance: any, className: Function) {
