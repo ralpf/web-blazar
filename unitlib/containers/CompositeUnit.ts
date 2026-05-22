@@ -22,6 +22,25 @@ export abstract class CompositeUnit extends Unit {
         this.initializeEvents();
     }
 
+    public syncField(url: string) {
+         // i.e. lamp/flik?hSpd=45 ;; note that url can't have leading /
+        Assert.Defined(url);
+        const i = url.indexOf('/');
+        const is_composite = i >= 0;
+
+        if (is_composite) {
+            const fieldName = url.slice(0, i);
+            const fieldUnit = this.getField<CompositeUnit>(fieldName);
+            fieldUnit.syncField(url.slice(i + 1));  // the rest of the url
+        } else {
+            ...
+            find field (part before ?)
+            apply the payload
+        }
+
+
+    }
+
     /** generic way to access a delayed class field */
     protected getField<T extends Unit>(fieldName: string): T {
         const unit = this.fields[fieldName];

@@ -5,6 +5,7 @@ import { Assert } from "../core/Assert";
 import { Unit } from "../core/Unit";
 import { CompositeUnit } from "../containers/CompositeUnit";
 import { RequestDispatcher } from "./RequestDispatcher";
+import { RequestReceiver } from "./RequestReceiver";
 
 
 
@@ -45,6 +46,7 @@ export class Application {
     public static initializeCompleted() {
         // call this after all init is done
         RequestDispatcher.enabled = true;
+        RequestReceiver.enabled = true;
     }
 
     public static cloneUnit<T extends Unit>(prototype: T, parentUnit: Unit, rootDomElement: Element): T {
