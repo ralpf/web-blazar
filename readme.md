@@ -35,7 +35,7 @@ Important: if the parent of *Unit is not a `CompositeUnit` type, it will pass-th
 Also a quirk of the system is that fields exists and propagates URL correctly, no matter if that fields are declared explicit in composite classes, like we do in `initializeClassFields()` method
 
 
-# Monotonic Input Update Protocol
+# Monotonic Input Update Protocol (NOT IMPLEMENTED, IDEA)
 Each InputUnit attaches a monotonic uint16 sequence number to every GET request.  
 Sequence numbers wrap naturally.  
 ESP32 stores the last accepted sequence per input.  
