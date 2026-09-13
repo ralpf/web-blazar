@@ -1,6 +1,7 @@
 import { Assert } from "../core/Assert";
 import { log } from "../core/global";
 import { Unit } from "../core/Unit";
+import { InputUnit } from "../inputs/InputUnit";
 
 
 export abstract class CompositeUnit extends Unit {
@@ -28,14 +29,20 @@ export abstract class CompositeUnit extends Unit {
         const i = url.indexOf('/');
         const is_composite = i >= 0;
 
+        let fieldName = '';
+        let fieldUnit = null;
+
         if (is_composite) {
-            const fieldName = url.slice(0, i);
-            const fieldUnit = this.getField<CompositeUnit>(fieldName);
+            fieldName = url.slice(0, i);
+            fieldUnit = this.getField<CompositeUnit>(fieldName);
             fieldUnit.syncField(url.slice(i + 1));  // the rest of the url
         } else {
-            ...
-            find field (part before ?)
-            apply the payload
+            const j = url.indexOf('?');
+            Assert.True(j > 0);
+            fieldName = url.slice(0, j);
+            fieldUnit = this.getField<InputUnit>(fieldName);
+            const valueString = url.slice(j + 1);
+            fieldUnit.showValue(valueString);
         }
 
 

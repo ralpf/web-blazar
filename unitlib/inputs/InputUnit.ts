@@ -15,8 +15,12 @@ export abstract class InputUnit extends Unit {
         this.prepareInnerElements();
     }
 
-    public invokeOnChange(value: any) {   // override this
+    public invokeOnChange(value: any) {     // override this
         this.invokeCallback(value);
+    }
+
+    public showValue(value: any) {          // does not notify listeners
+        this.setInputVisualTo(value);
     }
 
     protected invokeCallback(value: any) {
@@ -26,6 +30,7 @@ export abstract class InputUnit extends Unit {
     }
 
     protected abstract prepareInnerElements(): void;
+    protected abstract setInputVisualTo(value: any): void;
 
 }
 
