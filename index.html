@@ -155,13 +155,19 @@
         <div data-type="DevView" data-field="dev" class="proj-main-panel proj-dev-panel proj-hidden">
           <div class="proj-panel-header">WSocket Page</div>
           <div class="proj-dev-content">
-            <div class="proj-connection-bar">
+            <div class="proj-connection-bar">                              <!--WS connect status -->
               <div class="proj-connection">
                 <div class="proj-connection-label">WSocket</div>
                 <div data-tag="ws-on-off" class="proj-connection-status">of</div>
               </div>
             </div>
-            <div data-tag="logRoot" class="proj-log">
+            <div class="proj-inner-pannel">                     <!--Command Line text input form -->
+              <form data-tag="dev-command-line">
+                <input type="text" placeholder="Enter a command" />
+                <button type="submit">Go</button>
+              </form>
+            </div>
+            <div data-tag="logRoot" class="proj-log">                          <!--Log container -->
               <div class="proj-log-line">Welcome to ESP32 Serial piped via WebSocket!</div>
             </div>
           </div>
