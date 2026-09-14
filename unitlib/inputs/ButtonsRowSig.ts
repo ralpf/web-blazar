@@ -1,3 +1,4 @@
+import { DOM } from "../static/DOM";
 import { Assert } from "../core/Assert";
 import { Unit } from "../core/Unit";
 import { ButtonsRow } from "./ButtonsRow";
@@ -11,8 +12,8 @@ export class ButtonsRowSig extends ButtonsRow {
     protected override prepareInnerElements(): void {
         // do not call super.()
         // search in DOM by tag
-        const buttons = Array.from( Unit.FindWithTag(this.root, `buttons`).children );
-        const signals = Array.from( Unit.FindWithTag(this.root, `signals`).children );
+        const buttons = Array.from( DOM.FindWithTag(this.root, `buttons`).children );
+        const signals = Array.from( DOM.FindWithTag(this.root, `signals`).children );
         // validate stuff
         Assert.True(buttons.length === signals.length, `in root ${this.domPath}`);
         signals.forEach(x => Assert.True(x.children.length === 2, `in root ${this.domPath}`));

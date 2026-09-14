@@ -2,6 +2,7 @@ import { Unit } from "unitlib/core/Unit";
 import { Action } from "unitlib/core/aliases";
 import { InputUnit } from "unitlib/inputs/InputUnit";
 import { Color } from "../utils/Color";
+import { DOM } from "unitlib/static/DOM";
 
 
 export class ColorItem extends InputUnit {
@@ -49,10 +50,10 @@ export class ColorItem extends InputUnit {
     }
 
     protected prepareInnerElements(): void {
-        this.label         = Unit.Find(this.root, 'label') as HTMLLabelElement;
-        this.colorPicker   = Unit.Find(this.root, 'input') as HTMLInputElement;
-        this.buttonDel     = Unit.FindWithTag(this.root, 'x') as HTMLButtonElement;
-        this.buttonAdd     = Unit.FindWithTag(this.root, '+') as HTMLButtonElement;
+        this.label         = DOM.Find(this.root, 'label') as HTMLLabelElement;
+        this.colorPicker   = DOM.Find(this.root, 'input') as HTMLInputElement;
+        this.buttonDel     = DOM.FindWithTag(this.root, 'x') as HTMLButtonElement;
+        this.buttonAdd     = DOM.FindWithTag(this.root, '+') as HTMLButtonElement;
         this.buttonDelUnit = new Unit(this.buttonDel);
         this.buttonAddUnit = new Unit(this.buttonAdd);
         // subscribe to events
@@ -78,4 +79,7 @@ export class ColorItem extends InputUnit {
         return Math.min(defltSize, defltSize * scale * 1.3);
     }
 
+    protected setInputVisualTo(value: any): void {
+        throw new Error("Method not implemented.");
+    }
 }

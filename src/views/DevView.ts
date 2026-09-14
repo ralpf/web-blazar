@@ -1,6 +1,6 @@
 import { CompositeUnit } from "unitlib/containers/CompositeUnit";
 import { log } from "unitlib/core/global";
-import { Unit } from "unitlib/core/Unit";
+import { DOM } from "unitlib/static/DOM";
 
 
 export class DevView extends CompositeUnit {
@@ -11,8 +11,8 @@ export class DevView extends CompositeUnit {
     private ws!         : WebSocket | null;
 
     protected initializeClassFields(): void {
-        this.logLines = Unit.FindWithTag(this.root, 'logRoot');
-        this.wsocketOnOf = Unit.FindWithTag(this.root, 'ws-on-off');
+        this.logLines = DOM.FindWithTag(this.root, 'logRoot');
+        this.wsocketOnOf = DOM.FindWithTag(this.root, 'ws-on-off');
         // init WebSocket
         const url = `ws://${window.location.host}/log`;
         if (url.includes('127.0.0.1') || url.includes('localhost')) {

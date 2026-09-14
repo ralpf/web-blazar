@@ -1,11 +1,11 @@
-import { Unit } from "../core/Unit";
+import { DOM } from "../static/DOM";
 import { InputUnit } from "./InputUnit";
 
 
 export class Numeral extends InputUnit {
 
     protected prepareInnerElements(): void {
-        const num = Unit.Find(this.root, 'input[type="number"]') as HTMLInputElement;
+        const num = DOM.Find(this.root, 'input[type="number"]') as HTMLInputElement;
         num.addEventListener('change', () => this.invokeCallback(num.valueAsNumber));
     }
 

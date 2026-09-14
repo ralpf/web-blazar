@@ -1,6 +1,7 @@
 import { Assert } from "unitlib/core/Assert";
 import { Unit } from "unitlib/core/Unit";
 import { Coroutine } from "unitlib/static/Coroutine";
+import { DOM } from "unitlib/static/DOM";
 
 
 export class AnimationFX {
@@ -21,7 +22,7 @@ export class AnimationFX {
 
     private static *cr_labelStuff(u: Unit, delay: number) {
         Assert.Defined(u);
-        const label = Unit.Find(u.root, `label`);
+        const label = DOM.Find(u.root, `label`);
         if (label.textContent.length === 0) return;
         const orig = label.textContent.toLowerCase();
         let i = 0;

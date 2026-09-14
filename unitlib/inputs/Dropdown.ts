@@ -1,4 +1,4 @@
-import { Unit } from "../core/Unit";
+import { DOM } from "../static/DOM";
 import { InputUnit } from "./InputUnit";
 
 
@@ -6,7 +6,7 @@ import { InputUnit } from "./InputUnit";
 export class Dropdown extends InputUnit {
 
     protected override prepareInnerElements(): void {
-        const select = Unit.Find(this.root, 'select') as HTMLSelectElement;
+        const select = DOM.Find(this.root, 'select') as HTMLSelectElement;
         select.addEventListener('change', () => this.invokeCallback(select.selectedIndex));
     }
 

@@ -6,6 +6,7 @@ import { Unit } from "../core/Unit";
 import { CompositeUnit } from "../containers/CompositeUnit";
 import { RequestDispatcher } from "./RequestDispatcher";
 import { RequestReceiver } from "./RequestReceiver";
+import { DOM } from "./DOM";
 
 
 
@@ -98,7 +99,7 @@ export class Application {
         for (const child of  Array.from(domElement.children, x => x as HTMLElement)) {
             const typeName = child.dataset.type;
             const fieldName = child.dataset.field;
-            const domPath = Unit.elementDomPath(child);
+            const domPath = DOM.elementDomPath(child);
             //log(`-------- debug I'm in ${Unit.elementDomPath(child)} data-type=${typeName}`);
 
             if (typeName) {   // found [data-type] attrib

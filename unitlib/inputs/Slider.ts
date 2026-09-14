@@ -1,11 +1,11 @@
-import { Unit } from "../core/Unit";
+import { DOM } from "../static/DOM";
 import { InputUnit } from "./InputUnit";
 
 
 export class Slider extends InputUnit {
 
     protected override prepareInnerElements(): void {
-        const slider = Unit.Find(this.root, 'input[type="range"]') as HTMLInputElement;
+        const slider = DOM.Find(this.root, 'input[type="range"]') as HTMLInputElement;
         slider.addEventListener('change', () => this.invokeCallback(slider.valueAsNumber));
         // input  -> fire continuosly
         // change -> fire on release
