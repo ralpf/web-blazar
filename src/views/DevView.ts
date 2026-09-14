@@ -1,6 +1,7 @@
 import { CompositeUnit } from "unitlib/containers/CompositeUnit";
 import { log } from "unitlib/core/global";
 import { DOM } from "unitlib/static/DOM";
+import { RequestReceiver } from "unitlib/static/RequestReceiver";
 
 
 export class DevView extends CompositeUnit {
@@ -67,9 +68,9 @@ export class DevView extends CompositeUnit {
         this.commandLine.addEventListener('submit', ev => {         // this is a form with ok button
             ev.preventDefault();    // prevent page reload
             const cmd = runCommandInput.value.trim();
-            log(`[DEV.CommandLine] run ${cmd}`);
+            log(`[DEV.CommandLine] run '${cmd}'`);
+            RequestReceiver.runRequestAny(cmd);
         });
-        log('AAAAAAAAAAAAAAAAAAAAAAAAAAA-AAAAAAAAAAAAAAAAAAAAAAAAAAA-AAAAAAAAAAAAAAAAAAAAAAAAAAA');
     }
 
 }

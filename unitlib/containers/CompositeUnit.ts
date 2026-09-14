@@ -26,26 +26,24 @@ export abstract class CompositeUnit extends Unit {
     public syncField(url: string) {
          // i.e. lamp/flik?hSpd=45 ;; note that url can't have leading /
         Assert.Defined(url);
-        const i = url.indexOf('/');
-        const is_composite = i >= 0;
 
-        let fieldName = '';
-        let fieldUnit = null;
+        let i: number;
+        let payload  = '';
+        let nextName = '';
 
-        if (is_composite) {
-            fieldName = url.slice(0, i);
-            fieldUnit = this.getField<CompositeUnit>(fieldName);
-            fieldUnit.syncField(url.slice(i + 1));  // the rest of the url
-        } else {
-            const j = url.indexOf('?');
-            Assert.True(j > 0);
-            fieldName = url.slice(0, j);
-            fieldUnit = this.getField<InputUnit>(fieldName);
-            const valueString = url.slice(j + 1);
-            fieldUnit.showValue(valueString);
-        }
-
-
+        if ((i = url.indexOf('/')) >= 0) {                                      // lamp/flik?hSpd=45
+            nextName = url.slice(0, i);
+            payload  = url.slice(i + 1);
+            this.getField<CompositeUnit>(nextName).syncField(payload);
+        } else if ((i = url.indexOf('?')) >= 0) {                                    // flik?hSpd=45
+            nextName = url.slice(0, i);
+            payload  = url.slice(i + 1);
+            this.getField<CompositeUnit>(nextName).syncField(payload);
+        } else if ((i = url.indexOf('=')) >= 0) {                                         // hSpd=45
+            nextName = url.slice(0, i);
+            payload  = url.slice(i + i);
+            this.getField<InputUnit>(nextName).showValue(payload);
+        } else throw new Error('Never should happen');
     }
 
     /** generic way to access a delayed class field */

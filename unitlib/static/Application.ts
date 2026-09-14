@@ -69,6 +69,24 @@ export class Application {
         unit.dispose();
     }
 
+    public static syncFieldOnRoot(url: string) {
+        // here it is ok to pre-precess the url
+        // after this we will proceed to dig into the hierarchy
+        // and pass a payload (usually to an input to sync it's visual)
+
+        const i = url.indexOf('/');
+        if (i <= 0 || i === url.length - 1) err(`Expected root name w/o a leading '/': '${url}'`);
+
+        const rootName = url.slice(0, i);
+        for (const [ctor, rootUnit] of this.rootMap) {
+            if (rootUnit.getItsParentFieldName() !== rootName) continue;
+            Assert.True(rootUnit instanceof CompositeUnit, `Root '${rootName}' is not a CompositeUnit`);
+            rootUnit.syncField(url.slice(i + 1));  // the reminder of the url
+            return;
+        }
+        err(`[Application] Root constructor '${rootName}' not found`);
+    }
+
     private static buildRootUnits(ctors: UnitCTOR[]) {
         log('searching of DOM root Unit(s)');
         for (const ctor of ctors) {

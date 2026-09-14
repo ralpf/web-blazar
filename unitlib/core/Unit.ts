@@ -41,9 +41,15 @@ export class Unit {
         this._parU  = parent;
     }
 
+    // this and next are not very preety. Maybe to put it under an interface of hierarchable objects
     public setItsParentFieldName(fieldName: string) {
         Assert.Defined(fieldName);
         this._parFN = fieldName;
+    }
+
+    public getItsParentFieldName(): string {
+        if (this._parFN) return this._parFN;
+        else return '';
     }
 
     // a part of chain for URL creation

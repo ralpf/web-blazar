@@ -1,6 +1,7 @@
 import { CompositeUnit } from "../containers/CompositeUnit";
 import { Assert } from "../core/Assert";
-import { err } from "../core/global";
+import { err, log } from "../core/global";
+import { Application } from "./Application";
 
 
 // NOTE: this class is WIP and not finished yet
@@ -9,24 +10,28 @@ import { err } from "../core/global";
 export class RequestReceiver {
 
     public static enabled = false;
-    private static rootName : string;           // root name
-    private static rootUnit : CompositeUnit;    // root unit
 
 
-    public static init(rootName: string, rootUnit: CompositeUnit) {
-        Assert.Defined(rootName);
-        Assert.Defined(rootUnit);
-        this.rootName = rootName;        // i.e. 'esp'
-        this.rootUnit = rootUnit;        // i.e. 'ViewManager'
+    public static runRequestAny(obj: any): void {
+        if (!this.enabled) {
+            log(`[RequestReceiver] i'm disabled, ignoring command...`);
+            return;
+        }
+
+        if (typeof obj === 'string') {
+            this.processString(obj);
+        } else if (obj !== null && typeof obj === 'object') {
+            throw new Error('JSON requests are not implemented yet');
+        } else throw new Error('Expected a string or object');
     }
 
-    public static process(url: string) {
-        if (!this.enabled) return;
-        if (!this.rootName || !this.rootUnit) err("call init() firts");
-        const prefix = `/${this.rootName}/`;
-        if (url.startsWith(prefix) === false) err(`unexpected URL format: ${url}`);
-        // this will dig in unit hierarchy using the url as path
-        this.rootUnit.syncField(url.replace(prefix, ''));
-        throw new Error("Method not implemented. IT'S UNFINISHED, DO NOT USE YET");
+    private static processString(url: string) {
+        // supported url-like paths, of form: lamp/flik?hSpd=45 (note no leading / and mandatory ?)
+        // this will dig into unit hierarchy using the url as path
+        if (url.includes('/') && url.includes('?') && url.includes('='))
+            Application.syncFieldOnRoot(url);
+        else log(`[RequestReceiver] ignoring malformated string command \n\t'${url}'`);
+
+        // other kind of string commands are not supported yet
     }
 }
