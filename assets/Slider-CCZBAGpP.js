@@ -1,0 +1,1 @@
+import{D as e}from"./index-BlUrIuTe.js";import{InputUnit as t}from"./InputUnit-DuxmHKi1.js";class Slider extends t{prepareInnerElements(){const t=e.Find(this.root,'input[type="range"]');t.addEventListener("change",()=>this.invokeCallback(t.valueAsNumber))}setInputVisualTo(e){throw new Error("Method not implemented.")}}export{Slider};
