@@ -11,4 +11,7 @@ export class Slider extends InputUnit {
         // change -> fire on release
     }
 
+    protected setInputVisualTo(value: any): void {
+        throw new Error("Method not implemented.");
+    }
 }

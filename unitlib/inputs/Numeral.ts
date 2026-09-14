@@ -9,4 +9,7 @@ export class Numeral extends InputUnit {
         num.addEventListener('change', () => this.invokeCallback(num.valueAsNumber));
     }
 
+    protected setInputVisualTo(value: any): void {
+        throw new Error("Method not implemented.");
+    }
 }

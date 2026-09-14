@@ -10,4 +10,7 @@ export class Dropdown extends InputUnit {
         select.addEventListener('change', () => this.invokeCallback(select.selectedIndex));
     }
 
+    protected setInputVisualTo(value: any): void {
+        throw new Error("Method not implemented.");
+    }
 }

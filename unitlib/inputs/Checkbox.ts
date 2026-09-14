@@ -9,4 +9,7 @@ export class Checkbox extends InputUnit {
         checkbox.addEventListener('change', () => this.invokeCallback(checkbox.checked));
     }
 
+    protected setInputVisualTo(value: any): void {
+        throw new Error("Method not implemented.");
+    }
 }
