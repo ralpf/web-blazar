@@ -75,7 +75,6 @@ private registerBlazarClick() {
                 x: (rect.left + rect.width / 2) / window.innerWidth,
                 y: (rect.top + rect.height / 2) / window.innerHeight
             },
-            angle: 0, // Down and right.
         });
         
         setTimeout(() => {
