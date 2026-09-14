@@ -20,6 +20,7 @@ export abstract class InputUnit extends Unit {
     }
 
     public showValue(value: any) {          // does not notify listeners
+        Assert.Defined(value);
         this.setInputVisualTo(value);
     }
 

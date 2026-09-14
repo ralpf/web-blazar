@@ -41,7 +41,7 @@ export abstract class CompositeUnit extends Unit {
             this.getField<CompositeUnit>(nextName).syncField(payload);
         } else if ((i = url.indexOf('=')) >= 0) {                                         // hSpd=45
             nextName = url.slice(0, i);
-            payload  = url.slice(i + i);
+            payload  = url.slice(i + 1);
             this.getField<InputUnit>(nextName).showValue(payload);
         } else throw new Error('Never should happen');
     }
