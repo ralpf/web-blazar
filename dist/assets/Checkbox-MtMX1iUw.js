@@ -1,0 +1,1 @@
+import{D as e}from"./index-BlUrIuTe.js";import{InputUnit as t}from"./InputUnit-DuxmHKi1.js";class Checkbox extends t{prepareInnerElements(){const t=e.Find(this.root,'input[type="checkbox"]');t.addEventListener("change",()=>this.invokeCallback(t.checked))}setInputVisualTo(e){throw new Error("Method not implemented.")}}export{Checkbox};

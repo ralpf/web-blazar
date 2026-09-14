@@ -14,10 +14,14 @@
         "buildPublish": "npm run build && npm run publish"
     },
     "devDependencies": {
+        "@types/canvas-confetti": "^1.9.0",
         "terser": "^5.44.1",
         "vite": "^7.2.6"
     },
     "allowScripts": {
         "esbuild@0.25.12": true
+    },
+    "dependencies": {
+        "canvas-confetti": "^1.9.4"
     }
 }
