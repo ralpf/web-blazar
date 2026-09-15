@@ -57,7 +57,7 @@ export class Unit {
         Assert.Defined(this._parFN, `parent's field name was not set for ${this.domPath}`);    // should have a field name set
         const moreUrl = `${this._parFN}/${url}`;
         if (this.parentUnit) this.parentUnit.propagateURL(moreUrl);
-        else RequestDispatcher.process(moreUrl);
+        else RequestDispatcher.send(moreUrl);
     }
 
     public dispose() {

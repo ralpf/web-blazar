@@ -4,11 +4,11 @@ import { err, log } from "../core/global";
 
 export class RequestDispatcher {
 
-    private static readonly baseUrl = `http://${window.location.host}`;
     public  static enabled = false;
+    private static readonly baseUrl = `http://${window.location.host}`;
 
 
-    public static process(url: string) {
+    public static send(url: string) {
         if (!this.enabled) return;
         // url incomes in class form, i.e. ViewManager/LampView/FlickerWave/...
         const querryedUrl = this.formatQuerrySection(url);
@@ -34,14 +34,9 @@ export class RequestDispatcher {
 
     private static async GET(url: string) {
         log(`GET -> ${url}`);
-        if (url.includes('127.0.0.1') || url.includes('localhost')) {
-            log('Skipping request to localhost');
-            return;
-        }
-
         const req = await fetch(url, { method: 'GET' });
         if (!req.ok) err(`ESP GET failed: ${req.status}`);
-        const data = await req.text(); // or res.json()
+        const data = await req.text(); // or res.json() for a parsed java object
         log(`RESP <- ${data}`);
     }
 
