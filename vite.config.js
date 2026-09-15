@@ -6,5 +6,13 @@ export default {
             keep_classnames: true,
             keep_fnames: true
         }
-    }
+    },
+    server: {
+        proxy: {
+            '/esp': {
+                target: 'http://192.168.100.201',
+                changeOrigin: true,
+            },
+        },
+    },
 };
