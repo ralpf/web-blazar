@@ -1,5 +1,8 @@
+import { Assert } from "unitlib/core/Assert";
 import { ViewsManager } from "./views/ViewsManager";
 import { Application } from "unitlib/static/Application";
+import { RequestDispatcher } from "unitlib/static/RequestDispatcher";
+import { RequestReceiver } from "unitlib/static/RequestReceiver";
 
 
 export class BlazarApp extends Application
@@ -9,16 +12,19 @@ export class BlazarApp extends Application
 
 
     static async initializeAsync() {
-        await BlazarApp.initializeRootClasses(ViewsManager);
+        await BlazarApp.initialize();
         BlazarApp.bindKeyboard();
-        BlazarApp.initializeCompleted();
-        this.mainPager = Application.getSingleton(ViewsManager);
+        RequestDispatcher.enabled = true;
+        RequestReceiver.enabled = true;
+
+        Assert.True(Application.getRootUnit() instanceof ViewsManager);
+        this.mainPager = Application.getRootUnit() as ViewsManager;
     }
 
     static bindKeyboard() {
         Application.bindKeyAction(key => {
-            const x = Application.getSingleton(ViewsManager);
-            if (key === 't') x.isVisible = !x.isVisible;
+            const root = Application.getRootUnit();
+            if (key === 't') root.isVisible = !root.isVisible;
         });
     }
 }

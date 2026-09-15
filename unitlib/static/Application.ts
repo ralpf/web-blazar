@@ -15,13 +15,11 @@ import { DOM } from "./DOM";
 /** Extend this class to make a web app */
 export class Application {
 
-    private static rootMap = new Map<Function, Unit>();
+    private static rootUnit: CompositeUnit;
 
     /** get a root *Unit type from DOM */
-    public static getSingleton<T extends Unit>(classCTOR: UnitCTOR): T {
-              const rootInstance = Application.rootMap.get(classCTOR) as T;
-              if (!rootInstance) throw new Error(`Controller of type '${classCTOR.name}' not in registry`);
-              return rootInstance;
+    public static getRootUnit(): CompositeUnit {
+        return this.rootUnit;
     }
 
     /** bind a generic keyboard to the app */
@@ -33,21 +31,18 @@ export class Application {
     }
 
     /** pass a list of constructors, they will be searched and resolved from DOM  */
-    public static async initializeRootClasses(...ctors: UnitCTOR[]) {
+    public static async initialize() {
+        Assert.True(!this.rootUnit);   // only one call per session
         await buildUnitRegistry();
         logi(`classes in global registry:\n[${Object.keys(unitRegistry)}]`);
-        Assert.True(this.rootMap.size === 0);   // only one call per session
-        Assert.IsArray(ctors);
-        logi('initializing ...');
-        this.buildRootUnits(ctors);
+        this.buildRootUnits();
         this.buildAutoUnits();
         logi('... all done');
     }
 
     public static initializeCompleted() {
         // call this after all init is done
-        RequestDispatcher.enabled = true;
-        RequestReceiver.enabled = true;
+        
     }
 
     public static cloneUnit<T extends Unit>(prototype: T, parentUnit: Unit, rootDomElement: Element): T {
@@ -78,39 +73,43 @@ export class Application {
         if (i <= 0 || i === url.length - 1) err(`Expected root name w/o a leading '/': '${url}'`);
 
         const rootName = url.slice(0, i);
-        for (const [ctor, rootUnit] of this.rootMap) {
-            if (rootUnit.getItsParentFieldName() !== rootName) continue;
-            Assert.True(rootUnit instanceof CompositeUnit, `Root '${rootName}' is not a CompositeUnit`);
-            rootUnit.syncField(url.slice(i + 1));  // the reminder of the url
-            return;
-        }
-        err(`[Application] Root constructor '${rootName}' not found`);
+        if (this.rootUnit.getItsParentFieldName() !== rootName)
+            err(`url root '${rootName}' does not match DOM root filedName '${this.rootUnit.getItsParentFieldName()}'`);
+        this.rootUnit.syncField(url.slice(i + 1));  // the reminder of the url
     }
 
-    private static buildRootUnits(ctors: UnitCTOR[]) {
-        log('searching of DOM root Unit(s)');
-        for (const ctor of ctors) {
-            log(`@ ${ctor.name}`);
-            const allElements = Array.from( document.querySelectorAll(`[data-roottype="${ctor.name}"]`) );
-            if (allElements.length === 0) err(`no [data-roottype=${ctor.name}] found in DOM`);
-            const uniqElement = allElements[0];
-            const fieldName = uniqElement.getAttribute('data-field');
-            Assert.Defined(fieldName, `expected to have field name set for root unit ${ctor.name}`);
-            const singleton = new ctor(uniqElement);
-            singleton.setItsParentFieldName(fieldName);
-            this.rootMap.set(ctor, singleton);
-        }
-        Assert.True(this.rootMap.size > 0);     // at least one singleton
-        log(`total ${this.rootMap.size} root Unit object(s)`);
+    public static syncStateOnRoot(sjson: string) {
+        // accept a json with objects
+    }
+
+    private static buildRootUnits() {
+        logi(`searching for DOM root Unit ...`);
+
+        const allElements = Array.from( document.querySelectorAll(`[data-roottype]`) );
+        if (allElements.length === 0) err(`no [data-roottype=*] found in DOM`);
+        if (allElements.length > 1)   err(`multiple [data-roottype=*] found in DOM`);
+
+        const rootElement = allElements[0];
+        const fieldName = rootElement.getAttribute('data-field');
+        Assert.Defined(fieldName, `expected to have field name set for root unit`);
+        const ctorName = rootElement.getAttribute('data-roottype');
+        Assert.Defined(ctorName);
+
+        const unitCtor = unitRegistry[ctorName];
+        Assert.Defined(unitCtor, `unknown root type '${ctorName}' (not in ctor registry)`);
+        const unit = new unitCtor(rootElement);
+        Assert.True(unit instanceof CompositeUnit);
+
+        // important not to use this, as the 'this' can be a derived type (i.e. BlazarApp)
+        // which will create efectivelly 2 references Application.rootUnit and BlazarApp.rootUnit and mess things up
+        Application.rootUnit = unit;
+        this.rootUnit.setItsParentFieldName(fieldName);
     }
 
     private static buildAutoUnits() {
         log('auto-discovering of Unit(s)');
-        for (const [ctor, unit] of this.rootMap) {
-            log(`+ [M]${ctor.name}`);
-            this.recursiveBuildUnit(unit, unit.root, 0);
-            unit instanceof CompositeUnit && unit.onObjectConstructed();
-        }
+        this.recursiveBuildUnit(this.rootUnit, this.rootUnit.root, 0);
+        this.rootUnit instanceof CompositeUnit && this.rootUnit.onObjectConstructed();
     }
 
     private static recursiveBuildUnit(parentUnit: Unit, domElement: HTMLElement, depth: number) {

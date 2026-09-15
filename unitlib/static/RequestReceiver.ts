@@ -12,6 +12,7 @@ export class RequestReceiver {
     public static enabled = false;
 
 
+    /** The only API to run a command on frontend. Pass a sync json or url command */
     public static runRequestAny(obj: any): void {
         if (!this.enabled) {
             log(`[RequestReceiver] i'm disabled, ignoring command...`);
@@ -25,13 +26,26 @@ export class RequestReceiver {
         } else throw new Error('Expected a string or object');
     }
 
-    private static processString(url: string) {
-        // supported url-like paths, of form: lamp/flik?hSpd=45 (note no leading / and mandatory ?)
-        // this will dig into unit hierarchy using the url as path
-        if (url.includes('/') && url.includes('?') && url.includes('='))
-            Application.syncFieldOnRoot(url);
-        else log(`[RequestReceiver] ignoring malformated string command \n\t'${url}'`);
 
-        // other kind of string commands are not supported yet
+    private static processString(str: string) {
+        str = str.trim();
+        if (!str) { log(`[RequestReceiver] ignore emtpy string command ...`); return; }
+
+        // supported url-like paths, of form: lamp/flik?hSpd=45
+        if (str.includes('/') && str.includes('?') && str.includes('='))
+            this.processStringUrl(str);
+        else if (str.startsWith('{') && str.endsWith('}'))
+            this.processStringJson(str);
+        else log(`[RequestReceiver] unknown format of string command \n\t'${str}'`);
+    }
+
+
+    private static processStringUrl(url: string) {
+        Application.syncFieldOnRoot(url);
+    }
+
+
+    private static processStringJson(sjson: string) {
+
     }
 }
