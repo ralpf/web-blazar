@@ -4,8 +4,6 @@ import { Action, UnitCTOR } from "../core/aliases";
 import { Assert } from "../core/Assert";
 import { Unit } from "../core/Unit";
 import { CompositeUnit } from "../containers/CompositeUnit";
-import { RequestDispatcher } from "./RequestDispatcher";
-import { RequestReceiver } from "./RequestReceiver";
 import { DOM } from "./DOM";
 
 
@@ -34,15 +32,9 @@ export class Application {
     public static async initialize() {
         Assert.True(!this.rootUnit);   // only one call per session
         await buildUnitRegistry();
-        logi(`classes in global registry:\n[${Object.keys(unitRegistry)}]`);
-        this.buildRootUnits();
+        this.buildRootUnit();
         this.buildAutoUnits();
-        logi('... all done');
-    }
-
-    public static initializeCompleted() {
-        // call this after all init is done
-        
+        logi('... initialize() done');
     }
 
     public static cloneUnit<T extends Unit>(prototype: T, parentUnit: Unit, rootDomElement: Element): T {
@@ -82,7 +74,7 @@ export class Application {
         // accept a json with objects
     }
 
-    private static buildRootUnits() {
+    private static buildRootUnit() {
         logi(`searching for DOM root Unit ...`);
 
         const allElements = Array.from( document.querySelectorAll(`[data-roottype]`) );

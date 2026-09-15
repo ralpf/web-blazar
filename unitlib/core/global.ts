@@ -57,4 +57,5 @@ export async function buildUnitRegistry() {
     );
     await Promise.all(loaders);
     unitRegistry[Unit.name] = Unit;  // this class has to be add separatelly
+    logi(`classes in global registry:\n[${Object.keys(unitRegistry)}]`);
 }
