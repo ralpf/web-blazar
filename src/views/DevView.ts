@@ -1,5 +1,6 @@
 import { CompositeUnit } from "unitlib/containers/CompositeUnit";
-import { log } from "unitlib/core/global";
+import { log, logi } from "unitlib/core/global";
+import { ButtonOne } from "unitlib/inputs/ButtonOne";
 import { DOM } from "unitlib/static/DOM";
 import { RequestReceiver } from "unitlib/static/RequestReceiver";
 
@@ -9,14 +10,17 @@ export class DevView extends CompositeUnit {
     private logLines!   : HTMLElement;
     private wsocketOnOf!: HTMLElement;
     private commandLine!: HTMLElement;
+    private actionButton!: ButtonOne;
 
     private ws!         : WebSocket | null;
+
 
     protected initializeClassFields(): void {
         // resolve the fields
         this.logLines = DOM.FindWithTag(this.root, 'logRoot');
         this.wsocketOnOf = DOM.FindWithTag(this.root, 'ws-on-off');
         this.commandLine = DOM.FindWithTag(this.root, 'dev-command-line');
+        this.actionButton = this.getField<ButtonOne>('actionButton');
         // init WebSocket
         const url = `ws://${window.location.host}/log`;
         if (url.includes('127.0.0.1') || url.includes('localhost')) {
@@ -29,10 +33,13 @@ export class DevView extends CompositeUnit {
         }
     }
 
+
     protected initializeEvents(): void {
         this.initWebsocket();
         this.initCommandLine();
+        this.initActionbutton();
     }
+
 
     private initWebsocket(): void {
         if (!this.ws) return;
@@ -62,6 +69,7 @@ export class DevView extends CompositeUnit {
         window.addEventListener("beforeunload", () => this.ws?.close() );
     }
 
+
     private initCommandLine(): void {
         // subscribe to run command text input
         const runCommandInput = DOM.Find(this.commandLine, 'input') as HTMLInputElement;
@@ -71,6 +79,15 @@ export class DevView extends CompositeUnit {
             log(`[DEV.CommandLine] run '${cmd}'`);
             RequestReceiver.runRequestAny(cmd);
         });
+    }
+
+
+    private initActionbutton(): void {
+        const onClick = () => {
+            logi(`Ze Button Waz prezzed`);
+        };
+
+        this.actionButton.callback = onClick;
     }
 
 }
