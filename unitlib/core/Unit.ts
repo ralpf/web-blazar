@@ -1,6 +1,8 @@
 import { Assert } from "./Assert";
 import { DOM } from "../static/DOM";
 import { RequestDispatcher } from "../static/RequestDispatcher";
+import { JObject } from "./aliases";
+import { err } from "./global";
 
 
 // DONT convert this class to err() or log() or Assert.*
@@ -57,7 +59,7 @@ export class Unit {
         Assert.Defined(this._parFN, `parent's field name was not set for ${this.domPath}`);    // should have a field name set
         const moreUrl = `${this._parFN}/${url}`;
         if (this.parentUnit) this.parentUnit.propagateURL(moreUrl);
-        else RequestDispatcher.send(moreUrl);
+        else RequestDispatcher.sendPropagatedUrl(moreUrl);
     }
 
     public dispose() {

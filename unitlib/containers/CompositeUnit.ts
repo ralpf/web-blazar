@@ -1,5 +1,6 @@
+import { JObject } from "../core/aliases";
 import { Assert } from "../core/Assert";
-import { log } from "../core/global";
+import { err, log } from "../core/global";
 import { Unit } from "../core/Unit";
 import { InputUnit } from "../inputs/InputUnit";
 
@@ -23,8 +24,9 @@ export abstract class CompositeUnit extends Unit {
         this.initializeEvents();
     }
 
+    /** use to sync just 1 input somewhere using a string url */
     public syncField(url: string) {
-         // i.e. lamp/flik?hSpd=45 ;; note that url can't have leading /
+         // i.e. main/lamp/flik?hSpd=45 ;; note that url can't have leading /
         Assert.Defined(url);
 
         let i: number;
@@ -44,6 +46,21 @@ export abstract class CompositeUnit extends Unit {
             payload  = url.slice(i + 1);
             this.getField<InputUnit>(nextName).showValue(payload);
         } else throw new Error('Never should happen');
+    }
+
+    /** use to sync the full object plus it's internals with a json object */
+    public syncState(jobj: JObject): void {
+        for (const [name, value] of Object.entries(jobj)) {
+            Assert.Defined(name);
+            if (typeof value === 'object') {
+                const nextUnit = this.getField<CompositeUnit>(name);
+                nextUnit.syncState(value as JObject);
+            } else {    // primitive value or array
+                const leafInput = this.getField<InputUnit>(name);
+                leafInput.showValue(value);
+                err(`this method is incomplete, because of composite hierarchy`);
+            }
+        }
     }
 
     /** generic way to access a delayed class field */

@@ -1,6 +1,7 @@
 import { CompositeUnit } from "unitlib/containers/CompositeUnit";
 import { log, logi } from "unitlib/core/global";
 import { ButtonOne } from "unitlib/inputs/ButtonOne";
+import { Application } from "unitlib/static/Application";
 import { DOM } from "unitlib/static/DOM";
 import { RequestDispatcher } from "unitlib/static/RequestDispatcher";
 import { RequestReceiver } from "unitlib/static/RequestReceiver";
@@ -86,7 +87,7 @@ export class DevView extends CompositeUnit {
     private initActionbutton(): void {
         const onClick = () => {
             logi(`Ze Button Waz prezzed`);
-            RequestDispatcher.send("/esp/sync/state");
+            Application.syncFromESP();
         };
 
         this.actionButton.callback = onClick;

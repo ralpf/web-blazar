@@ -8,3 +8,6 @@ export type Action = (value: any) => void;
 export type UnitCTOR<T extends Unit = Unit> = new (el: Element) => T;
 //                                  ^~~~ defaults the param to 'Unit' type
 
+/** A simplest json in parsed, object representation */
+export type JObject = Record<string, unknown>;
+

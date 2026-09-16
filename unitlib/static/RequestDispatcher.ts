@@ -1,5 +1,5 @@
 import { Assert } from "../core/Assert";
-import { err, log } from "../core/global";
+import { err, log, logi } from "../core/global";
 
 
 export class RequestDispatcher {
@@ -8,36 +8,53 @@ export class RequestDispatcher {
     private static readonly baseUrl = `http://${window.location.host}`;
 
 
+
+    public static sendPropagatedUrl(url: string) {
+        // propagated url is one created from Unit hierarchy.
+        // is has a form like /esp/someMode/SomePanel/SomeGroup/SomeControl=123
+        // In this method a reduction function can be applied, even intermidiates deleted
+        // The idea is to put data into a parameter quesrry list, and have sm like
+        // /esp/someMode/SomePanel/SomeGroup?SomeControl=123
+        url = this.formatQuerrySection(url);
+        // remove # incoming from colors, since in url it is a separator. ESP can handle colors w/o # prefix
+        url = this.removeHash(url);
+        // add baseUrl, the address of the esp
+        this.send(`${this.baseUrl}${url}`)
+    }
+
+
     public static send(url: string) {
-        if (!this.enabled) return;
-        // url incomes in class form, i.e. ViewManager/LampView/FlickerWave/...
-        const querryedUrl = this.formatQuerrySection(url);
-        const fixedUrl    = this.removeHash(querryedUrl);       // # is a separator and has to be escaped. ESP api will handle colors w/0 it no problem
-        const finalUrl    = `${this.baseUrl}${fixedUrl}`;
-        this.GET(finalUrl);
+        if (!this.enabled) { logi(`ignore request - the class is disabled ...`); return; }
+        Assert.Defined(url);
+        this.GET(url);
+    }
+
+
+    public static async sendAsync(url: string): Promise<string> {
+        if (!this.enabled) { logi(`ignore request - the class is disabled ...`); return ''; }
+        Assert.Defined(url);
+        return this.GET(url);
     }
 
     private static formatQuerrySection(url: string): string {
-        const tokens = url.split('/');
-        const lastToken = tokens[tokens.length - 1];
-        let finalUrl = url;
-        if (lastToken && lastToken.includes('=')) {
-            const path = tokens.slice(0, -1).filter((token) => token.length > 0).join('/');
-            finalUrl = path.length > 0 ? `/${path}?${lastToken}` : `/?${lastToken}`;
-        }
-        return finalUrl;
+        const i = url.lastIndexOf('/');
+        const lastPart = url.slice(i + 1);
+        if (!lastPart.includes('=')) return url;
+        const path = url.slice(0, i + 1);
+        return `${path || '/'}?${lastPart}`;
     }
 
     private static removeHash(url: string): string {
         return url.replace(/#/g, '');
     }
 
-    private static async GET(url: string) {
+    private static async GET(url: string): Promise<string> {
         log(`GET -> ${url}`);
         const req = await fetch(url, { method: 'GET' });
         if (!req.ok) err(`ESP GET failed: ${req.status}`);
-        const data = await req.text(); // or res.json() for a parsed java object
-        log(`RESP <- ${data}`);
+        const text = await req.text(); // or res.json() for a parsed java object
+        log(`RESP <- ${text}`);
+        return text;
     }
 
 }

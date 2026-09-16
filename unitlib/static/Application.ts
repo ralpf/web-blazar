@@ -5,6 +5,7 @@ import { Assert } from "../core/Assert";
 import { Unit } from "../core/Unit";
 import { CompositeUnit } from "../containers/CompositeUnit";
 import { DOM } from "./DOM";
+import { RequestDispatcher } from "./RequestDispatcher";
 
 
 
@@ -71,7 +72,20 @@ export class Application {
     }
 
     public static syncStateOnRoot(sjson: string) {
-        // accept a json with objects
+        let jobj = null;
+        try {
+            jobj = JSON.parse(sjson);
+        }
+        catch { err(`can't parse json '${sjson}'`); }
+        
+        
+        logi(`... done sync webpage internals with extern json`);
+    }
+
+    public static async syncFromESP() {
+        logi(`will request esp32 for sync json ...`);
+        const sjson = await RequestDispatcher.sendAsync("/esp/sync/state");
+        this.syncStateOnRoot(sjson);
     }
 
     private static buildRootUnit() {
