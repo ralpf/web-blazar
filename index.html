@@ -49,13 +49,13 @@
           </div>
         </div>
       </div>
-      <div data-type="Container" data-field="viewsRoot" class="proj-main">
-        <!-- Global Settings Group -->
+      <div class="proj-main">                                            <!-- Group of all views -->
+        <!-- Global Settings View Group -->
         <div data-type="SettingsView" data-field="glob" class="proj-main-panel proj-hidden">
           <div class="proj-panel-header">Settings Page</div>
           <div data-type="Slider" data-field="luma" class="proj-inner-pannel"><label class="proj-slider-label">Bright</label><input type="range" min="0" max="255" value="128" id="ifw7n" class="proj-slider-value"/></div>
         </div>
-        <!-- Lamp Group -->
+        <!-- Lamp View Group -->
         <div data-type="LampView" data-field="lamp" class="proj-main-panel proj-hidden">
           <div class="proj-panel-header">Blazar Page</div>
           <div data-type="Slider" data-field="luma" class="proj-inner-pannel proj-input-slider proj-slider-row"><label class="proj-slider-label">Bright</label><input type="range" min="0" max="255" value="128" id="ifw7n-2" class="proj-slider-value-spaced"/></div>
@@ -84,7 +84,7 @@
               </div>
             </div>
           </div>
-          <div data-type="Container" data-field="content">
+          <div >    <!-- Group of Lamp modes -->
             <div data-type="MoodColors" data-field="mood" class="proj-inner-pannel">
               <div class="proj-inner-pannel-header">Mood Colors</div>
               <div data-field="buttons" data-type="ButtonsRow" class="proj-color-grid">
@@ -116,7 +116,7 @@
             </div>
           </div>
         </div>
-        <!-- Deck Group -->
+        <!-- Deck View Group -->
         <div data-type="DeckView" data-field="deck" class="proj-main-panel">
           <div class="proj-panel-header">Deck Page</div>
           <div data-type="Slider" data-field="luma" class="proj-inner-pannel"><label class="proj-slider-label">Bright</label><input type="range" min="0" max="255" value="128" id="ifw7n-3" class="proj-slider-value"/></div>
@@ -129,7 +129,7 @@
               <option value="4">Color Picker</option>
             </select>
           </div>
-          <div data-type="Container" data-field="content" class="proj-mode-content">
+          <div class="proj-mode-content"> <!-- Group of deck modes -->
             <div class="proj-inner-pannel">
               <div class="proj-inner-pannel-header">Mirror Lamp Mode</div>
             </div>
