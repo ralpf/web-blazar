@@ -6,6 +6,7 @@ import { Unit } from "../core/Unit";
 import { Composite } from "../containers/Composite";
 import { DOM } from "./DOM";
 import { RequestDispatcher } from "./RequestDispatcher";
+import { Confetti } from "../fx/Confetti";
 
 
 
@@ -77,8 +78,8 @@ export class Application {
             jobj = JSON.parse(sjson);
         }
         catch { err(`can't parse json '${sjson}'`); }
-        
-        
+
+        this.rootUnit.syncState(jobj);
         logi(`... done sync webpage internals with extern json`);
     }
 
@@ -86,6 +87,7 @@ export class Application {
         logi(`will request esp32 for sync json ...`);
         const sjson = await RequestDispatcher.sendAsync("/esp/sync/state");
         this.syncStateOnRoot(sjson);
+        Confetti.shootRealistic();
     }
 
     private static parseUnitAttribute(element: HTMLElement, attribute: 'data-type' | 'data-roottype') {

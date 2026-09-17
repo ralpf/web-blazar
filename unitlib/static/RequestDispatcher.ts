@@ -42,7 +42,7 @@ export class RequestDispatcher {
         const i = url.lastIndexOf('/');
         const lastPart = url.slice(i + 1);
         if (!lastPart.includes('=')) return url;
-        const path = url.slice(0, i + 1);
+        const path = i >= 0 ? url.slice(0, i) : '';
         return `${path || '/'}?${lastPart}`;
     }
 

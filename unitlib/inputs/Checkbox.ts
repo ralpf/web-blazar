@@ -1,15 +1,24 @@
+import { logi } from "../core/global";
 import { DOM } from "../static/DOM";
 import { InputUnit } from "./InputUnit";
 
 
 export class Checkbox extends InputUnit {
 
+    private checkbox!: HTMLInputElement;
+
+
     protected prepareInnerElements(): void {
-        const checkbox = DOM.Find(this.root, 'input[type="checkbox"]') as HTMLInputElement;
-        checkbox.addEventListener('change', () => this.invokeCallback(checkbox.checked));
+        this.checkbox = DOM.Find(this.root, 'input[type="checkbox"]') as HTMLInputElement;
+        this.checkbox.addEventListener('change', () => this.invokeCallback(this.checkbox.checked));
     }
 
     protected setInputVisualTo(value: any): void {
-        throw new Error("Method not implemented.");
+        const type = typeof value;
+        if (type === 'boolean') {
+            this.checkbox.checked = value;
+            this.invokeCallback(value);
+        }
+        else logi(`unexpected value '${value}' of type '${type}'`);
     }
 }

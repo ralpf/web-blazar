@@ -1,6 +1,6 @@
 import { JObject } from "../core/aliases";
 import { Assert } from "../core/Assert";
-import { err, log } from "../core/global";
+import { err, log, logi } from "../core/global";
 import { Unit } from "../core/Unit";
 import { InputUnit } from "../inputs/InputUnit";
 
@@ -52,13 +52,18 @@ export class Composite extends Unit {
     public syncState(jobj: JObject): void {
         for (const [name, value] of Object.entries(jobj)) {
             Assert.Defined(name);
+            if (this.hasField(name) === false) {
+                logi(`skip sync '${name}' on '${this.getItsParentFieldName()}' because the latest lacks former field with such name`);
+                continue;
+            }
+            // the field is present
             if (typeof value === 'object') {
                 const nextUnit = this.getField<Composite>(name);
                 nextUnit.syncState(value as JObject);
             } else {    // primitive value or array
                 const leafInput = this.getField<InputUnit>(name);
                 leafInput.showValue(value);
-                err(`this method is incomplete, because of composite hierarchy`);
+                //err(`this method is incomplete, because of composite hierarchy`);
             }
         }
     }
@@ -68,6 +73,11 @@ export class Composite extends Unit {
         const unit = this.fields[fieldName];
         Assert.False(!unit, `no filed '${this.typeName}.${fieldName}' was found (refactored?) Available: [${Object.keys(this.fields).join(", ")}]`);
         return unit as T;
+    }
+
+
+    protected hasField(fieldName: string): boolean {
+        return Object.prototype.hasOwnProperty.call(this.fields, fieldName);
     }
 
 

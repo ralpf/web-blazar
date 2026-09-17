@@ -7,6 +7,7 @@ import { Switcher } from "unitlib/misc/Switcher";
 import confetti from "canvas-confetti";
 import { DOM } from "unitlib/static/DOM";
 import { logi } from "unitlib/core/global";
+import { Confetti } from "unitlib/fx/Confetti";
 
 
 export class ViewsManager extends Composite {
@@ -65,38 +66,10 @@ export class ViewsManager extends Composite {
         const span = document.getElementById('ID-span-star');
         Assert.Defined(span);
         span.addEventListener('click', () => {
-            this.shootParticles(span);  // Particle FX
+            Confetti.shootTwice(span);  // Particle FX
             if (this.isStarAnimated) return;
             AnimationFX.startHeader(span,() => this.isStarAnimated = true, () => this.isStarAnimated = false);
         });
-    }
-
-    private shootParticles(element: HTMLElement) {
-        // move this method to some other place, later
-        const rect = element.getBoundingClientRect();
-
-        confetti({
-            particleCount: 30,
-            spread: 360,
-            startVelocity: 15,
-            origin: {
-                x: (rect.left + rect.width / 2) / window.innerWidth,
-                y: (rect.top + rect.height / 2) / window.innerHeight
-            },
-        });
-        
-        setTimeout(() => {
-            confetti({
-                particleCount: 160,
-                spread: 70,
-                startVelocity: 25,
-                origin: {
-                    x: (rect.left + rect.width / 2) / window.innerWidth,
-                    y: (rect.top + rect.height / 2) / window.innerHeight
-                },
-                angle: 240, // Down and right.
-            });
-        }, 150); // Delay in milliseconds.
     }
 
 }

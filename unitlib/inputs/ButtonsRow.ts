@@ -1,3 +1,4 @@
+import { logi } from "../core/global";
 import { DOM } from "../static/DOM";
 import { InputUnit } from "./InputUnit";
 
@@ -10,6 +11,6 @@ export class ButtonsRow extends InputUnit {
     }
 
     protected setInputVisualTo(value: any): void {
-        throw new Error("Method not implemented.");
+        logi(`this class lacks visual feedback. Value was ${value}`);
     }
 }

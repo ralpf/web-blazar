@@ -5,14 +5,16 @@ import { InputUnit } from "./InputUnit";
 
 export class Slider extends InputUnit {
 
+    private slider!: HTMLInputElement;
+
     protected override prepareInnerElements(): void {
-        const slider = DOM.Find(this.root, 'input[type="range"]') as HTMLInputElement;
-        slider.addEventListener('change', () => this.invokeCallback(slider.valueAsNumber));
+        this.slider = DOM.Find(this.root, 'input[type="range"]') as HTMLInputElement;
+        this.slider.addEventListener('change', () => this.invokeCallback(this.slider.valueAsNumber));
     }
 
     protected override setInputVisualTo(value: any): void {
-        const slider = DOM.Find(this.root, 'input[type="range"]') as HTMLInputElement;
-        slider.valueAsNumber = Number(value);
+        if (Number.isFinite(value)) this.slider.valueAsNumber = value;
+        else log(`invalid slider value '${value}'`);
     }
 }
 

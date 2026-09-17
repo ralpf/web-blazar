@@ -37,6 +37,15 @@ export class ButtonsRowSig extends ButtonsRow {
     }
 
 
+    protected setInputVisualTo(value: any): void {
+        if (Number.isInteger(value) && value >= 0 && value < this.signals.length) {
+            for (const x of this.signals) this.setSignalOnOff(x, false);
+            this.setSignalOnOff(this.signals[value], true);
+        }
+        else logi(`invalid button signal index '${value}'`);
+    }
+
+
 }
 
 //type Signal = { on: Unit, of: Unit };

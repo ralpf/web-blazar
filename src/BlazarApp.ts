@@ -3,12 +3,13 @@ import { ViewsManager } from "./views/ViewsManager";
 import { Application } from "unitlib/static/Application";
 import { RequestDispatcher } from "unitlib/static/RequestDispatcher";
 import { RequestReceiver } from "unitlib/static/RequestReceiver";
+import { Confetti } from "unitlib/fx/Confetti";
 
 
 export class BlazarApp extends Application
  {
 
-    private static mainPager: ViewsManager;
+    private static viewsManager: ViewsManager;
 
 
     static async initializeAsync() {
@@ -18,7 +19,9 @@ export class BlazarApp extends Application
         RequestReceiver.enabled = true;
 
         Assert.True(Application.getRootUnit() instanceof ViewsManager);
-        this.mainPager = Application.getRootUnit() as ViewsManager;
+        this.viewsManager = Application.getRootUnit() as ViewsManager;
+        BlazarApp.syncFromESP();
+        Confetti.shootRealistic();
     }
 
     static bindKeyboard() {
