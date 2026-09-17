@@ -19,21 +19,23 @@ export class RequestDispatcher {
         // remove # incoming from colors, since in url it is a separator. ESP can handle colors w/o # prefix
         url = this.removeHash(url);
         // add baseUrl, the address of the esp
-        this.send(`${this.baseUrl}${url}`)
+        this.send(url);
     }
 
 
     public static send(url: string) {
         if (!this.enabled) { logi(`ignore request - the class is disabled ...`); return; }
         Assert.Defined(url);
-        this.GET(url);
+        if (!url.startsWith('/')) url = '/' + url;
+        this.GET(this.baseUrl + url);
     }
 
 
     public static async sendAsync(url: string): Promise<string> {
         if (!this.enabled) { logi(`ignore request - the class is disabled ...`); return ''; }
         Assert.Defined(url);
-        return this.GET(url);
+        if (!url.startsWith('/')) url = '/' + url;
+        return this.GET(this.baseUrl + url);
     }
 
     private static formatQuerrySection(url: string): string {
