@@ -132,10 +132,10 @@ export class Application {
                 log('    '.repeat(depth + 1) + `+ ${typeName}`);        // pretty log
                 const newUnit = new unitCtor(child);                    // ~ build the *Unit class
                 newUnit.reportsTo(parentUnit);                          // this is used for url up-propagation
-                this.recursiveBuildUnit(newUnit, child, depth + 1);     // recurse in it's own dom inner tree, depth is for debug
-                if (newUnit instanceof Composite) newUnit.onObjectConstructed(); // think how to rename the mehtod or refactor the dom walker
                 // attach the instance to it's parent, if the dom object uses a fields, but NOT 'none'
                 if (fieldName !== 'none') this.findCompositeParent(newUnit).attachClassField(fieldName, newUnit);
+                this.recursiveBuildUnit(newUnit, child, depth + 1);     // recurse in it's own dom inner tree, depth is for debug
+                if (newUnit instanceof Composite) newUnit.onObjectConstructed(); // think how to rename the mehtod or refactor the dom walker
             }
             else {                                                      // no [data-type], scan in inner elements
                 this.recursiveBuildUnit(parentUnit, child, depth + 1);

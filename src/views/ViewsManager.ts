@@ -6,6 +6,7 @@ import { Composite } from "unitlib/containers/Composite";
 import { Switcher } from "unitlib/misc/Switcher";
 import confetti from "canvas-confetti";
 import { DOM } from "unitlib/static/DOM";
+import { logi } from "unitlib/core/global";
 
 
 export class ViewsManager extends Composite {
@@ -17,15 +18,22 @@ export class ViewsManager extends Composite {
 
 
     public initializeClassFields(): void {
-        this.selector = this.getField<ButtonsRowSig>('viewsSelect')
+        this.selector = this.getField<ButtonsRowSig>('viewsSelect');
         const rootPanelsEl = DOM.FindWithTag(this.root, 'mainview-panels');
-        this.panels = new Switcher(rootPanelsEl, 1);
+        this.panels = new Switcher(rootPanelsEl);
     }
 
     protected initializeEvents(): void {
-        this.selector.callback = (idx) => this.panels.activeIdx = idx;
+        this.selector.callback = this.onSelectorChangeView.bind(this);
         this.registerBlazarClick();
         this.registerStarClick();
+        // select the Lamp panel (idx=1)
+        this.selector.invokeOnChange(1);
+    }
+
+
+    private onSelectorChangeView(i: number): void {
+        this.panels.activeIdx = i;
     }
 
 

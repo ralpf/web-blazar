@@ -14,16 +14,14 @@ export class ColorArray extends FormUnit {
 
 
     protected initializeClassFields(): void {
-        // fields are attached by dom objects. Assign class members here
         this.prototype = this.getField('prototype');
         this.container = this.prototype.root.parentElement!;
         this.prototype.root.remove(); // remove from dom, but will keep the subtree alive
+    }
+    
+    protected initializeEvents(): void {
         this.cloneTemplate(0);
         this.checkAuxButtonsVisibility();
-    }
-
-    protected initializeEvents(): void {
-        // events are attached when items are added
     }
 
     private cloneTemplate(idx: number) {
