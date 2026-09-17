@@ -1,6 +1,6 @@
-import { CompositeUnit } from "./CompositeUnit";
+import { Composite } from "./Composite";
 
 
-export abstract class FormUnit extends CompositeUnit {
+export abstract class FormUnit extends Composite {
 
 }

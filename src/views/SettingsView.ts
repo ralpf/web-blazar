@@ -1,8 +1,8 @@
-import { CompositeUnit } from "unitlib/containers/CompositeUnit";
+import { Composite } from "unitlib/containers/Composite";
 import { Slider } from "unitlib/inputs/Slider";
 
 
-export class SettingsView extends CompositeUnit {
+export class SettingsView extends Composite {
 
     private luma!: Slider;
 

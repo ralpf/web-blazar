@@ -1,35 +1,35 @@
-import { CompositeUnit } from "unitlib/containers/CompositeUnit";
-import { Container } from "unitlib/containers/Container";
 import { Assert } from "unitlib/core/Assert";
 import { ButtonsRowSig } from "unitlib/inputs/ButtonsRowSig";
 import { InputUnit } from "unitlib/inputs/InputUnit";
 import { AnimationFX } from "../anim/AnimationFX";
-
+import { Composite } from "unitlib/containers/Composite";
+import { Switcher } from "unitlib/misc/Switcher";
 import confetti from "canvas-confetti";
+import { DOM } from "unitlib/static/DOM";
 
 
-export class ViewsManager extends CompositeUnit {
+export class ViewsManager extends Composite {
 
-    protected viewsSelect! : InputUnit;
-    protected viewsRoot!   : Container;
+    protected selector! : InputUnit;
+    protected panels!   : Switcher;
 
     private   isStarAnimated = false;
 
 
     public initializeClassFields(): void {
-        this.viewsSelect = this.getField<ButtonsRowSig>('viewsSelect')
-        this.viewsRoot   = this.getField<Container>('viewsRoot');
+        this.selector = this.getField<ButtonsRowSig>('viewsSelect')
+        const rootPanelsEl = DOM.FindWithTag(this.root, 'mainview-panels');
+        this.panels = new Switcher(rootPanelsEl, 1);
     }
 
     protected initializeEvents(): void {
-        this.viewsSelect.callback = (idx) => this.viewsRoot.activeIdx = idx;
-        this.viewsSelect.invokeOnChange(1);
+        this.selector.callback = (idx) => this.panels.activeIdx = idx;
         this.registerBlazarClick();
         this.registerStarClick();
     }
 
 
-private registerBlazarClick() {
+    private registerBlazarClick() {
         const clickTimeWindowMs = 1000;
         const span = document.getElementById('ID-span-blazar');
         Assert.Defined(span);
@@ -48,7 +48,7 @@ private registerBlazarClick() {
                 clickTimer = null;
                 clickCount = 0;
                 // action on tripple click
-                this.viewsRoot.activeIdx = 3;   // dev hidden page
+                this.panels.activeIdx = 3;   // dev hidden page
             }
         });
     }

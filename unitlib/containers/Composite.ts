@@ -5,7 +5,7 @@ import { Unit } from "../core/Unit";
 import { InputUnit } from "../inputs/InputUnit";
 
 
-export abstract class CompositeUnit extends Unit {
+export class Composite extends Unit {
 
     private fields: Record<string, Unit> = {}
 
@@ -36,11 +36,11 @@ export abstract class CompositeUnit extends Unit {
         if ((i = url.indexOf('/')) >= 0) {                                      // lamp/flik?hSpd=45
             nextName = url.slice(0, i);
             payload  = url.slice(i + 1);
-            this.getField<CompositeUnit>(nextName).syncField(payload);
+            this.getField<Composite>(nextName).syncField(payload);
         } else if ((i = url.indexOf('?')) >= 0) {                                    // flik?hSpd=45
             nextName = url.slice(0, i);
             payload  = url.slice(i + 1);
-            this.getField<CompositeUnit>(nextName).syncField(payload);
+            this.getField<Composite>(nextName).syncField(payload);
         } else if ((i = url.indexOf('=')) >= 0) {                                         // hSpd=45
             nextName = url.slice(0, i);
             payload  = url.slice(i + 1);
@@ -53,7 +53,7 @@ export abstract class CompositeUnit extends Unit {
         for (const [name, value] of Object.entries(jobj)) {
             Assert.Defined(name);
             if (typeof value === 'object') {
-                const nextUnit = this.getField<CompositeUnit>(name);
+                const nextUnit = this.getField<Composite>(name);
                 nextUnit.syncState(value as JObject);
             } else {    // primitive value or array
                 const leafInput = this.getField<InputUnit>(name);
@@ -63,14 +63,27 @@ export abstract class CompositeUnit extends Unit {
         }
     }
 
-    /** generic way to access a delayed class field */
+
     protected getField<T extends Unit>(fieldName: string): T {
         const unit = this.fields[fieldName];
         Assert.False(!unit, `no filed '${this.typeName}.${fieldName}' was found (refactored?) Available: [${Object.keys(this.fields).join(", ")}]`);
         return unit as T;
     }
 
-    protected abstract initializeClassFields(): void;
-    protected abstract initializeEvents(): void;
+
+    protected getNestedField<T extends Unit>(fieldPath: string): T {
+        const parts = fieldPath.split('.');
+        if (parts.some(x => !x)) err(`invalid field path '${fieldPath}'`);
+        let unit: Unit = this;
+        for (const part of parts) {
+            if (!(unit instanceof Composite))
+                err(`can't resolve '${part}' in '${fieldPath}': '${unit.typeName}' is not Composite`);
+            unit = unit.getField<Unit>(part);
+        }
+        return unit as T;
+    }
+
+    protected initializeClassFields(): void {};
+    protected initializeEvents(): void {};
 
 }

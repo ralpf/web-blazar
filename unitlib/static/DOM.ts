@@ -61,4 +61,14 @@ export class DOM {
         return names.reverse().join('/') + id;
     }
 
+
+    static getIsVisible(el : HTMLElement) : boolean {
+        return getComputedStyle(el).display !== 'none';
+    }
+
+
+    static setIsVisible(el: HTMLElement, isVisible: boolean): void {
+        el.style.display = isVisible ? 'flex' : 'none';
+    }
+
 }

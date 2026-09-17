@@ -1,4 +1,4 @@
-import { CompositeUnit } from "unitlib/containers/CompositeUnit";
+import { Composite } from "unitlib/containers/Composite";
 import { log, logi } from "unitlib/core/global";
 import { ButtonOne } from "unitlib/inputs/ButtonOne";
 import { Application } from "unitlib/static/Application";
@@ -7,7 +7,7 @@ import { RequestDispatcher } from "unitlib/static/RequestDispatcher";
 import { RequestReceiver } from "unitlib/static/RequestReceiver";
 
 
-export class DevView extends CompositeUnit {
+export class DevView extends Composite {
 
     private logLines!   : HTMLElement;
     private wsocketOnOf!: HTMLElement;

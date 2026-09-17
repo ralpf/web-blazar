@@ -1,21 +1,23 @@
-import { CompositeUnit } from "unitlib/containers/CompositeUnit";
-import { Container } from "unitlib/containers/Container";
+import { Composite } from "unitlib/containers/Composite";
 import { Dropdown } from "unitlib/inputs/Dropdown";
 import { Slider } from "unitlib/inputs/Slider";
 import { AnimationFX } from "../anim/AnimationFX";
+import { DOM } from "unitlib/static/DOM";
+import { Switcher } from "unitlib/misc/Switcher";
 
 
-export class DeckView extends CompositeUnit {
+export class DeckView extends Composite {
 
     private luma!     : Slider;
     private dropdown! : Dropdown;
-    private content!  : Container;
+    private panels!   : Switcher;
 
 
     protected initializeClassFields(): void {
         this.luma = this.getField('luma');
-        this.dropdown = this.getField('dropdown');
-        this.content = this.getField('content');
+        this.dropdown = this.getField('mode');
+        const panelsRootEl = DOM.FindWithTag(this.root, 'deck-panels');
+        this.panels = new Switcher(panelsRootEl);
     }
 
     protected initializeEvents(): void {
@@ -25,8 +27,8 @@ export class DeckView extends CompositeUnit {
         AnimationFX.sliderLuma(this.luma, 0.33);
     }
 
-        private onModeChanged(n: number) {
-        this.content.activeIdx = n;
+    private onModeChanged(n: number) {
+        this.panels.activeIdx = n;
         this.propagateURL(`mode=${n}`);
     }
 

@@ -1,4 +1,4 @@
-import { CompositeUnit } from "../containers/CompositeUnit";
+import { Composite } from "../containers/Composite";
 import { Assert } from "../core/Assert";
 import { err, log } from "../core/global";
 import { Application } from "./Application";

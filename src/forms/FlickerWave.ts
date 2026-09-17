@@ -2,26 +2,29 @@ import { FormUnit } from "unitlib/containers/FormUnit";
 import { Checkbox } from "unitlib/inputs/Checkbox";
 import { Numeral } from "unitlib/inputs/Numeral";
 import { Unit } from "unitlib/core/Unit";
+import { DOM } from "unitlib/static/DOM";
+import { Switcher } from "unitlib/misc/Switcher";
 
 
 
 export class FlickerWave extends FormUnit {
 
     private checkbox!: Checkbox;
-    private content! : Unit;
     private hueSpeed!: Numeral;
     private hueAmplitude!: Numeral;
     private lumaSpeed!: Numeral;
     private lumaAmplitude!: Numeral;
+    private panel! : HTMLElement;
 
 
     protected initializeClassFields(): void {
-        this.checkbox      = this.getField('checkbox');
-        this.content       = this.getField('content');
-        this.hueSpeed      = this.getField('hueSpeed');
-        this.hueAmplitude  = this.getField('hueAmplitude');
-        this.lumaSpeed     = this.getField('lumaSpeed');
-        this.lumaAmplitude = this.getField('lumaAmplitude');
+        this.checkbox      = this.getField('isOn');
+
+        this.hueSpeed      = this.getNestedField('hue.spd');
+        this.hueAmplitude  = this.getNestedField('hue.ampl');
+        this.lumaSpeed     = this.getNestedField('val.spd');
+        this.lumaAmplitude = this.getNestedField('val.ampl');
+        this.panel = DOM.FindWithTag(this.root, 'panel');
     }
 
     protected initializeEvents(): void {
@@ -33,7 +36,7 @@ export class FlickerWave extends FormUnit {
     }
 
     private setFormOnOff(isOn: boolean) {
-        this.content.isVisible = isOn;
+        DOM.setIsVisible(this.panel, isOn);
         this.propagateURL(`on=${isOn ? 1 : 0}`);
     }
 

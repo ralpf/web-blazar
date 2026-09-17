@@ -3,7 +3,7 @@ import { buildUnitRegistry } from "../core/global";
 import { Action, UnitCTOR } from "../core/aliases";
 import { Assert } from "../core/Assert";
 import { Unit } from "../core/Unit";
-import { CompositeUnit } from "../containers/CompositeUnit";
+import { Composite } from "../containers/Composite";
 import { DOM } from "./DOM";
 import { RequestDispatcher } from "./RequestDispatcher";
 
@@ -14,10 +14,10 @@ import { RequestDispatcher } from "./RequestDispatcher";
 /** Extend this class to make a web app */
 export class Application {
 
-    private static rootUnit: CompositeUnit;
+    private static rootUnit: Composite;
 
     /** get a root *Unit type from DOM */
-    public static getRootUnit(): CompositeUnit {
+    public static getRootUnit(): Composite {
         return this.rootUnit;
     }
 
@@ -48,7 +48,7 @@ export class Application {
         const newUnit = new ctor(newElement) as T;
         newUnit.reportsTo(parentUnit);
         this.recursiveBuildUnit(newUnit, newUnit.root, 0);
-        if (newUnit instanceof CompositeUnit) newUnit.onObjectConstructed();
+        if (newUnit instanceof Composite) newUnit.onObjectConstructed();
         return newUnit;
     }
 
@@ -88,23 +88,28 @@ export class Application {
         this.syncStateOnRoot(sjson);
     }
 
+    private static parseUnitAttribute(element: HTMLElement, attribute: 'data-type' | 'data-roottype') {
+        const value = element.getAttribute(attribute) ?? '';
+        const parts = value.split('.');
+        Assert.True(parts.length === 2 && !!parts[0] && !!parts[1],
+            `DOM el. ${DOM.elementDomPath(element)} expected ${attribute}="ClassName.fieldName", got '${value}'`);
+        return { typeName: parts[0], fieldName: parts[1] };
+    }
+
     private static buildRootUnit() {
         logi(`searching for DOM root Unit ...`);
 
-        const allElements = Array.from( document.querySelectorAll(`[data-roottype]`) );
+        const allElements = Array.from( document.querySelectorAll<HTMLElement>(`[data-roottype]`) );
         if (allElements.length === 0) err(`no [data-roottype=*] found in DOM`);
         if (allElements.length > 1)   err(`multiple [data-roottype=*] found in DOM`);
 
         const rootElement = allElements[0];
-        const fieldName = rootElement.getAttribute('data-field');
-        Assert.Defined(fieldName, `expected to have field name set for root unit`);
-        const ctorName = rootElement.getAttribute('data-roottype');
-        Assert.Defined(ctorName);
+        const { typeName, fieldName } = this.parseUnitAttribute(rootElement, 'data-roottype');
 
-        const unitCtor = unitRegistry[ctorName];
-        Assert.Defined(unitCtor, `unknown root type '${ctorName}' (not in ctor registry)`);
+        const unitCtor = unitRegistry[typeName];
+        Assert.Defined(unitCtor, `unknown root type '${typeName}' (not in ctor registry)`);
         const unit = new unitCtor(rootElement);
-        Assert.True(unit instanceof CompositeUnit);
+        Assert.True(unit instanceof Composite);
 
         // important not to use this, as the 'this' can be a derived type (i.e. BlazarApp)
         // which will create efectivelly 2 references Application.rootUnit and BlazarApp.rootUnit and mess things up
@@ -115,27 +120,22 @@ export class Application {
     private static buildAutoUnits() {
         log('auto-discovering of Unit(s)');
         this.recursiveBuildUnit(this.rootUnit, this.rootUnit.root, 0);
-        this.rootUnit instanceof CompositeUnit && this.rootUnit.onObjectConstructed();
+        this.rootUnit instanceof Composite && this.rootUnit.onObjectConstructed();
     }
 
     private static recursiveBuildUnit(parentUnit: Unit, domElement: HTMLElement, depth: number) {
         for (const child of  Array.from(domElement.children, x => x as HTMLElement)) {
-            const typeName = child.dataset.type;
-            const fieldName = child.dataset.field;
-            const domPath = DOM.elementDomPath(child);
-            //log(`-------- debug I'm in ${Unit.elementDomPath(child)} data-type=${typeName}`);
-
-            if (typeName) {   // found [data-type] attrib
-                Assert.False(!fieldName, `Dom el. ${domPath} declared type '${typeName}' but is missing 'data-field' attribute`);
+            if (child.hasAttribute('data-type')) {
+                const { typeName, fieldName } = this.parseUnitAttribute(child, 'data-type');
                 const unitCtor = unitRegistry[typeName];
-                if (!unitCtor) err(`DOM el. ${domPath} attached type '${typeName}' that is NOT part of Unit family ctors`);
+                if (!unitCtor) err(`DOM el. ${DOM.elementDomPath(child)} attached type '${typeName}' that is NOT part of Unit family ctors`);
                 log('    '.repeat(depth + 1) + `+ ${typeName}`);        // pretty log
                 const newUnit = new unitCtor(child);                    // ~ build the *Unit class
                 newUnit.reportsTo(parentUnit);                          // this is used for url up-propagation
                 this.recursiveBuildUnit(newUnit, child, depth + 1);     // recurse in it's own dom inner tree, depth is for debug
-                if (newUnit instanceof CompositeUnit) newUnit.onObjectConstructed(); // think how to rename the mehtod or refactor the dom walker
+                if (newUnit instanceof Composite) newUnit.onObjectConstructed(); // think how to rename the mehtod or refactor the dom walker
                 // attach the instance to it's parent, if the dom object uses a fields, but NOT 'none'
-                if (fieldName !== 'none') this.findCompositeParent(newUnit).attachClassField(fieldName!, newUnit);
+                if (fieldName !== 'none') this.findCompositeParent(newUnit).attachClassField(fieldName, newUnit);
             }
             else {                                                      // no [data-type], scan in inner elements
                 this.recursiveBuildUnit(parentUnit, child, depth + 1);
@@ -143,11 +143,11 @@ export class Application {
         }
     }
 
-    private static findCompositeParent(unit: Unit): CompositeUnit {
+    private static findCompositeParent(unit: Unit): Composite {
         let curr = unit.parentUnit;
         while (true) {
-            if (!curr) err(`DOM el. ${unit.domPath} does not have a parent that is ${CompositeUnit.name}`);
-            if (curr instanceof CompositeUnit) return curr;
+            if (!curr) err(`DOM el. ${unit.domPath} does not have a parent that is ${Composite.name}`);
+            if (curr instanceof Composite) return curr;
             curr = curr.parentUnit;
         }
     }

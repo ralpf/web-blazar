@@ -13,13 +13,13 @@
   <body class="proj-page">
     <div class="proj-spacer proj-hidden"></div>
     <div class="proj-legacy-checkbox proj-hidden"><label for="ilcvt">Flicker</label><input type="checkbox" name="" value=""/></div>
-    <div data-roottype="ViewsManager" data-field="esp" class="proj-app">
+    <div data-roottype="ViewsManager.esp" class="proj-app">
       <div class="proj-header">
         <div class="proj-header-title">TV LED dashboard complex v10</div>
         <div class="proj-header-brand"><span id="ID-span-blazar" class="proj-header-action">Blazar</span><span id="ID-span-star" class="proj-header-star">🌠</span></div>
       </div>
       <!-- Select Buttons Header -->
-      <div data-type="ButtonsRowSig" data-field="viewsSelect" class="proj-mode">
+      <div data-type="ButtonsRowSig.viewsSelect" class="proj-mode">
         <div data-tag="buttons" class="proj-mode-buttons">
           <button type="button" class="proj-mode-bt">
             <div>Global</div>
@@ -49,17 +49,17 @@
           </div>
         </div>
       </div>
-      <div class="proj-main">                                            <!-- Group of all views -->
+      <div data-tag="mainview-panels" class="proj-main">                 <!-- Group of all views -->
         <!-- Global Settings View Group -->
-        <div data-type="SettingsView" data-field="glob" class="proj-main-panel proj-hidden">
+        <div data-type="SettingsView.glob" class="proj-main-panel proj-hidden">
           <div class="proj-panel-header">Settings Page</div>
-          <div data-type="Slider" data-field="luma" class="proj-inner-pannel"><label class="proj-slider-label">Bright</label><input type="range" min="0" max="255" value="128" id="ifw7n" class="proj-slider-value"/></div>
+          <div data-type="Slider.luma" class="proj-inner-pannel"><label class="proj-slider-label">Bright</label><input type="range" min="0" max="255" value="128" id="ifw7n" class="proj-slider-value"/></div>
         </div>
         <!-- Lamp View Group -->
-        <div data-type="LampView" data-field="lamp" class="proj-main-panel proj-hidden">
+        <div data-type="LampView.lamp" class="proj-main-panel proj-hidden">
           <div class="proj-panel-header">Blazar Page</div>
-          <div data-type="Slider" data-field="luma" class="proj-inner-pannel proj-input-slider proj-slider-row"><label class="proj-slider-label">Bright</label><input type="range" min="0" max="255" value="128" id="ifw7n-2" class="proj-slider-value-spaced"/></div>
-          <div data-type="Dropdown" data-field="mode" class="proj-inner-pannel proj-select-row proj-mobile-inset">
+          <div data-type="Slider.luma" class="proj-inner-pannel proj-input-slider proj-slider-row"><label class="proj-slider-label">Bright</label><input type="range" min="0" max="255" value="128" id="ifw7n-2" class="proj-slider-value-spaced"/></div>
+          <div data-type="Dropdown.mode" class="proj-inner-pannel proj-select-row proj-mobile-inset">
             <label for="ID-lamp-mode-select">Lamp Mode</label>
             <select type="text" id="ID-lamp-mode-select" class="proj-input-select">
               <option value="1">Mood</option>
@@ -69,25 +69,25 @@
           </div>
           <div class="proj-divider"></div>
           <!-- Lamp.Flicker -->
-          <div data-type="FlickerWave" data-field="flick" class="proj-inner-pannel proj-mobile-inset">
-            <div data-type="Checkbox" data-field="isOn" class="proj-input-checkbox"><label for="i657i">Flicker</label><input type="checkbox" name="" value="" id="ID-lamp-flicker"/></div>
-            <div data-type="Unit" data-field="content" class="proj-flicker-content proj-hidden">
-              <div class="proj-flicker-row">
+          <div data-type="FlickerWave.flick" class="proj-inner-pannel proj-mobile-inset">
+            <div data-type="Checkbox.isOn" class="proj-input-checkbox"><label for="i657i">Flicker</label><input type="checkbox" name="" value="" id="ID-lamp-flicker"/></div>
+            <div data-tag="panel" class="proj-flicker-content proj-hidden"> <!-- Content Panel -->
+              <div data-type="Composite.hue" class="proj-flicker-row">
                 <label class="proj-flicker-label">HUE</label>
-                <div data-type="Numeral" data-field="spd" class="proj-input-number"><label for="ij3bp" class="proj-number-label">⏲</label><input type="number" min="0" max="255" value="4" id="ij3bp" class="proj-number-value"/></div>
-                <div data-type="Numeral" data-field="ampl" class="proj-input-number"><label for="idcvjp">↝</label><input type="number" min="0" max="255" value="4" id="idcvjp" class="proj-number-value"/></div>
+                <div data-type="Numeral.spd" class="proj-input-number"><label for="ij3bp" class="proj-number-label">⏲</label><input type="number" min="0" max="255" value="4" id="ij3bp" class="proj-number-value"/></div>
+                <div data-type="Numeral.ampl" class="proj-input-number"><label for="idcvjp">↝</label><input type="number" min="0" max="255" value="4" id="idcvjp" class="proj-number-value"/></div>
               </div>
-              <div class="proj-flicker-row">
+              <div data-type="Composite.val" class="proj-flicker-row">
                 <label class="proj-flicker-label">Luma</label>
-                <div data-type="Numeral" data-field="spd" class="proj-input-number"><label for="ij3bp-2" class="proj-number-label">⏲</label><input type="number" min="0" max="255" value="4" id="ij3bp-2" class="proj-number-value"/></div>
-                <div data-type="Numeral" data-field="ampl" class="proj-input-number"><label for="idcvjp-2">↝</label><input type="number" min="0" max="255" value="4" id="idcvjp-2" class="proj-number-value"/></div>
+                <div data-type="Numeral.spd" class="proj-input-number"><label for="ij3bp-2" class="proj-number-label">⏲</label><input type="number" min="0" max="255" value="4" id="ij3bp-2" class="proj-number-value"/></div>
+                <div data-type="Numeral.ampl" class="proj-input-number"><label for="idcvjp-2">↝</label><input type="number" min="0" max="255" value="4" id="idcvjp-2" class="proj-number-value"/></div>
               </div>
             </div>
           </div>
-          <div >    <!-- Group of Lamp modes -->
-            <div data-type="MoodColors" data-field="mood" class="proj-inner-pannel">
+          <div data-tag="lamp-panels">    <!-- Group of Lamp modes -->
+            <div data-type="MoodColors.mood" class="proj-inner-pannel">
               <div class="proj-inner-pannel-header">Mood Colors</div>
-              <div data-field="buttons" data-type="ButtonsRow" class="proj-color-grid">
+              <div data-type="ButtonsRow.buttons" class="proj-color-grid">
                 <button type="button" class="proj-lampcolor-bt proj-color-red">Red</button>
                 <button type="button" class="proj-lampcolor-bt proj-color-cat">Cat</button>
                 <button type="button" class="proj-lampcolor-bt proj-color-sun">Sun</button>
@@ -96,15 +96,15 @@
                 <button type="button" class="proj-lampcolor-bt proj-color-ice">Ice</button>
               </div>
             </div>
-            <div data-type="SlidersHSV" data-field="sliders" class="proj-inner-pannel proj-hidden">
+            <div data-type="SlidersHSV.sliders" class="proj-inner-pannel proj-hidden">
               <div class="proj-inner-pannel-header">Sliders HSV</div>
-              <div data-type="Slider" data-field="hue" class="proj-input-slider"><label for="i05dwi" class="proj-slider-label">Hue</label><input type="range" min="0" max="255" value="128" id="i05dwi" class="proj-slider-value-spaced"/></div>
-              <div data-type="Slider" data-field="sat" class="proj-input-slider"><label for="i05dwi" class="proj-slider-label">Sat</label><input type="range" min="0" max="255" value="128" id="igstvh" class="proj-slider-value-spaced"/></div>
+              <div data-type="Slider.hue" class="proj-input-slider"><label for="i05dwi" class="proj-slider-label">Hue</label><input type="range" min="0" max="255" value="128" id="i05dwi" class="proj-slider-value-spaced"/></div>
+              <div data-type="Slider.sat" class="proj-input-slider"><label for="i05dwi" class="proj-slider-label">Sat</label><input type="range" min="0" max="255" value="128" id="igstvh" class="proj-slider-value-spaced"/></div>
             </div>
-            <div data-type="ColorArray" data-field="picker" class="proj-inner-pannel proj-hidden">
+            <div data-type="ColorArray.picker" class="proj-inner-pannel proj-hidden">
               <div class="proj-inner-pannel-header">Color Picker</div>
               <div class="proj-color-list">
-                <div data-type="ColorItem" data-field="prototype" class="proj-input-color">
+                <div data-type="ColorItem.prototype" class="proj-input-color">
                   <label for="is2ybh">▣ Ze Name</label>
                   <div class="proj-input-color-picker-zone">
                     <button type="button" data-tag="x" class="proj-color-remove">×</button>
@@ -117,10 +117,10 @@
           </div>
         </div>
         <!-- Deck View Group -->
-        <div data-type="DeckView" data-field="deck" class="proj-main-panel">
+        <div data-type="DeckView.deck" class="proj-main-panel">
           <div class="proj-panel-header">Deck Page</div>
-          <div data-type="Slider" data-field="luma" class="proj-inner-pannel"><label class="proj-slider-label">Bright</label><input type="range" min="0" max="255" value="128" id="ifw7n-3" class="proj-slider-value"/></div>
-          <div data-type="Dropdown" data-field="mode" class="proj-inner-pannel proj-select-row">
+          <div data-type="Slider.luma" class="proj-inner-pannel"><label class="proj-slider-label">Bright</label><input type="range" min="0" max="255" value="128" id="ifw7n-3" class="proj-slider-value"/></div>
+          <div data-type="Dropdown.mode" class="proj-inner-pannel proj-select-row">
             <label for="ID-deck-mode-select">Deck Mode</label>
             <select type="text" id="ID-deck-mode-select" class="proj-input-select">
               <option value="1">Mirror Lamp</option>
@@ -129,7 +129,7 @@
               <option value="4">Color Picker</option>
             </select>
           </div>
-          <div class="proj-mode-content"> <!-- Group of deck modes -->
+          <div data-tag="deck-panels" class="proj-mode-content"> <!-- Group of deck modes -->
             <div class="proj-inner-pannel">
               <div class="proj-inner-pannel-header">Mirror Lamp Mode</div>
             </div>
@@ -137,15 +137,15 @@
               <div class="proj-inner-pannel-header">Pallete mode</div>
               <div class="proj-panel-note">Download data json from ESP32</div>
             </div>
-            <div data-type="SlidersHSV" data-field="sliders" class="proj-inner-pannel proj-hidden">
+            <div data-type="SlidersHSV.sliders" class="proj-inner-pannel proj-hidden">
               <div class="proj-inner-pannel-header">Sliders mode</div>
-              <div data-type="Slider" data-field="hue" class="proj-input-slider"><label for="irxqbh" class="proj-slider-label">Hue</label><input type="range" min="0" max="255" value="128" id="irxqbh" class="proj-slider-value"/></div>
-              <div data-type="Slider" data-field="sat" class="proj-input-slider"><label for="iu3j3b" class="proj-slider-label">Sat</label><input type="range" min="0" max="255" value="128" id="iu3j3b" class="proj-slider-value"/></div>
+              <div data-type="Slider.hue" class="proj-input-slider"><label for="irxqbh" class="proj-slider-label">Hue</label><input type="range" min="0" max="255" value="128" id="irxqbh" class="proj-slider-value"/></div>
+              <div data-type="Slider.sat" class="proj-input-slider"><label for="iu3j3b" class="proj-slider-label">Sat</label><input type="range" min="0" max="255" value="128" id="iu3j3b" class="proj-slider-value"/></div>
             </div>
-            <div data-type="ColorArray" data-field="picker" class="proj-inner-pannel proj-hidden">
+            <div data-type="ColorArray.picker" class="proj-inner-pannel proj-hidden">
               <div class="proj-inner-pannel-header">COLOR PICKER mode</div>
               <div class="proj-color-list">
-                <div data-type="ColorItem" data-field="prototype" class="proj-input-color">
+                <div data-type="ColorItem.prototype" class="proj-input-color">
                   <label for="is2ybh">▣ Ze Name</label>
                   <div class="proj-input-color-picker-zone">
                     <button type="button" data-tag="x" class="proj-color-remove">×</button>
@@ -158,7 +158,7 @@
           </div>
         </div>
                               <!--================ DEV PANEL ================= -->
-        <div data-type="DevView" data-field="dev" class="proj-main-panel proj-dev-panel proj-hidden">
+        <div data-type="DevView.dev" class="proj-main-panel proj-dev-panel proj-hidden">
           <div class="proj-panel-header">WSocket Page</div>
           <div class="proj-dev-content">
             <div class="proj-connection-bar">                              <!--WS connect status -->
@@ -174,7 +174,7 @@
               </form>
             </div>
             <div class="proj-inner-pannel" data-tag="dev-action-button" 
-                     data-type="ButtonOne" data-field="actionButton">     <!--Test Action Button -->
+                     data-type="ButtonOne.actionButton">     <!--Test Action Button -->
               <button type="button" class="proj-mode-buttons">Test Action</button>
             </div>
             <div data-tag="logRoot" class="proj-log">                          <!--Log container -->
