@@ -1,0 +1,58 @@
+{
+  "glob": {
+    "luma": 0,
+    "gamma": 1
+  },
+  "lamp": {
+    "luma": 200,
+    "flick": {
+      "isOn": false,
+      "hue": {
+        "spd": 0,
+        "ampl": 0
+      },
+      "val": {
+        "spd": 0,
+        "ampl": 0
+      }
+    },
+    "mode": 2,
+    "mood": {
+      "col32": 16711935
+    },
+    "sliders": {
+      "hue": 200,
+      "sat": 255
+    },
+    "picker": {
+      "max": 8,
+      "cols32": [7828143]
+    }
+  },
+  "deck": {
+    "luma": 128,
+    "flick": {
+      "isOn": false,
+      "hue": {
+        "spd": 0,
+        "ampl": 0
+      },
+      "val": {
+        "spd": 0,
+        "ampl": 0
+      }
+    },
+    "mode": 2,
+    "sliders": {
+      "hue": 200,
+      "sat": 255
+    },
+    "picker": {
+      "max": 8,
+      "cols32": [15573699]
+    },
+    "palette": {
+      "idx": 0
+    }
+  }
+}
