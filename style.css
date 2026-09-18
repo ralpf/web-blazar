@@ -374,30 +374,6 @@ input[type=checkbox] {
     gap: 8px;
 }
 
-.proj-color-red {
-    background-color: rgba(239, 83, 83, 1);
-}
-
-.proj-color-cat {
-    background-color: rgba(236, 104, 231, 1);
-}
-
-.proj-color-sun {
-    background-color: rgba(234, 170, 68, 1);
-}
-
-.proj-color-fairy {
-    background-color: rgba(64, 241, 118, 1);
-}
-
-.proj-color-teal {
-    background-color: rgba(78, 234, 242, 1);
-}
-
-.proj-color-ice {
-    background-color: rgba(205, 222, 255, 1);
-}
-
 .proj-color-list {
     display: flex;
     flex-direction: column;

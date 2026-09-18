@@ -21,7 +21,6 @@ export class BlazarApp extends Application
         Assert.True(Application.getRootUnit() instanceof ViewsManager);
         this.viewsManager = Application.getRootUnit() as ViewsManager;
         BlazarApp.syncFromESP();
-        Confetti.shootRealistic();
     }
 
     static bindKeyboard() {
