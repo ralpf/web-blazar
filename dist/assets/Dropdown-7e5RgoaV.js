@@ -1,1 +1,0 @@
-import{D as e}from"./index-BlUrIuTe.js";import{InputUnit as t}from"./InputUnit-DuxmHKi1.js";class Dropdown extends t{prepareInnerElements(){const t=e.Find(this.root,"select");t.addEventListener("change",()=>this.invokeCallback(t.selectedIndex))}setInputVisualTo(e){throw new Error("Method not implemented.")}}export{Dropdown};
