@@ -1,0 +1,1 @@
+import{C as i}from"./index-BFYJ54s2.js";class SettingsView extends i{initializeClassFields(){this.luma=this.getField("luma")}initializeEvents(){this.luma.callback=i=>this.propagateURL(`luma=${i}`)}}export{SettingsView};

@@ -1,0 +1,1 @@
+import{D as s,l as t}from"./index-BFYJ54s2.js";import{InputUnit as e}from"./InputUnit-BdCDzyN3.js";class ButtonsRow extends e{prepareInnerElements(){s.FindAll(this.root,"button").forEach((s,t)=>s.addEventListener("click",()=>this.invokeCallback(t)))}setInputVisualTo(s){t(`this class lacks visual feedback. Value was ${s}`)}}export{ButtonsRow};
