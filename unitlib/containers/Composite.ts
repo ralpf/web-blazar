@@ -71,7 +71,7 @@ export class Composite extends Unit {
 
     protected getField<T extends Unit>(fieldName: string): T {
         const unit = this.fields[fieldName];
-        Assert.False(!unit, `no filed '${this.typeName}.${fieldName}' was found (refactored?) Available: [${Object.keys(this.fields).join(", ")}]`);
+        Assert.False(!unit, `no filed '${this.typeName}.${fieldName}' was found (refactored?) Available: [${Object.keys(this.fields).join(", ")}] at ${this.domPath}`);
         return unit as T;
     }
 

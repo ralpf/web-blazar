@@ -47,18 +47,23 @@ export class DOM {
 
 
     /**
-     * Prints a DOM hierarchy path to the element. Also ID, if available
-     ** Ex: div/div/div/select [someId]
+     * Prints a DOM hierarchy path to the element. Also ID and unit field path, if available
+     ** Ex: div/div/div/select [someId] [panel/mode/more]
      */
     static elementDomPath(el: HTMLElement): string {
         const names = [];
+        const fields = [];
         let curr: HTMLElement | null = el;
         while (curr) {
             names.push(curr.tagName.toLocaleLowerCase());
+            const type = curr.getAttribute('data-roottype') ?? curr.getAttribute('data-type');
+            const field = type?.split('.')[1];
+            if (field && field !== 'none') fields.push(field);
             curr = curr.parentElement;
         }
         const id = el.id ? ` [${el.id}]` : '';
-        return names.reverse().join('/') + id;
+        const fieldPath = fields.length ? ` [${fields.reverse().join('/')}]` : '';
+        return names.reverse().join('/') + id + fieldPath;
     }
 
 

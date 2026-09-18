@@ -1,11 +1,13 @@
 import { FormUnit } from "unitlib/containers/FormUnit";
 import { Application } from "unitlib/static/Application";
 import { ColorItem } from "../inputs/ColorItem";
+import { SyncUnit } from "unitlib/core/SyncUnit";
 
 
 export class ColorArray extends FormUnit {
 
     private prototype!: ColorItem;
+    private maxSync!  : SyncUnit;
     private container!: HTMLElement;
     private all       : ColorItem[] = [];
     private limit     : number = 16;
@@ -15,6 +17,7 @@ export class ColorArray extends FormUnit {
 
     protected initializeClassFields(): void {
         this.prototype = this.getField('prototype');
+        this.maxSync   = this.getField('max');
         this.container = this.prototype.root.parentElement!;
         this.prototype.root.remove(); // remove from dom, but will keep the subtree alive
     }
@@ -22,6 +25,7 @@ export class ColorArray extends FormUnit {
     protected initializeEvents(): void {
         this.cloneTemplate(0);
         this.checkAuxButtonsVisibility();
+        this.maxSync.callback = (value) => this.limit = value;
     }
 
     private cloneTemplate(idx: number) {

@@ -78,15 +78,17 @@ export class Application {
             jobj = JSON.parse(sjson);
         }
         catch { err(`can't parse json '${sjson}'`); }
-
+        
         this.rootUnit.syncState(jobj);
         logi(`... done sync webpage internals with extern json`);
     }
-
+    
     public static async syncFromESP() {
         logi(`will request esp32 for sync json ...`);
         const sjson = await RequestDispatcher.sendAsync("/esp/sync/state");
+        RequestDispatcher.enabled = false;
         this.syncStateOnRoot(sjson);
+        RequestDispatcher.enabled = true;
         Confetti.shootRealistic();
     }
 
