@@ -38,11 +38,11 @@ export class ColorItem extends InputUnit {
     }
 
     public setDelButtonVisible(isVisible: boolean) {
-        this.buttonDelUnit.isVisible = isVisible;
+        this.buttonDelUnit.root.style.visibility = isVisible ? 'visible' : 'hidden';
     }
 
     public setAddButtonVisible(isVisible: boolean) {
-        this.buttonAddUnit.isVisible = isVisible;
+        this.buttonAdd.style.visibility = isVisible ? 'visible' : 'hidden';
     }
 
     public getColorString(): string {

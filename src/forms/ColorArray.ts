@@ -6,11 +6,12 @@ import { SyncUnit } from "unitlib/core/SyncUnit";
 
 export class ColorArray extends FormUnit {
 
-    private prototype!: ColorItem;
-    private maxSync!  : SyncUnit;
-    private container!: HTMLElement;
-    private all       : ColorItem[] = [];
-    private limit     : number = 16;
+    private prototype!  : ColorItem;
+    private maxSync!    : SyncUnit;
+    private colorsSync! : SyncUnit;
+    private container!  : HTMLElement;
+    private all         : ColorItem[] = [];
+    private limit       : number = 16;
 
     private get count(): number { return this.all.length; }
 
@@ -18,6 +19,7 @@ export class ColorArray extends FormUnit {
     protected initializeClassFields(): void {
         this.prototype = this.getField('prototype');
         this.maxSync   = this.getField('max');
+        this.colorsSync= this.getField('cols32');
         this.container = this.prototype.root.parentElement!;
         this.prototype.root.remove(); // remove from dom, but will keep the subtree alive
     }
@@ -26,6 +28,7 @@ export class ColorArray extends FormUnit {
         this.cloneTemplate(0);
         this.checkAuxButtonsVisibility();
         this.maxSync.callback = (value) => this.limit = value;
+        this.colorsSync.callback = (value) => this.syncColorArray(value);
     }
 
     private cloneTemplate(idx: number) {
@@ -40,6 +43,16 @@ export class ColorArray extends FormUnit {
         this.all.splice(idx + 1, 0, item);
         // style
         item.setRandomColor();
+    }
+
+    private syncColorArray(arr: number[]) {
+        this.all.forEach(x => Application.removeUnit(x));
+        this.all = [];
+        arr.slice(0, this.limit).forEach((color, i) => {
+            this.cloneTemplate(this.count - 1);
+            this.all[i].setColor('#' + color.toString(16).padStart(6, '0'));
+        });
+        this.checkAuxButtonsVisibility();
     }
     
     //..........................................................................................UTIL

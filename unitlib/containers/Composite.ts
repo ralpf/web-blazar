@@ -57,7 +57,7 @@ export class Composite extends Unit {
                 continue;
             }
             // the field is present
-            if (typeof value === 'object') {
+            if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
                 const nextUnit = this.getField<Composite>(name);
                 nextUnit.syncState(value as JObject);
             } else {    // primitive value or array
