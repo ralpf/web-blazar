@@ -1,3 +1,4 @@
+import { err } from "unitlib/core/global";
 import { InputUnit } from "unitlib/inputs/InputUnit";
 import { DOM } from "unitlib/static/DOM";
 
@@ -29,9 +30,14 @@ export class NamedPalettes extends InputUnit {
     }
 
 
-    protected setInputVisualTo(value: string[]): void {
-        this.container.replaceChildren();
-        value.forEach((label, idx) => this.cloneButton(label, idx));
+    // protected setInputVisualTo(value: string[]): void {
+    //     this.container.replaceChildren();
+    //     value.forEach((label, idx) => this.cloneButton(label, idx));
+    //     this.updateSelection();
+    // }
+    protected setInputVisualTo(value: any): void {
+        if (typeof value !== 'number') err(`unexpected type '${typeof value}' (${value})`);
+        this.activeIdx = value;
         this.updateSelection();
     }
 

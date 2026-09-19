@@ -27,7 +27,7 @@ export class DeckView extends Composite {
         this.luma.callback     = (n: number) => this.propagateURL(`luma=${n}`);
         this.dropdown.callback = (n: number) => this.onModeChanged(n);
         this.palettes.callback = (i: number) => this.propagateURL(`pal=${i}`);
-        this.palettes.showValue(['Sunset', 'Ocean', 'Forest', 'Gamp']);
+        //this.palettes.showValue(['Sunset', 'Ocean', 'Forest', 'Gamp']);
         // just a coroutine example, keep it
         AnimationFX.sliderLuma(this.luma, 0.33);
     }

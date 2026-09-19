@@ -59,6 +59,8 @@ export class Composite extends Unit {
             // the field is present
             if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
                 const nextUnit = this.getField<Composite>(name);
+                Assert.True(nextUnit instanceof Composite,
+                    `JSON/Unit-tree mismatch at ${this.typeName}.${name}: expected it to be Composite, got '${nextUnit.typeName}'`);
                 nextUnit.syncState(value as JObject);
             } else {    // primitive value or array
                 const leafInput = this.getField<InputUnit>(name);
