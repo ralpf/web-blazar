@@ -7,6 +7,7 @@ import { Composite } from "../containers/Composite";
 import { DOM } from "./DOM";
 import { RequestDispatcher } from "./RequestDispatcher";
 import { Confetti } from "../fx/Confetti";
+import { RequestReceiver } from "./RequestReceiver";
 
 
 
@@ -33,10 +34,13 @@ export class Application {
     /** pass a list of constructors, they will be searched and resolved from DOM  */
     public static async initialize() {
         Assert.True(!this.rootUnit);   // only one call per session
+        RequestDispatcher.enabled = false;   // turn it off till we init the unit tree
         await buildUnitRegistry();
         this.buildRootUnit();
         this.buildAutoUnits();
+        RequestDispatcher.enabled = true;
         logi('... initialize() done');
+        this.getRootUnit().onUnitTreeReady();
     }
 
     public static cloneUnit<T extends Unit>(prototype: T, parentUnit: Unit, rootDomElement: Element): T {

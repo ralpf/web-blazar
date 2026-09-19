@@ -12,6 +12,13 @@ export class NamedPalettes extends InputUnit {
     private activeIdx! : number;
 
 
+    public rebuildButtons(value: string[]): void {
+        this.container.replaceChildren();
+        value.forEach((label, idx) => this.cloneButton(label, idx));
+        this.updateSelection();
+    }
+
+
     protected prepareInnerElements(): void {
         this.buttonProto = DOM.Find(this.root, 'button') as HTMLButtonElement;
         this.container = this.buttonProto.parentElement!;
@@ -30,11 +37,6 @@ export class NamedPalettes extends InputUnit {
     }
 
 
-    // protected setInputVisualTo(value: string[]): void {
-    //     this.container.replaceChildren();
-    //     value.forEach((label, idx) => this.cloneButton(label, idx));
-    //     this.updateSelection();
-    // }
     protected setInputVisualTo(value: any): void {
         if (typeof value !== 'number') err(`unexpected type '${typeof value}' (${value})`);
         this.activeIdx = value;

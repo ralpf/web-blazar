@@ -24,6 +24,16 @@ export class Composite extends Unit {
         this.initializeEvents();
     }
 
+    /** called when the html was parsed and all units were build and linked. Usefull to do post-init stuff, like fetch data from esp */
+    public onUnitTreeReady() {
+        // call the same method recursivelly. Override this method to add more action
+        for (const unit of Object.values(this.fields)) {
+            if (unit instanceof Composite) {
+                unit.onUnitTreeReady();
+            }
+        }
+    }
+
     /** use to sync just 1 input somewhere using a string url */
     public syncField(url: string) {
          // i.e. main/lamp/flik?hSpd=45 ;; note that url can't have leading /

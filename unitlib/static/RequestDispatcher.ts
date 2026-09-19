@@ -4,7 +4,7 @@ import { err, log, logi } from "../core/global";
 
 export class RequestDispatcher {
 
-    public  static enabled = false;
+    public  static enabled = true;
     private static readonly baseUrl = `http://${window.location.host}`;
 
 

@@ -5,6 +5,9 @@ import { AnimationFX } from "../anim/AnimationFX";
 import { DOM } from "unitlib/static/DOM";
 import { Switcher } from "unitlib/misc/Switcher";
 import { NamedPalettes } from "../forms/NamedPalettes";
+import { RequestDispatcher } from "unitlib/static/RequestDispatcher";
+import { logi } from "unitlib/core/global";
+import { Assert } from "unitlib/core/Assert";
 
 
 export class DeckView extends Composite {
@@ -27,7 +30,6 @@ export class DeckView extends Composite {
         this.luma.callback     = (n: number) => this.propagateURL(`luma=${n}`);
         this.dropdown.callback = (n: number) => this.onModeChanged(n);
         this.palettes.callback = (i: number) => this.propagateURL(`pal=${i}`);
-        //this.palettes.showValue(['Sunset', 'Ocean', 'Forest', 'Gamp']);
         // just a coroutine example, keep it
         AnimationFX.sliderLuma(this.luma, 0.33);
     }
@@ -35,6 +37,22 @@ export class DeckView extends Composite {
     private onModeChanged(n: number) {
         this.panels.activeIdx = n;
         this.propagateURL(`mode=${n}`);
+    }
+
+
+    public override onUnitTreeReady(): void {
+        super.onUnitTreeReady();
+        this.buildPaletteButtonsAsync();
+    }
+
+    private async buildPaletteButtonsAsync() {
+        Assert.True(RequestDispatcher.enabled);
+        const json = await RequestDispatcher.sendAsync('/esp/sync/palette');
+        Assert.False(!json);    // not empty string
+        const data = JSON.parse(json);
+        const paletteNames: string[] = data.pals;
+        Assert.Defined(paletteNames);
+        this.palettes.rebuildButtons(paletteNames);
     }
 
 }

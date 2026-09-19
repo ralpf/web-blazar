@@ -15,8 +15,6 @@ export class BlazarApp extends Application
     static async initializeAsync() {
         await BlazarApp.initialize();
         BlazarApp.bindKeyboard();
-        RequestDispatcher.enabled = true;
-        RequestReceiver.enabled = true;
 
         Assert.True(Application.getRootUnit() instanceof ViewsManager);
         this.viewsManager = Application.getRootUnit() as ViewsManager;
