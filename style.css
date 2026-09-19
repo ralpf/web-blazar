@@ -260,6 +260,32 @@ input[type=checkbox] {
     margin-top: 6px;
 }
 
+.proj-palette-buttons-layout {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    margin-top: 0px;
+}
+
+.proj-palette-buttons-layout > button {
+    border-radius: 8px;
+    border: 1px solid #bb96ee;
+    background-color: #cfd3d8;
+    color: #690156;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
+    padding: 4px 2px;
+    font-family: ui-monospace, "Cascadia Mono", monospace;
+}
+
+.proj-palette-buttons-layout > button.is-selected {
+    background-color: #690156;
+    color: #ffffff;
+    border-color: #bb96ee;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.3);
+}
+
 .proj-mode-icon {
     font-size: 22px;
 }
