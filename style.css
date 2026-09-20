@@ -233,6 +233,19 @@ input[type=checkbox] {
     background-color: rgba(178, 178, 178, 1);
 }
 
+.proj-palette-setting {
+    display: flex;
+    justify-content: space-between;
+    padding: 6px;
+    background-color: rgb(201, 191, 193);
+    color: #5b1d4f;
+    margin-bottom: 10px;
+}
+
+.proj-separator40 {
+    height: 30px;
+}
+
 /* Navigation */
 .proj-mode {
     background-color: rgba(96, 37, 84, 1);
