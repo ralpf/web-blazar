@@ -1,1 +1,0 @@
-import{U as t,c as e}from"./index-BFYJ54s2.js";class InputUnit extends t{set callback(t){this._cb=t}constructor(t){super(t),this.prepareInnerElements()}invokeOnChange(t){this.invokeCallback(t)}showValue(t){this.setInputVisualTo(t)}invokeCallback(t){e.True(!!this._cb,`input callback undefined in ${this.domPath} <${this.typeName}>`),this._cb(t)}}export{InputUnit};
