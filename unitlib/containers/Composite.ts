@@ -69,13 +69,12 @@ export class Composite extends Unit {
             // the field is present
             if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
                 const nextUnit = this.getField<Composite>(name);
-                Assert.True(nextUnit instanceof Composite,
-                    `JSON/Unit-tree mismatch at ${this.typeName}.${name}: expected it to be Composite, got '${nextUnit.typeName}'`);
+                Assert.True(nextUnit instanceof Composite, `JSON/Unit-tree mismatch at ${this.typeName}.${name}: expected it to be Composite, got '${nextUnit.typeName}'`);
                 nextUnit.syncState(value as JObject);
             } else {    // primitive value or array
                 const leafInput = this.getField<InputUnit>(name);
+                Assert.True(leafInput instanceof InputUnit, `JSON/Unit-tree mismatch at ${this.typeName}.${name}: expected it to be InputUnit, got '${leafInput.typeName}'`);
                 leafInput.showValue(value);
-                //err(`this method is incomplete, because of composite hierarchy`);
             }
         }
     }
@@ -84,6 +83,7 @@ export class Composite extends Unit {
     protected getField<T extends Unit>(fieldName: string): T {
         const unit = this.fields[fieldName];
         Assert.False(!unit, `no filed '${this.typeName}.${fieldName}' was found (refactored?) Available: [${Object.keys(this.fields).join(", ")}] at ${this.domPath}`);
+        // we can't check that the unit is T here
         return unit as T;
     }
 

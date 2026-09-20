@@ -1,29 +1,65 @@
+import { FormUnit } from "unitlib/containers/FormUnit";
 import { err } from "unitlib/core/global";
+import { SyncUnit } from "unitlib/core/SyncUnit";
+import { Checkbox } from "unitlib/inputs/Checkbox";
 import { InputUnit } from "unitlib/inputs/InputUnit";
+import { Numeral } from "unitlib/inputs/Numeral";
 import { DOM } from "unitlib/static/DOM";
 
 
 
 
-export class NamedPalettes extends InputUnit {
+export class NamedPalettes extends FormUnit {
 
+    private isRand! : Checkbox;
+    private speed!  : Numeral;
+    private idxSync!: SyncUnit;
+
+    private activeIdx!   : number;
     private buttonProto! : HTMLButtonElement;
-    private container! : HTMLElement;
-    private activeIdx! : number;
+    private container!   : HTMLElement;
 
 
-    public rebuildButtons(value: string[]): void {
-        this.container.replaceChildren();
-        value.forEach((label, idx) => this.cloneButton(label, idx));
-        this.updateSelection();
+    protected override initializeClassFields(): void {
+        this.isRand  = this.getField('rand');
+        this.speed   = this.getField('spd');
+        this.idxSync = this.getField('idx');
     }
 
 
-    protected prepareInnerElements(): void {
+    protected override initializeEvents(): void {
+        this.isRand.callback = (b) => this.propagateURL(`rand=${(b ? '1': '0')}`);
+        this.speed .callback = (n) => this.propagateURL(`spd=${n}`);
+        this.idxSync.callback= (n) => { this.activeIdx = n; this.updateSelectionVisuals() };
+        // buttons init
         this.buttonProto = DOM.Find(this.root, 'button') as HTMLButtonElement;
         this.container = this.buttonProto.parentElement!;
         this.buttonProto.remove(); // Keep the template in memory, outside the visible row.
         this.activeIdx = 0;
+    }
+
+
+    private onSomeButtonClicked(idx: number): void {
+        this.activeIdx = idx;
+        this.updateSelectionVisuals();
+        this.propagateURL(`idx=${idx}`);
+    }
+
+
+    private updateSelectionVisuals(): void {
+        Array.from(this.container.children).forEach((button, idx) => {
+            const selected = idx === this.activeIdx;
+            button.classList.toggle('is-selected', selected);
+            // aria-pressed describes a button’s persistent on/off state. String makes a 'true' or 'false' value
+            button.setAttribute('aria-pressed', String(selected)); 
+        });
+    }
+
+
+    public externRebuildButtons(buttonNames: string[]): void {
+        this.container.replaceChildren();
+        buttonNames.forEach((label, idx) => this.cloneButton(label, idx));
+        this.updateSelectionVisuals();
     }
 
 
@@ -40,24 +76,7 @@ export class NamedPalettes extends InputUnit {
     protected setInputVisualTo(value: any): void {
         if (typeof value !== 'number') err(`unexpected type '${typeof value}' (${value})`);
         this.activeIdx = value;
-        this.updateSelection();
+        this.updateSelectionVisuals();
     }
-
-
-    private onSomeButtonClicked(idx: number): void {
-        this.activeIdx = idx;
-        this.invokeCallback(idx);
-        this.updateSelection();
-    }
-
-
-    private updateSelection(): void {
-        Array.from(this.container.children).forEach((button, idx) => {
-            const selected = idx === this.activeIdx;
-            button.classList.toggle('is-selected', selected);
-            // aria-pressed describes a button’s persistent on/off state. String makes a 'true' or 'false' value
-            button.setAttribute('aria-pressed', String(selected));
-    });
-}
 
 }

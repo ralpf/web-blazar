@@ -29,7 +29,6 @@ export class DeckView extends Composite {
     protected initializeEvents(): void {
         this.luma.callback     = (n: number) => this.propagateURL(`luma=${n}`);
         this.dropdown.callback = (n: number) => this.onModeChanged(n);
-        this.palettes.callback = (i: number) => this.propagateURL(`pal=${i}`);
         // just a coroutine example, keep it
         AnimationFX.sliderLuma(this.luma, 0.33);
     }
@@ -52,7 +51,7 @@ export class DeckView extends Composite {
         const data = JSON.parse(json);
         const paletteNames: string[] = data.pals;
         Assert.Defined(paletteNames);
-        this.palettes.rebuildButtons(paletteNames);
+        this.palettes.externRebuildButtons(paletteNames);
     }
 
 }
