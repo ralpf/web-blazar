@@ -8,8 +8,8 @@
     <meta name="generator" content="GrapesJS Studio"/>
     <link rel="icon" href="https://ralpf.github.io/web-blazar/assets/icon-DiSFa2Td.png"/>
     <meta name="theme-color" content="#221d24"/>
-    <script type="module" crossorigin src="https://ralpf.github.io/web-blazar/assets/index-BFYJ54s2.js"></script>
-    <link rel="stylesheet" crossorigin href="https://ralpf.github.io/web-blazar/assets/index-DMA6y9AY.css">
+    <script type="module" crossorigin src="https://ralpf.github.io/web-blazar/assets/index-YKATGmo4.js"></script>
+    <link rel="stylesheet" crossorigin href="https://ralpf.github.io/web-blazar/assets/index-B9prav73.css">
   </head>
   <body class="proj-page">
     <div class="proj-spacer proj-hidden"></div>
@@ -119,19 +119,15 @@
           <div data-type="Dropdown.mode" class="proj-inner-pannel proj-select-row">
             <label for="ID-deck-mode-select">Deck Mode</label>
             <select type="text" id="ID-deck-mode-select" class="proj-input-select">
-              <option value="1">Mirror Lamp</option>
-              <option value="2">Palette</option>
-              <option value="3">Slider</option>
-              <option value="4">Color Picker</option>
+              <option value="0">Mirror Lamp</option>
+              <option value="1">Slider</option>
+              <option value="2">Color Picker</option>
+              <option value="3">Palette</option>
             </select>
           </div>
           <div data-tag="deck-panels" class="proj-mode-content"> <!-- Group of deck modes -->
             <div class="proj-inner-pannel">
               <div class="proj-inner-pannel-header">Mirror Lamp Mode</div>
-            </div>
-            <div class="proj-inner-pannel">
-              <div class="proj-inner-pannel-header">Pallete mode</div>
-              <div class="proj-panel-note">Download data json from ESP32</div>
             </div>
             <div data-type="SlidersHSV.sliders" class="proj-inner-pannel">
               <div class="proj-inner-pannel-header">Sliders mode</div>
@@ -149,6 +145,19 @@
                     <button type="button" data-tag="+" class="proj-color-add">+</button>
                   </div>
                 </div>
+              </div>
+            </div>
+            <div data-type="NamedPalettes.palette" class="proj-inner-pannel">
+              <div class="proj-inner-pannel-header">Pallete mode</div>
+                <div data-type="Checkbox.rand" class="proj-palette-setting">
+                  <label>Aurora Mode</label><input type="checkbox"/>
+                </div>
+                <div data-type="Numeral.spd" class="proj-palette-setting">
+                  <label>Speed</label> <input type="number" class="proj-number-value"/>
+                </div>
+              <div class="proj-separator40"></div>
+              <div data-type="SyncUnit.idx" class="proj-palette-buttons-layout">
+                <button type="button" >PROTO</button>
               </div>
             </div>
           </div>

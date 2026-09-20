@@ -1,0 +1,1 @@
+import{I as t,D as e}from"./index-YKATGmo4.js";class ButtonOne extends t{prepareInnerElements(){this.buttonElem=this.root instanceof HTMLButtonElement?this.root:e.Find(this.root,"button"),this.buttonElem.addEventListener("click",()=>this.invokeCallback(this.buttonElem.textContent))}setInputVisualTo(t){"string"==typeof t&&(this.buttonElem.textContent=t)}}export{ButtonOne};

@@ -1,0 +1,1 @@
+import{I as e,D as t,l as n}from"./index-YKATGmo4.js";class Numeral extends e{prepareInnerElements(){this.num=t.Find(this.root,'input[type="number"]'),this.num.addEventListener("change",()=>this.invokeCallback(this.num.valueAsNumber))}setInputVisualTo(e){const t=typeof e;"number"===t?this.num.valueAsNumber=e:n(`unexpected value '${e}' of type '${t}'`)}}export{Numeral};
