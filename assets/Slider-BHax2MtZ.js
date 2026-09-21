@@ -1,1 +1,0 @@
-import{I as e,D as i,c as s}from"./index-YKATGmo4.js";class Slider extends e{prepareInnerElements(){this.slider=i.Find(this.root,'input[type="range"]'),this.slider.addEventListener("change",()=>this.invokeCallback(this.slider.valueAsNumber))}setInputVisualTo(e){Number.isFinite(e)?this.slider.valueAsNumber=e:s(`invalid slider value '${e}'`)}}export{Slider};

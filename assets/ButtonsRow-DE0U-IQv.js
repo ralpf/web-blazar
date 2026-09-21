@@ -1,1 +1,0 @@
-import{I as s,D as t,l as e}from"./index-YKATGmo4.js";class ButtonsRow extends s{prepareInnerElements(){t.FindAll(this.root,"button").forEach((s,t)=>s.addEventListener("click",()=>this.invokeCallback(t)))}setInputVisualTo(s){e(`this class lacks visual feedback. Value was ${s}`)}}export{ButtonsRow};
